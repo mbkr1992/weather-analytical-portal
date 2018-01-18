@@ -1,5 +1,5 @@
-from FileDownloader.FTPFileDownloader import FTPFileDownloader
-from FileDownloader.DownloaderFactory import DownloaderFactory
+from DownloadModel.FTPFileDownloader import FTPFileDownloader
+from DownloadModel.DownloaderFactory import DownloaderFactory
 from Common import Constants
 
 class ConcreteDownloaderFactory(DownloaderFactory):

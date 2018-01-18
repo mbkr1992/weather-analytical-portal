@@ -1,4 +1,4 @@
-from FileDownloader.Downloader import Downloader
+from DownloadModel.Downloader import Downloader
 from ftplib import FTP
 
 class FTPFileDownloader(Downloader):

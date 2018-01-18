@@ -1,9 +1,9 @@
 
-from FileDownloader.ConcreteDownloaderFactory import ConcreteDownloaderFactory
-from FileParser.ConcreteParserFactory import ConcreteParserFactory
-from Common import Constants
-from DBHandler import DBHandler
-
+from DownloadModel.ConcreteDownloaderFactory import ConcreteDownloaderFactory
+from ParserModel.ConcreteParserFactory import ConcreteParserFactory
+from Common import Constants, Helper
+from DatabaseModel.DBHandler import insert_stations, update_stations
+from psycopg2 import errorcodes, IntegrityError
 
 class Operation:
     def __init__(self):
@@ -21,7 +21,13 @@ class Operation:
 
         parser = ConcreteParserFactory().getParser(Constants.STATION)
         stations = parser.parse(filename)
-        DBHandler.insert_stations(stations)
+        try:
+            insert_stations(stations)
+        except Exception as e:
+            if e.pgcode == errorcodes.UNIQUE_VIOLATION:
+                update_stations(stations)
+        else:
+            Helper.remove_file(filename)
 
 
 def main():

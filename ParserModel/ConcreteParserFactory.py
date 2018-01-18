@@ -1,6 +1,6 @@
-from FileParser.FileSoilStationParser import FileSoilStationParser
-from FileParser.ParserFactory import ParserFactory
-from FileParser.StationParser import StationParser
+from ParserModel.FileSoilStationParser import FileSoilStationParser
+from ParserModel.ParserFactory import ParserFactory
+from ParserModel.StationParser import StationParser
 from Common import Constants
 
 class ConcreteParserFactory(ParserFactory):

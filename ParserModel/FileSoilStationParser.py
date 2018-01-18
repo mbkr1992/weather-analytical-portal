@@ -1,4 +1,4 @@
-from FileParser.Parser import Parser
+from ParserModel.Parser import Parser
 from Common import Station
 
 class FileSoilStationParser(Parser):

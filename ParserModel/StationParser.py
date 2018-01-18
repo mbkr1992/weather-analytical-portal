@@ -1,4 +1,4 @@
-from FileParser.Parser import Parser
+from ParserModel.Parser import Parser
 from Common.Station import Station
 
 class StationParser(Parser):

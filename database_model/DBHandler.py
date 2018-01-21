@@ -1,13 +1,14 @@
 from psycopg2 import connect, errorcodes, IntegrityError
 from postgis.psycopg import register
 from postgis import Point
-from Common import Constants
+from common import Constants
 
 DBN = Constants.DATABASE_CONNECTION
 
 insert_station = 'INSERT ' \
                  'INTO station (id, name, position, state, from_date, to_date, height) ' \
                  'VALUES (%s, %s, %s, %s, %s, %s, %s);'
+
 update_station = 'UPDATE station ' \
                  'SET id=(%s), name=(%s), position=(%s), state=(%s), from_date=(%s), to_date=(%s), height=(%s) ' \
                  'WHERE id=(%s);'

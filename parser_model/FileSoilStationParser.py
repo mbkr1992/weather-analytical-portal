@@ -1,5 +1,5 @@
-from ParserModel.Parser import Parser
-from Common import Station
+from parser_model.Parser import Parser
+from common import Station
 
 class FileSoilStationParser(Parser):
 

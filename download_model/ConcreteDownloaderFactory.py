@@ -1,6 +1,6 @@
-from DownloadModel.FTPFileDownloader import FTPFileDownloader
-from DownloadModel.DownloaderFactory import DownloaderFactory
-from Common import Constants
+from download_model.FTPFileDownloader import FTPFileDownloader
+from download_model.DownloaderFactory import DownloaderFactory
+from common import Constants
 
 class ConcreteDownloaderFactory(DownloaderFactory):
     def __init__(self):

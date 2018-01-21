@@ -6,5 +6,5 @@ class Downloader(ABC):
         super().__init__()
 
     @abstractmethod
-    def download(self):
+    def download(self, server, username, password, server_path, filename):
         pass

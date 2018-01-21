@@ -1,7 +1,7 @@
-from ParserModel.FileSoilStationParser import FileSoilStationParser
-from ParserModel.ParserFactory import ParserFactory
-from ParserModel.StationParser import StationParser
-from Common import Constants
+from parser_model.FileSoilStationParser import FileSoilStationParser
+from parser_model.ParserFactory import ParserFactory
+from parser_model.StationParser import StationParser
+from common import Constants
 
 class ConcreteParserFactory(ParserFactory):
     def __init__(self):

@@ -9,7 +9,7 @@ class StationParser(Parser):
 
     def parse(self, server_path, filename):
         print('Parsing file: ' + filename);
-    
+
         path_with_filename = DOWNLOAD_FOLDER + server_path + filename
 
         with open(path_with_filename, encoding='ISO-8859-1') as f:

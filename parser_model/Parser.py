@@ -6,5 +6,5 @@ class Parser(ABC):
         super().__init__()
 
     @abstractmethod
-    def parse(self):
+    def parse(self, server_path, filename):
         pass

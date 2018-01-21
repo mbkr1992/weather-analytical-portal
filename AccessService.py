@@ -10,19 +10,20 @@ import os
 class Operation:
     def __init__(self):
         super().__init__()
+        self.server = 'ftp-cdc.dwd.de'
+        self.username = 'anonymous'
+        self.password = 'anonymous'
 
-    def perform_operation(self, factory):
-        server = 'ftp-cdc.dwd.de'
-        username = 'anonymous'
-        password = 'anonymous'
+    def perform_simple_operation(self, factory):
         path = '/pub/CDC/observations_germany/climate/hourly/solar/ST_Stundenwerte_Beschreibung_Stationen.txt'
         server_path, separator, filename = path.rpartition('/')
 
         downloader = factory.getDownloader(Constants.FTP_DOWNLOADER)
-        downloader.download(server, username, password, server_path + separator, filename)
+        downloader.download(self.server, self.username, self.password, server_path + separator, filename)
 
         parser = ConcreteParserFactory().getParser(Constants.STATION)
-        stations = parser.parse(filename)
+        stations = parser.parse(server_path + separator, filename)
+
         # try:
         #     insert_stations(stations)
         # except Exception as e:
@@ -32,9 +33,17 @@ class Operation:
         # else:
         #     Helper.remove_file(filename)
 
+    def perform_zip_operation(self, factory):
+        path = '/pub/CDC/observations_germany/climate/hourly/solar/stundenwerte_ST_02928_row.zip'
+        server_path, separator, filename = path.rpartition('/')
+
+        downloader = factory.getDownloader(Constants.FTP_DOWNLOADER)
+        downloader.download(self.server, self.username, self.password, server_path + separator, filename)
+        pass
+
 
 def main():
     downloader = ConcreteDownloaderFactory()
-    Operation().perform_operation(downloader)
+    Operation().perform_zip_operation(downloader)
 
 main()

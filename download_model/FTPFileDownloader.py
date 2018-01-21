@@ -23,4 +23,6 @@ class FTPFileDownloader(Downloader):
             with open(path_with_filename, 'wb') as local_file:
                 ftp.retrbinary('RETR ' + filename, local_file.write, 1024)
                 local_file.close()
+        else:
+            print('File already downloaded')
         ftp.quit()

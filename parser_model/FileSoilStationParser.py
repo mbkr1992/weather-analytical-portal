@@ -6,7 +6,7 @@ class FileSoilStationParser(Parser):
     def __init__(self):
         super().__init__()
 
-    def parse(self, filename):
+    def parse(self, server_path, filename):
         print('Parsing file: ' + filename);
         with open(filename, encoding='ISO-8859-1') as f:
             listOfStations = []

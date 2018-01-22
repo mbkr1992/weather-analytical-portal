@@ -24,8 +24,8 @@
           <file leaf-file-name="AccessService.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/AccessService.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="230">
-                  <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="47" />
+                <state relative-caret-position="380">
+                  <caret line="49" column="39" lean-forward="true" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
                   <folding>
                     <element signature="e#1#37#0" expanded="true" />
                     <marker date="1516661688733" expanded="true" signature="654:724" ph="..." />
@@ -38,7 +38,7 @@
             <entry file="file://$PROJECT_DIR$/model/Solar.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="255">
-                  <caret line="17" column="15" lean-forward="true" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+                  <caret line="17" column="15" lean-forward="false" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
                   <folding />
                 </state>
               </provider>
@@ -132,7 +132,7 @@
             <entry file="file://$PROJECT_DIR$/parser_model/SimpleParser.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="375">
-                  <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+                  <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
                   <folding>
                     <element signature="e#0#38#0" expanded="true" />
                   </folding>
@@ -410,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1516661978936</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="-- Added hourly solar description sql queries">
+      <created>1516662108369</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1516662108369</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -459,7 +466,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="-- Included mappers, parsers for solar zip files" />
-    <option name="LAST_COMMIT_MESSAGE" value="-- Included mappers, parsers for solar zip files" />
+    <MESSAGE value="-- Added hourly solar description sql queries" />
+    <option name="LAST_COMMIT_MESSAGE" value="-- Added hourly solar description sql queries" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -707,7 +715,7 @@
     <entry file="file://$PROJECT_DIR$/model/Solar.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="17" column="15" lean-forward="true" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+          <caret line="17" column="15" lean-forward="false" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -715,7 +723,7 @@
     <entry file="file://$PROJECT_DIR$/parser_model/SimpleParser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
-          <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+          <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -724,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AccessService.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="47" />
+        <state relative-caret-position="380">
+          <caret line="49" column="39" lean-forward="true" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
           <folding>
             <element signature="e#1#37#0" expanded="true" />
             <marker date="1516661688733" expanded="true" signature="654:724" ph="..." />

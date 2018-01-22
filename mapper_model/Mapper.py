@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 
 
-class Parser(ABC):
+class Mapper(ABC):
     def __init__(self):
         super().__init__()
 
     @abstractmethod
-    def parse(self, filename):
+    def map(self, item):
         pass

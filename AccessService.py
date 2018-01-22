@@ -1,10 +1,8 @@
 
+from common import Constants, Helper
 from download_model.ConcreteDownloaderFactory import ConcreteDownloaderFactory
 from parser_model.ConcreteParserFactory import ConcreteParserFactory
-from common import Constants, Helper
-from database_model.DBHandler import insert_stations, update_stations
-from psycopg2 import errorcodes, IntegrityError
-import os
+from mapper_model.MapperFactory import MapperFactory
 
 
 class Operation:
@@ -21,8 +19,12 @@ class Operation:
         downloader = factory.getDownloader(Constants.FTP_DOWNLOADER)
         downloader.download(self.server, self.username, self.password, server_path + separator, filename)
 
-        parser = ConcreteParserFactory().getParser(Constants.STATION)
-        stations = parser.parse(server_path + separator, filename)
+        mapper = MapperFactory().get_mapper(Constants.STATION)
+
+        parser = ConcreteParserFactory().get_parser(Constants.STATION)
+        path_with_filename = server_path + separator + filename
+
+        stations = parser.parse(path_with_filename, mapper)
 
         # try:
         #     insert_stations(stations)
@@ -39,6 +41,13 @@ class Operation:
 
         downloader = factory.getDownloader(Constants.FTP_DOWNLOADER)
         downloader.download(self.server, self.username, self.password, server_path + separator, filename)
+
+        extracted_path = Helper.unzip(server_path + separator, filename)
+        file_path = Helper.find('produkt_*.txt', extracted_path)
+
+        mapper = MapperFactory().get_mapper(Constants.SOLAR)
+        parser = ConcreteParserFactory().get_parser(Constants.SIMPLE)
+        parser.parse(file_path, mapper)
         pass
 
 

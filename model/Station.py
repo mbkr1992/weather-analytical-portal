@@ -1,3 +1,6 @@
+from mapper_model import Mapper
+
+
 class Station:
 
     def __init__(self, station=None):

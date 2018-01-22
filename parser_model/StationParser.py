@@ -1,18 +1,18 @@
-from parser_model.Parser import Parser
-from common.Station import Station
 from common.Constants import DOWNLOAD_FOLDER
+from model.Station import Station
+from parser_model.Parser import Parser
 
 
 class StationParser(Parser):
     def __init__(self):
         super().__init__()
 
-    def parse(self, server_path, filename):
-        print('Parsing file: ' + filename);
+    def parse(self, path_file):
+        print('Parsing file: ' + path_file);
 
-        path_with_filename = DOWNLOAD_FOLDER + server_path + filename
+        temporary_path = DOWNLOAD_FOLDER + path_file
 
-        with open(path_with_filename, encoding='ISO-8859-1') as f:
+        with open(temporary_path, encoding='ISO-8859-1') as f:
             list_of_stations = []
 
             # Headings Station_id etc

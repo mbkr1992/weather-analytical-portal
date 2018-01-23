@@ -1,5 +1,5 @@
-from model import Station
-from parser_model.Parser import Parser
+from model import station
+from parser_model.parser import Parser
 
 
 class FileSoilStationParser(Parser):
@@ -22,7 +22,7 @@ class FileSoilStationParser(Parser):
             return listOfStations
 
 
-def toStation(station) -> Station:
+def toStation(station) -> station:
     stationIndex = station['Stationsindex']
     height = station['Höhe in m']
 

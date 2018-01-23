@@ -1,5 +1,9 @@
-import os, errno, zipfile, fnmatch
-from common.Constants import DOWNLOAD_FOLDER
+import errno
+import fnmatch
+import os
+import zipfile
+
+from constants.constants import DOWNLOAD_FOLDER
 
 
 def remove_file(filename):

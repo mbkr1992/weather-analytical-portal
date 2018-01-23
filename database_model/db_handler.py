@@ -1,9 +1,10 @@
-from psycopg2 import connect, errorcodes, IntegrityError
-from postgis.psycopg import register
 from postgis import Point
-from common import Constants
+from postgis.psycopg import register
+from psycopg2 import connect
 
-DBN = Constants.DATABASE_CONNECTION
+from constants import constants
+
+DBN = constants.DATABASE_CONNECTION
 
 insert_station = 'INSERT ' \
                  'INTO station (id, name, position, state, from_date, to_date, height) ' \

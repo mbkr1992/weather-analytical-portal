@@ -1,8 +1,9 @@
 
-from common import Constants, Helper
-from download_model.ConcreteDownloaderFactory import ConcreteDownloaderFactory
-from parser_model.ConcreteParserFactory import ConcreteParserFactory
-from mapper_model.MapperFactory import MapperFactory
+from common import helper
+from constants import constants
+from download_model.concrete_downloader_factory import ConcreteDownloaderFactory
+from mapper_model.mapper_factory import MapperFactory
+from parser_model.concrete_parser_factory import ConcreteParserFactory
 
 
 class Operation:
@@ -16,12 +17,12 @@ class Operation:
         path = '/pub/CDC/observations_germany/climate/hourly/solar/ST_Stundenwerte_Beschreibung_Stationen.txt'
         server_path, separator, filename = path.rpartition('/')
 
-        downloader = factory.getDownloader(Constants.FTP_DOWNLOADER)
+        downloader = factory.getDownloader(constants.FTP_DOWNLOADER)
         downloader.download(self.server, self.username, self.password, server_path + separator, filename)
 
-        mapper = MapperFactory().get_mapper(Constants.STATION)
+        mapper = MapperFactory().get_mapper(constants.STATION)
 
-        parser = ConcreteParserFactory().get_parser(Constants.STATION)
+        parser = ConcreteParserFactory().get_parser(constants.STATION)
         path_with_filename = server_path + separator + filename
 
         stations = parser.parse(path_with_filename, mapper)
@@ -39,14 +40,14 @@ class Operation:
         path = '/pub/CDC/observations_germany/climate/hourly/solar/stundenwerte_ST_02928_row.zip'
         server_path, separator, filename = path.rpartition('/')
 
-        downloader = factory.getDownloader(Constants.FTP_DOWNLOADER)
+        downloader = factory.getDownloader(constants.FTP_DOWNLOADER)
         downloader.download(self.server, self.username, self.password, server_path + separator, filename)
 
-        extracted_path = Helper.unzip(server_path + separator, filename)
-        file_path = Helper.find('produkt_*.txt', extracted_path)
+        extracted_path = helper.unzip(server_path + separator, filename)
+        file_path = helper.find('produkt_*.txt', extracted_path)
 
-        mapper = MapperFactory().get_mapper(Constants.SOLAR)
-        parser = ConcreteParserFactory().get_parser(Constants.SIMPLE)
+        mapper = MapperFactory().get_mapper(constants.SOLAR)
+        parser = ConcreteParserFactory().get_parser(constants.SIMPLE)
         parser.parse(file_path, mapper)
         pass
 

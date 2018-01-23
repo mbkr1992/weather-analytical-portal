@@ -1,6 +1,6 @@
-from common.Constants import STATION, SOLAR
-from mapper_model.StationMapper import StationMapper
-from mapper_model.SolarMapper import SolarMapper
+from constants.constants import STATION, SOLAR
+from mapper_model.solar_mapper import SolarMapper
+from mapper_model.station_mapper import StationMapper
 
 
 class MapperFactory:

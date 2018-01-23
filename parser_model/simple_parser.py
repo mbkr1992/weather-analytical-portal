@@ -1,5 +1,4 @@
-from parser_model.Parser import Parser
-from common.Constants import DOWNLOAD_FOLDER
+from parser_model.parser import Parser
 
 
 class SimpleParser(Parser):

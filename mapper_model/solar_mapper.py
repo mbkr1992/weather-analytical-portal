@@ -1,5 +1,5 @@
-from mapper_model.Mapper import Mapper
-from model.Solar import Solar
+from mapper_model.mapper import Mapper
+from model.solar import Solar
 
 
 class SolarMapper(Mapper):

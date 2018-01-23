@@ -1,5 +1,5 @@
-from mapper_model.Mapper import Mapper
-from model.Station import Station
+from mapper_model.mapper import Mapper
+from model.station import Station
 
 
 class StationMapper(Mapper):

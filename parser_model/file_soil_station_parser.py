@@ -8,7 +8,6 @@ class FileSoilStationParser(Parser):
         super().__init__()
 
     def parse(self, server_path, filename):
-        print('Parsing file: ' + filename);
         with open(filename, encoding='ISO-8859-1') as f:
             listOfStations = []
             keys = f.readline().split(';')

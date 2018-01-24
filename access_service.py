@@ -3,6 +3,7 @@ from common import helper
 from constants import constants
 from download_model.concrete_downloader_factory import ConcreteDownloaderFactory
 from mapper_model.mapper_factory import MapperFactory
+from mapper_model.solar_mapper import SolarMapper
 from parser_model.concrete_parser_factory import ConcreteParserFactory
 
 
@@ -48,7 +49,12 @@ class Operation:
 
         mapper = MapperFactory().get_mapper(constants.SOLAR)
         parser = ConcreteParserFactory().get_parser(constants.SIMPLE)
-        parser.parse(file_path, mapper)
+        items = parser.parse(file_path, mapper)
+
+        entities = [entity for item in items for entity in SolarMapper(solar=item).to_entities()]
+        print(entities)
+        print(len(entities))
+
         pass
 
 

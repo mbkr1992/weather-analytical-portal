@@ -3,6 +3,7 @@ from postgis.psycopg import register
 from psycopg2 import connect
 
 from constants import constants
+from model.entity import Entity
 
 DBN = constants.DATABASE_CONNECTION
 
@@ -25,6 +26,7 @@ def insert_stations(stations):
                         s.state, s.from_date, s.to_date, s.height)
                 curs.execute(insert_station, data)
 
+
 def update_stations(stations):
     print('Updating stations')
     with connect(DBN) as conn:
@@ -35,3 +37,10 @@ def update_stations(stations):
                         s.state, s.from_date, s.to_date, s.height, s.id)
                 curs.execute(update_station, data)
 
+
+def insert_into_data_hub(items: Entity):
+    print('Inserting into data hub')
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            pass

@@ -4,6 +4,11 @@ import os
 import zipfile
 
 from constants.constants import DOWNLOAD_FOLDER
+from itertools import chain
+
+
+def flatmap(f, items):
+    return chain.from_iterable(map(f, items))
 
 
 def remove_file(filename):

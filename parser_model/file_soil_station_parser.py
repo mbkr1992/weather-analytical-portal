@@ -1,5 +1,5 @@
-from model import Station
-from parser_model.Parser import Parser
+from model import station
+from parser_model.parser import Parser
 
 
 class FileSoilStationParser(Parser):
@@ -8,7 +8,6 @@ class FileSoilStationParser(Parser):
         super().__init__()
 
     def parse(self, server_path, filename):
-        print('Parsing file: ' + filename);
         with open(filename, encoding='ISO-8859-1') as f:
             listOfStations = []
             keys = f.readline().split(';')
@@ -22,7 +21,7 @@ class FileSoilStationParser(Parser):
             return listOfStations
 
 
-def toStation(station) -> Station:
+def toStation(station) -> station:
     stationIndex = station['Stationsindex']
     height = station['Höhe in m']
 

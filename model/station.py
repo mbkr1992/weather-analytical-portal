@@ -1,4 +1,4 @@
-from mapper_model import Mapper
+from mapper_model import mapper
 
 
 class Station:

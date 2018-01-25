@@ -1,8 +1,10 @@
-from download_model.Downloader import Downloader
-from ftplib import FTP
-from common.Constants import DOWNLOAD_FOLDER
-from pathlib import Path
 import os
+from ftplib import FTP
+from pathlib import Path
+
+from constants.constants import DOWNLOAD_FOLDER
+from download_model.downloader import Downloader
+
 
 class FTPFileDownloader(Downloader):
     def __init__(self):

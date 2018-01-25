@@ -1,0 +1,19 @@
+# Temporary folder
+DOWNLOAD_FOLDER = 'downloads'
+
+# Database Operation
+DATABASE_CONNECTION = 'dbname=portal user=postgres'
+
+# Mapper
+MAPPER_SOLAR = 'MAPPER_SOLAR'
+MAPPER_STATION = 'MAPPER_STATION'
+
+# Parser
+PARSER_SIMPLE = 'SIMPLE'
+PARSER_STATION = 'PARSER_STATION'
+
+# Operation
+OPERATION_ZIP = 'OPERATION_ZIP'
+
+# Downloader
+DOWNLOADER_FTP = 'DOWNLOADER_FTP'

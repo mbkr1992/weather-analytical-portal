@@ -1,5 +1,4 @@
-from parser_model.Parser import Parser
-from common.Constants import DOWNLOAD_FOLDER
+from parser_model.parser import Parser
 
 
 class SimpleParser(Parser):
@@ -7,7 +6,6 @@ class SimpleParser(Parser):
         super().__init__()
 
     def parse(self, path_file, mapper):
-        print('Parsing file: ' + path_file, mapper);
 
         temporary_path = path_file
 
@@ -23,7 +21,6 @@ class SimpleParser(Parser):
                 item = {}
                 for i in range(0, len(keys)):
                     item[keys[i].strip()] = values[i].strip()
-                print(item)
                 list_of_items.append(mapper.map(item))
             f.close()
             return list_of_items

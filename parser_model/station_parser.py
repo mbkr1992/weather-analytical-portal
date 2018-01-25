@@ -1,6 +1,6 @@
-from common.Constants import DOWNLOAD_FOLDER
-from model.Station import Station
-from parser_model.Parser import Parser
+from constants.constants import DOWNLOAD_FOLDER
+from model.station import Station
+from parser_model.parser import Parser
 
 
 class StationParser(Parser):

@@ -1,9 +1,8 @@
 from postgis import Point
 from postgis.psycopg import register
 from psycopg2 import connect
-
 from constants import constants
-from model.entity import Entity
+from model.solar import Solar
 
 DBN = constants.DATABASE_CONNECTION
 
@@ -14,6 +13,15 @@ insert_station = 'INSERT ' \
 update_station = 'UPDATE station ' \
                  'SET id=(%s), name=(%s), position=(%s), state=(%s), from_date=(%s), to_date=(%s), height=(%s) ' \
                  'WHERE id=(%s);'
+
+insert_solar = 'INSERT ' \
+                  'INTO data_hub (station_id, measurement_date, solar_qn, solar_atmo, solar_fd, ' \
+                  'solar_fg, solar_sd, solar_zenith, solar_measurement_date_local) ' \
+                  'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);'
+
+insert_solar_dummy = 'INSERT ' \
+                  'INTO data_hub (measurement_date) ' \
+                  'VALUES (%s);'
 
 
 def insert_stations(stations):
@@ -38,9 +46,11 @@ def update_stations(stations):
                 curs.execute(update_station, data)
 
 
-def insert_into_data_hub(items: Entity):
+def insert_solar_data(items: [Solar]):
     print('Inserting into data hub')
     with connect(DBN) as conn:
-        register(connection=conn)
         with conn.cursor() as curs:
-            pass
+            for s in items:
+                data = (s.station_id, s.measurement_date, s.qn, s.atmo_radiation, s.fd_radiation, s.fg_radiation,
+                        s.sd_radiation, s.zenith, s.measurement_date_local)
+                curs.execute(insert_solar, data)

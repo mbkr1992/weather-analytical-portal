@@ -9,6 +9,3 @@ class Mapper(ABC):
     def map(self, item):
         pass
 
-    @abstractmethod
-    def to_entities(self):
-        pass

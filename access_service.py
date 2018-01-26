@@ -30,6 +30,13 @@ from operation_model.operation_factory import OperationFactory
 #     #         update_stations(stations)
 #     # else:
 #     #     Helper.remove_file(filename)
+def perform_text_operation():
+    path = '/pub/CDC/observations_germany/climate/hourly/solar/ST_Stundenwerte_Beschreibung_Stationen.txt'
+    mapper = MapperFactory.get_mapper(constants.MAPPER_STATION)
+    parser = ParserFactory.get_parser(constants.PARSER_STATION)
+    downloader = DownloaderFactory.get_downloader(constants.DOWNLOADER_FTP)
+    operation = OperationFactory.get_operation(constants.OPERATION_TEXT)
+    items = operation.perform_operation(path=path, mapper=mapper, parser=parser, downloader=downloader)
 
 
 def perform_zip_operation():
@@ -47,7 +54,6 @@ def perform_zip_operation():
 
 
 def main():
-    downloader = DownloaderFactory()
     perform_zip_operation()
 
 main()

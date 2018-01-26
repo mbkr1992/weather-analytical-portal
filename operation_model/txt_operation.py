@@ -2,7 +2,7 @@ from common.helper import unzip, find
 from operation_model.operation import Operation
 
 
-class ZipOperation(Operation):
+class TxtOperation(Operation):
     def __init__(self):
         super().__init__()
 
@@ -10,8 +10,5 @@ class ZipOperation(Operation):
         server_path, separator, filename = path.rpartition('/')
         downloader.download(self.server, self.username, self.password, server_path + separator, filename)
 
-        extracted_path = unzip(server_path + separator, filename)
-        file_path = find('produkt_*.txt', extracted_path)
-
-        items = parser.parse(file_path, mapper)
+        items = parser.parse(path, mapper)
         return items

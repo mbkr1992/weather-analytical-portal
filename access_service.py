@@ -7,7 +7,6 @@ from parser_model.parser_factory import ParserFactory
 from database_model.db_handler import insert_solar_data
 from operation_model.operation_factory import OperationFactory
 
-
 # def perform_simple_operation(factory):
 #     path = '/pub/CDC/observations_germany/climate/hourly/solar/ST_Stundenwerte_Beschreibung_Stationen.txt'
 #     server_path, separator, filename = path.rpartition('/')
@@ -33,21 +32,23 @@ from operation_model.operation_factory import OperationFactory
 
 
 def perform_zip_operation():
-    path = '/pub/CDC/observations_germany/climate/hourly/solar/stundenwerte_ST_02928_row.zip'
-    mapper = MapperFactory.get_mapper(constants.MAPPER_SOLAR)
-    parser = ParserFactory.get_parser(constants.PARSER_SIMPLE)
+    path = '/pub/CDC/observations_germany/climate/10_minutes/air_temperature/historical/10minutenwerte_tu_00003_19930428_19991231_hist.zip'
+    #     mapper = MapperFactory.get_mapper(constants.MAPPER_SOLAR)
+    #     parser = ParserFactory.get_parser(constants.PARSER_SIMPLE)
     downloader = DownloaderFactory.get_downloader(constants.DOWNLOADER_FTP)
-    operation = OperationFactory.get_operation(constants.OPERATION_ZIP)
-    items = operation.perform_operation(path=path, mapper=mapper, parser=parser, downloader=downloader)
-
-    try:
-        insert_solar_data(items)
-    except Exception as e:
-        print('exception {0}'.format(e))
+    downloader.download(path)
+    #     operation = OperationFactory.get_operation(constants.OPERATION_ZIP)
+    #     items = operation.perform_operation(path=path, mapper=mapper, parser=parser, downloader=downloader)
+    #
+    #     try:
+    #         insert_solar_data(items)
+    #     except Exception as e:
+    #         print('exception {0}'.format(e))
+    pass
 
 
 def main():
-    downloader = DownloaderFactory()
-    perform_zip_operation()
+
+    pass
 
 main()

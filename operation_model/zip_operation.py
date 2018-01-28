@@ -12,7 +12,7 @@ class ZipOperation(Operation):
 
     def perform_operation(self, path, downloader, parser, mapper):
         server_path, separator, filename = path.rpartition('/')
-        downloader.download(self.server, self.username, self.password, server_path + separator, filename)
+        downloader.download(filename)
 
         extracted_path = unzip(server_path + separator, filename)
         file_path = find('produkt_*.txt', extracted_path)

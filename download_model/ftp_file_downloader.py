@@ -8,4 +8,4 @@ class FTPFileDownloader(Downloader):
 
     def download(self, path):
         print('Downloading file: ' + path);
-        FTPHelper.download_file(path)
+        FTPHelper().download_file(path)

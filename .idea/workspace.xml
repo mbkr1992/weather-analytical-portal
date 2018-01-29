@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fcfb57f-3740-444c-825f-1e46a7dc9c52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/ftp_helper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/file.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/access_service.py" afterPath="$PROJECT_DIR$/access_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/constants/constants.py" afterPath="$PROJECT_DIR$/constants/constants.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/ftp_helper.py" afterPath="$PROJECT_DIR$/common/ftp_helper.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database_model/db_handler.py" afterPath="$PROJECT_DIR$/database_model/db_handler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/download_model/downloader.py" afterPath="$PROJECT_DIR$/download_model/downloader.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/download_model/ftp_file_downloader.py" afterPath="$PROJECT_DIR$/download_model/ftp_file_downloader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/operation_model/zip_operation.py" afterPath="$PROJECT_DIR$/operation_model/zip_operation.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample_request.py" afterPath="$PROJECT_DIR$/sample_request.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -25,7 +21,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/portal$sample.coverage" NAME="sample Coverage Results" MODIFIED="1517105718836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/portal$Initiate.coverage" NAME="Initiate Coverage Results" MODIFIED="1517179120061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/portal$Initiate.coverage" NAME="Initiate Coverage Results" MODIFIED="1517213804114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -39,17 +35,17 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5367751">
+    <splitter split-orientation="horizontal" split-proportion="0.518315">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="access_service.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/access_service.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="280">
-                  <caret line="20" column="1" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+                <state relative-caret-position="249">
+                  <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
                   <folding>
                     <element signature="e#1#26#0" expanded="true" />
-                    <marker date="1517179114023" expanded="true" signature="571:640" ph="..." />
+                    <marker date="1517213802143" expanded="true" signature="653:722" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -58,11 +54,11 @@
           <file leaf-file-name="sample_request.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sample_request.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="375">
-                  <caret line="25" column="139" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="139" />
+                <state relative-caret-position="288">
+                  <caret line="26" column="4" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="27" selection-end-column="31" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
-                    <marker date="1517178773608" expanded="true" signature="913:943" ph="insert into t... " />
+                    <marker date="1517180635440" expanded="true" signature="743:773" ph="insert into t... " />
                   </folding>
                 </state>
               </provider>
@@ -72,21 +68,23 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="db_handler.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="db_handler.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/database_model/db_handler.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="14">
-                  <caret line="34" column="43" lean-forward="true" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
+                <state relative-caret-position="224">
+                  <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#25#0" expanded="true" />
-                    <marker date="1517105637656" expanded="true" signature="252:419" ph="INSERT INTO station... " />
-                    <marker date="1517105637656" expanded="true" signature="447:624" ph="UPDATE stati... " />
-                    <marker date="1517105637656" expanded="true" signature="453:624" ph="INSERT INTO station... " />
-                    <marker date="1517105637656" expanded="true" signature="650:759" ph="INSERT INTO data_hub... " />
-                    <marker date="1517105637656" expanded="true" signature="650:919" ph="INSERT INTO station... " />
-                    <marker date="1517105637656" expanded="true" signature="945:1047" ph="INSERT INTO file_meta... " />
-                    <marker date="1517105637656" expanded="true" signature="945:1103" ph="INSERT INTO file_meta... " />
-                    <marker date="1517105637656" expanded="true" signature="945:1169" ph="INSERT INTO file_meta... " />
+                    <marker date="1517183631348" expanded="true" signature="252:419" ph="INSERT INTO station... " />
+                    <marker date="1517183631348" expanded="true" signature="447:624" ph="UPDATE stati... " />
+                    <marker date="1517183631348" expanded="true" signature="453:624" ph="INSERT INTO station... " />
+                    <marker date="1517183631348" expanded="true" signature="650:759" ph="INSERT INTO data_hub... " />
+                    <marker date="1517183631348" expanded="true" signature="650:919" ph="INSERT INTO station... " />
+                    <marker date="1517183631348" expanded="true" signature="945:1047" ph="INSERT INTO file_meta... " />
+                    <marker date="1517183631348" expanded="true" signature="945:1103" ph="INSERT INTO file_meta... " />
+                    <marker date="1517183631348" expanded="true" signature="945:1169" ph="INSERT INTO file_meta... " />
+                    <marker date="1517183631348" expanded="true" signature="1211:1332" ph="INSERT INTO file_meta... " />
+                    <marker date="1517183631348" expanded="true" signature="1433:1499" ph="UPDATE file_... " />
                   </folding>
                 </state>
               </provider>
@@ -96,7 +94,7 @@
             <entry file="file://$PROJECT_DIR$/model/file.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="240">
-                  <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+                  <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -105,8 +103,8 @@
           <file leaf-file-name="ftp_file_downloader.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/download_model/ftp_file_downloader.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+                <state relative-caret-position="165">
+                  <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -114,11 +112,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ftp_helper.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ftp_helper.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/common/ftp_helper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="381">
-                  <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+                <state relative-caret-position="354">
+                  <caret line="53" column="40" lean-forward="false" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="40" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -149,6 +147,8 @@
       <find>insert_solar_dummy</find>
       <find>dir</find>
       <find>S</find>
+      <find>downloading</find>
+      <find>[</find>
     </findStrings>
     <replaceStrings>
       <replace>self.solar</replace>
@@ -215,10 +215,10 @@
         <option value="$PROJECT_DIR$/mapper_model/file_mapper.py" />
         <option value="$PROJECT_DIR$/constants/constants.py" />
         <option value="$PROJECT_DIR$/model/file.py" />
-        <option value="$PROJECT_DIR$/database_model/db_handler.py" />
         <option value="$PROJECT_DIR$/download_model/ftp_file_downloader.py" />
-        <option value="$PROJECT_DIR$/common/ftp_helper.py" />
         <option value="$PROJECT_DIR$/sample_request.py" />
+        <option value="$PROJECT_DIR$/database_model/db_handler.py" />
+        <option value="$PROJECT_DIR$/common/ftp_helper.py" />
         <option value="$PROJECT_DIR$/access_service.py" />
       </list>
     </option>
@@ -501,13 +501,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="951" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893157" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.502442" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25330132" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20288116" sideWeight="0.497558" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33493397" sideWeight="0.497558" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893157" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13675214" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -606,7 +605,7 @@
           <caret line="42" column="15" lean-forward="false" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
           <folding>
             <element signature="e#1#26#0" expanded="true" />
-            <marker date="1517179114023" expanded="true" signature="571:640" ph="..." />
+            <marker date="1517213802143" expanded="true" signature="653:722" ph="..." />
           </folding>
         </state>
       </provider>
@@ -617,7 +616,7 @@
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding>
             <element signature="e#1#26#0" expanded="true" />
-            <marker date="1517179114023" expanded="true" signature="571:640" ph="..." />
+            <marker date="1517213802143" expanded="true" signature="653:722" ph="..." />
           </folding>
         </state>
       </provider>
@@ -628,14 +627,16 @@
           <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
-            <marker date="1517105637656" expanded="true" signature="252:419" ph="INSERT INTO station... " />
-            <marker date="1517105637656" expanded="true" signature="447:624" ph="UPDATE stati... " />
-            <marker date="1517105637656" expanded="true" signature="453:624" ph="INSERT INTO station... " />
-            <marker date="1517105637656" expanded="true" signature="650:759" ph="INSERT INTO data_hub... " />
-            <marker date="1517105637656" expanded="true" signature="650:919" ph="INSERT INTO station... " />
-            <marker date="1517105637656" expanded="true" signature="945:1047" ph="INSERT INTO file_meta... " />
-            <marker date="1517105637656" expanded="true" signature="945:1103" ph="INSERT INTO file_meta... " />
-            <marker date="1517105637656" expanded="true" signature="945:1169" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="252:419" ph="INSERT INTO station... " />
+            <marker date="1517183631348" expanded="true" signature="447:624" ph="UPDATE stati... " />
+            <marker date="1517183631348" expanded="true" signature="453:624" ph="INSERT INTO station... " />
+            <marker date="1517183631348" expanded="true" signature="650:759" ph="INSERT INTO data_hub... " />
+            <marker date="1517183631348" expanded="true" signature="650:919" ph="INSERT INTO station... " />
+            <marker date="1517183631348" expanded="true" signature="945:1047" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="945:1103" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="945:1169" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="1211:1332" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="1433:1499" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -913,47 +914,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sample_request.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="26" column="4" lean-forward="false" selection-start-line="26" selection-start-column="4" selection-end-line="27" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <marker date="1517180635440" expanded="true" signature="743:773" ph="insert into t... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/file.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database_model/db_handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="34" column="43" lean-forward="true" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <marker date="1517105637656" expanded="true" signature="252:419" ph="INSERT INTO station... " />
-            <marker date="1517105637656" expanded="true" signature="447:624" ph="UPDATE stati... " />
-            <marker date="1517105637656" expanded="true" signature="453:624" ph="INSERT INTO station... " />
-            <marker date="1517105637656" expanded="true" signature="650:759" ph="INSERT INTO data_hub... " />
-            <marker date="1517105637656" expanded="true" signature="650:919" ph="INSERT INTO station... " />
-            <marker date="1517105637656" expanded="true" signature="945:1047" ph="INSERT INTO file_meta... " />
-            <marker date="1517105637656" expanded="true" signature="945:1103" ph="INSERT INTO file_meta... " />
-            <marker date="1517105637656" expanded="true" signature="945:1169" ph="INSERT INTO file_meta... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sample_request.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="139" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="139" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <marker date="1517178773608" expanded="true" signature="913:943" ph="insert into t... " />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/download_model/ftp_file_downloader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -962,21 +945,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/common/ftp_helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+        <state relative-caret-position="354">
+          <caret line="53" column="40" lean-forward="false" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="40" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/database_model/db_handler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <marker date="1517183631348" expanded="true" signature="252:419" ph="INSERT INTO station... " />
+            <marker date="1517183631348" expanded="true" signature="447:624" ph="UPDATE stati... " />
+            <marker date="1517183631348" expanded="true" signature="453:624" ph="INSERT INTO station... " />
+            <marker date="1517183631348" expanded="true" signature="650:759" ph="INSERT INTO data_hub... " />
+            <marker date="1517183631348" expanded="true" signature="650:919" ph="INSERT INTO station... " />
+            <marker date="1517183631348" expanded="true" signature="945:1047" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="945:1103" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="945:1169" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="1211:1332" ph="INSERT INTO file_meta... " />
+            <marker date="1517183631348" expanded="true" signature="1433:1499" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/access_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="20" column="1" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+        <state relative-caret-position="249">
+          <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
           <folding>
             <element signature="e#1#26#0" expanded="true" />
-            <marker date="1517179114023" expanded="true" signature="571:640" ph="..." />
+            <marker date="1517213802143" expanded="true" signature="653:722" ph="..." />
           </folding>
         </state>
       </provider>

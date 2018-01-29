@@ -26,6 +26,13 @@ query_insert_files = 'INSERT ' \
                      'ON CONFLICT (path) DO UPDATE ' \
                      'SET modify_date = file_meta.modify_date;'
 
+query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
+                              'SELECT path FROM file_meta WHERE is_downloaded = {0};'.format(False)
+
+query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
+
+query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE is_downloaded =(%s);'
+
 
 def insert_files(files: [File]):
     print('Inserting files')
@@ -34,6 +41,34 @@ def insert_files(files: [File]):
         with conn.cursor() as curs:
             data = [file.to_tuple() for file in files]
             extras.execute_values(curs, query_insert_files, data, template=None, page_size=100)
+
+
+def select_files(batch_operation):
+    print('Fetching files', batch_operation)
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            curs.execute(query_select_files_part_one)
+            while True:
+                curs.execute(query_select_files_part_two)
+                rows = curs.fetchall()
+
+                print('Fetching files', rows)
+
+                if not rows:
+                    break
+
+                for row in rows:
+                    batch_operation(row[0])
+
+
+def update_files():
+    print('Updating files')
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            data = True, False
+            curs.execute(query_update_files, data)
 
 
 def insert_stations(stations):

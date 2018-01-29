@@ -23,12 +23,9 @@ from database_model.db_handler import insert_files
 
 
 def main():
-    path = '/pub/CDC/observations_germany/climate/10_minutes/air_temperature/historical/10minutenwerte_tu_00003_19930428_19991231_hist.zip'
-    # list_of_files = FTPHelper().fetch_all_meta_information(path=path)
-    # insert_files(list_of_files)
-
-    downloader = DownloaderFactory.get_downloader(constants.DOWNLOADER_FTP)
-
+    path = '/pub/CDC/observations_germany/climate/'
+    list_of_files = FTPHelper().fetch_all_meta_information(path=path)
+    insert_files(list_of_files)
 
 main()
 

@@ -14,7 +14,10 @@ class FTPHelper:
         self.username = 'anonymous'
         self.password = 'anonymous'
 
-    def fetch_all_meta_information(self, path='/pub/CDC/observations_germany/climate/'):
+    def fetch_all_meta_information(self, path=None):
+        if path is None:
+            return []
+
         ftp = FTP(self.server)
         ftp.login(self.username, self.password)
         ftp.cwd(path)
@@ -29,7 +32,7 @@ class FTPHelper:
             else:
                 file = File('{0}{1}'.format(path, folder), meta_information)
                 files.append(file)
-
+        ftp.quit()
         return files
 
     def download_file(self, path):
@@ -48,6 +51,7 @@ class FTPHelper:
             with open(path_with_filename, 'wb') as local_file:
                 ftp.retrbinary('RETR ' + filename, local_file.write, 1024)
                 local_file.close()
+                print('File downloaded')
         else:
             print('File already downloaded')
         ftp.quit()

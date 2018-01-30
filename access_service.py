@@ -5,9 +5,9 @@ from download_model.downloader_factory import DownloaderFactory
 from common.ftp_helper import FTPHelper
 from mapper_model.mapper_factory import MapperFactory
 from parser_model.parser_factory import ParserFactory
-from database_model.db_handler import insert_solar_data, select_files, update_files, insert_files
+from database_model.db_handler import insert_solar_data, select_files, update_file, insert_files, select_files_simple
 from operation_model.operation_factory import OperationFactory
-
+import asyncio
 # def perform_simple_operation(factory):
 #     path = '/pub/CDC/observations_germany/climate/hourly/solar/ST_Stundenwerte_Beschreibung_Stationen.txt'
 #     server_path, separator, filename = path.rpartition('/')
@@ -49,30 +49,13 @@ def perform_zip_operation():
             print('Exception: {0}'.format(e))
 
     try:
-        # path = '/pub/CDC/observations_germany/climate/'
-        # list_of_files = FTPHelper().fetch_all_meta_information(path=path)
-        # insert_files(list_of_files)
-
         select_files(batch_operation=batch_operation)
-        update_files()
     except Exception as e:
         print('Exception: {0}'.format(e))
-
-    #     mapper = MapperFactory.get_mapper(constants.MAPPER_SOLAR)
-    #     parser = ParserFactory.get_parser(constants.PARSER_SIMPLE)
-
-    #     operation = OperationFactory.get_operation(constants.OPERATION_ZIP)
-    #     items = operation.perform_operation(path=path, mapper=mapper, parser=parser, downloader=downloader)
-    #
-    #     try:
-    #         insert_solar_data(items)
-    #     except Exception as e:
-    #         print('exception {0}'.format(e))
     pass
 
-
 def main():
-    perform_zip_operation()
+    perform_async_operation()
     pass
 
 main()

@@ -31,7 +31,9 @@ query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
 
 query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
 
-query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE is_downloaded =(%s);'
+query_select_files_simple = 'SELECT path FROM file_meta LIMIT 5;'
+
+query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 
 
 def insert_files(files: [File]):
@@ -62,12 +64,23 @@ def select_files(batch_operation):
                     batch_operation(row[0])
 
 
-def update_files():
+def select_files_simple():
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            curs.execute(query_select_files_part_one)
+            while True:
+                curs.execute(query_select_files_simple)
+                rows = curs.fetchall()
+                return [row[0] for row in rows]
+
+
+def update_file(path):
     print('Updating files')
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:
-            data = True, False
+            data = True, path
             curs.execute(query_update_files, data)
 
 

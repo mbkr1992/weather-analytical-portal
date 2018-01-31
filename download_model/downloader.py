@@ -8,3 +8,7 @@ class Downloader(ABC):
     @abstractmethod
     def download(self, path):
         pass
+
+    @abstractmethod
+    def download_meta(self, path):
+        pass

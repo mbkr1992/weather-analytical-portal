@@ -3,6 +3,9 @@ from ftplib import FTP
 from constants.constants import DOWNLOAD_FOLDER
 from pathlib import Path
 from download_model.downloader import Downloader
+from model.file import File
+import time
+import pathlib
 
 
 class FTPAsyncFileDownloader(Downloader):
@@ -13,45 +16,29 @@ class FTPAsyncFileDownloader(Downloader):
         self.username = 'anonymous'
         self.password = 'anonymous'
 
-    async def download(self, path):
+    async def download(self, prefix_path, file_path):
         async with aioftp.ClientSession(host=self.server, user=self.username, password=self.password) as client:
-            # local_path = DOWNLOAD_FOLDER + path
-            file_path, separator, filename = path.rpartition('/')
+            await client.change_directory(prefix_path)
 
+            path_for_download = pathlib.PurePosixPath(file_path.replace(prefix_path, ''))
 
-            print('Change directory {0}, {1}, {2}'.format(file_path, separator, filename))
-            # await client.change_directory(path='/pub/CDC/observations_germany/climate/1_minute/precipitation/historical/2017')
+            _, _, filename = file_path.rpartition('/')
+            path_for_destination = DOWNLOAD_FOLDER + file_path.replace(filename, '')
 
-            source = '/pub/CDC/observations_germany/climate/'
-            destination = 'downloads/pub/CDC/observations_germany/climate/'
-            # for p, info in (await client.list()):
-            #     print('stats for client:', p, info)
-            try:
-                result2 = await client.download(source=source, destination=destination, write_into='true')
-                print('Download file {0}'.format(1))
-            except Exception as e:
-                print('Exception {0}'.format(e))
+            if not os.path.isfile(file_path):
+                path = Path(path_for_destination)
+                path.mkdir(parents=True, exist_ok=True)
 
+            await client.download(source=path_for_download, destination=path_for_destination, write_into=False)
 
+    async def download_meta(self, prefix_path):
+        async with aioftp.ClientSession(host=self.server, user=self.username, password=self.password) as client:
+            await client.change_directory(prefix_path)
+            list = await client.list(recursive=True)
 
-        # ftp = FTP(self.server)
-        # ftp.login(self.username, self.password)
-        # server_path, separator, filename = path.rpartition('/')
-        # ftp.cwd(server_path)
-        #
-        # path_without_filename = DOWNLOAD_FOLDER + server_path
-        # path_with_filename = DOWNLOAD_FOLDER + server_path + separator + filename
-        #
-        # if not os.path.isfile(path_with_filename):
-        #     path = Path(path_without_filename)
-        #     path.mkdir(parents=True, exist_ok=True)
-        #
-        #     with open(path_with_filename, 'wb') as local_file:
-        #         ftp.retrbinary('RETR ' + filename, local_file.write, 1024)
-        #         local_file.close()
-        #         print('File downloaded')
-        # else:
-        #     print('File already downloaded')
-        # ftp.quit()
+            def to_file(file_tuple):
+                path, meta_information = file_tuple
+                full_path = '{0}{1}'.format(prefix_path, path)
+                return File(filename=path.name, path=full_path, meta_information=meta_information)
 
-
+            return [to_file(item) for item in list if item[1]['type'] == 'file']

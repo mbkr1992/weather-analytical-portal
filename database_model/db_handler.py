@@ -21,7 +21,7 @@ query_insert_solar = 'INSERT ' \
                      'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);'
 
 query_insert_files = 'INSERT ' \
-                     'INTO file_meta (path, modify_date) ' \
+                     'INTO file_meta (filename, path, modify_date) ' \
                      'VALUES %s ' \
                      'ON CONFLICT (path) DO UPDATE ' \
                      'SET modify_date = file_meta.modify_date;'
@@ -31,7 +31,7 @@ query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
 
 query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
 
-query_select_files_simple = 'SELECT path FROM file_meta LIMIT 5;'
+query_select_files_simple = 'SELECT path FROM file_meta;'
 
 query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 

@@ -31,7 +31,7 @@ query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
 
 query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
 
-query_select_files_simple = 'SELECT path FROM file_meta;'
+query_select_files_simple = 'SELECT path FROM file_meta where is_downloaded=False;'
 
 query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 
@@ -76,7 +76,7 @@ def select_files_simple():
 
 
 def update_file(path):
-    print('Updating files')
+    # print('Updating files')
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:

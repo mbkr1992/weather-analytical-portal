@@ -42,17 +42,22 @@ def perform_async_operation():
         insert_files(file_paths)
 
     async def download_file_operation(semaphore, prefix_path, file_path):
-        await semaphore.acquire()
+        try:
+            await semaphore.acquire()
 
-        # start downloading the files here
-        downloader = DownloaderFactory.get_downloader(constants.DOWNLOADER_FTP_ASYNC)
-        await downloader.download(prefix_path, file_path)
-        update_file(file_path)
-        semaphore.release()
+            # start downloading the files here
+            downloader = DownloaderFactory.get_downloader(constants.DOWNLOADER_FTP_ASYNC)
+            await downloader.download(prefix_path, file_path)
+            update_file(file_path)
+
+        except Exception as e:
+            print('Exception 1 {0} on path {1}'.format(e.strerror, file_path))
+        finally:
+            semaphore.release()
 
         # print('File downloaded', file_path);
 
-
+    print('Operation One start');
     # try:
     # paths = [] #select_files_simple()
     prefix_path = '/pub/CDC/observations_germany/climate/'
@@ -63,7 +68,8 @@ def perform_async_operation():
     sem = asyncio.Semaphore(value=10)
 
     # Fetch all the non-downloaded file paths from database
-    paths_to_download = select_files_simple();
+    paths_to_download = select_files_simple()
+    print('Fetching from database {0}'.format(len(paths_to_download)));
     download_operations = [download_file_operation(sem, prefix_path, file_path) for file_path in paths_to_download]
 
     loop = asyncio.get_event_loop()

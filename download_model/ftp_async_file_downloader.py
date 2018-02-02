@@ -25,11 +25,14 @@ class FTPAsyncFileDownloader(Downloader):
             _, _, filename = file_path.rpartition('/')
             path_for_destination = DOWNLOAD_FOLDER + file_path.replace(filename, '')
 
-            if not os.path.isfile(file_path):
-                path = Path(path_for_destination)
-                path.mkdir(parents=True, exist_ok=True)
+            try:
+                if not os.path.isfile(file_path):
+                    path = Path(path_for_destination)
+                    path.mkdir(parents=True, exist_ok=True)
 
-            await client.download(source=path_for_download, destination=path_for_destination, write_into=False)
+                await client.download(source=path_for_download, destination=path_for_destination, write_into=False)
+            except Exception as e:
+                print('Exception 2 {0} on path {1}'.format(e, file_path))
 
     async def download_meta(self, prefix_path):
         async with aioftp.ClientSession(host=self.server, user=self.username, password=self.password) as client:

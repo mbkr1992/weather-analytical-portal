@@ -21,16 +21,17 @@ query_insert_solar = 'INSERT ' \
                      'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);'
 
 query_insert_files = 'INSERT ' \
-                     'INTO file_meta (filename, path, modify_date) ' \
+                     'INTO file_meta as file (filename, path, modify_date) ' \
                      'VALUES %s ' \
                      'ON CONFLICT (path) DO UPDATE ' \
-                     'SET modify_date = file_meta.modify_date;'
+                     'SET modify_date=excluded.modify_date, is_downloaded=False ' \
+                     'WHERE file.modify_date < excluded.modify_Date;'
 
-query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
-                              'SELECT path FROM file_meta WHERE is_downloaded = {0};'.format(False)
+# query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
+#                               'SELECT path FROM file_meta WHERE is_downloaded = {0};'.format(False)
 
-query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
-
+# query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
+#
 query_select_files_simple = 'SELECT path FROM file_meta where is_downloaded=False;'
 
 query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
@@ -44,35 +45,13 @@ def insert_files(files: [File]):
             data = [file.to_tuple() for file in files]
             extras.execute_values(curs, query_insert_files, data, template=None, page_size=100)
 
-
-def select_files(batch_operation):
-    print('Fetching files', batch_operation)
-    with connect(DBN) as conn:
-        register(connection=conn)
-        with conn.cursor() as curs:
-            curs.execute(query_select_files_part_one)
-            while True:
-                curs.execute(query_select_files_part_two)
-                rows = curs.fetchall()
-
-                print('Fetching files', rows)
-
-                if not rows:
-                    break
-
-                for row in rows:
-                    batch_operation(row[0])
-
-
 def select_files_simple():
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:
-            curs.execute(query_select_files_part_one)
-            while True:
-                curs.execute(query_select_files_simple)
-                rows = curs.fetchall()
-                return [row[0] for row in rows]
+            curs.execute(query_select_files_simple)
+            rows = curs.fetchall()
+            return [row[0] for row in rows]
 
 
 def update_file(path):

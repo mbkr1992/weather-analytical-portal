@@ -6,7 +6,7 @@ from itertools import islice
 from common.ftp_helper import FTPHelper
 from mapper_model.mapper_factory import MapperFactory
 from parser_model.parser_factory import ParserFactory
-from database_model.db_handler import insert_solar_data, select_files, update_file, insert_files, select_files_simple
+from database_model.db_handler import insert_solar_data, update_file, insert_files, select_files_simple
 from operation_model.operation_factory import OperationFactory
 import asyncio
 import time
@@ -58,55 +58,30 @@ def perform_async_operation():
         # print('File downloaded', file_path);
 
     print('Operation One start');
-    # try:
-    # paths = [] #select_files_simple()
-    prefix_path = '/pub/CDC/observations_germany/climate/'
-    # loop = asyncio.get_event_loop()
-    # loop.run_until_complete(fetch_path_operation(prefix_path))
-    # print('Operation One done');
-    start_time = time.time()
-    sem = asyncio.Semaphore(value=10)
+    try:
+        # Fetch all the paths from the duetsche service
+        prefix_path = '/pub/CDC/observations_germany/climate/daily/solar/'
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(fetch_path_operation(prefix_path))
+        # loop.close()
+        print('Operation One done');
 
-    # Fetch all the non-downloaded file paths from database
-    paths_to_download = select_files_simple()
-    print('Fetching from database {0}'.format(len(paths_to_download)));
-    download_operations = [download_file_operation(sem, prefix_path, file_path) for file_path in paths_to_download]
 
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(asyncio.wait(download_operations))
-    loop.close()
+        # Fetch all the non-downloaded file paths from database
+        paths_to_download = select_files_simple()
+        sem = asyncio.Semaphore(value=10)
+        download_operations = [download_file_operation(sem, prefix_path, file_path) for file_path in paths_to_download]
 
-    print('Operation Two done');
-    print('{0} seconds'.format(time.time() - start_time))
+        # loop = asyncio.get_event_loop()
+        loop.run_until_complete(asyncio.wait(download_operations))
+        loop.close()
 
-    # except Exception as e:
-    #     print('Exception: {0}'.format(e))
+    except Exception as e:
+        print('Exception: {0}'.format(e))
     pass
-
-def perform_random():
-    seq = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    limit = 10
-    print([seq[i::limit] for i in range(limit)])
-
-
-# def perform_operation():
-#     async def batch_operation(the_path):
-#         try:
-#             downloader = DownloaderFactory.get_downloader(constants.DOWNLOADER_FTP_ASYNC)
-#             await downloader.download(the_path)
-#             # update_file(the_path)
-#         except Exception as ee:
-#             print('Exception: {0}'.format(ee))
-
- # limit_of_threads = 10
-    # list_of_sub_operations = [download_operations[i::10] for i in range(limit_of_threads)]
-    #
-    # for sub_operations in list_of_sub_operations:
 
 
 def main():
-
     perform_async_operation()
-    # perform_random()
 
 main()

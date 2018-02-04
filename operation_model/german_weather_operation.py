@@ -5,7 +5,6 @@ from download_model.downloader_factory import DownloaderFactory
 from parser_model.parser_factory import ParserFactory
 from mapper_model.mapper_factory import MapperFactory
 from common.helper import Helper
-
 import asyncio
 
 
@@ -33,15 +32,15 @@ class GermanWeatherOperation(Operation):
             if paths_to_parse:
                 for path in paths_to_parse:
                     try:
-                        print('Path file {0}'.format(path))
                         if not Helper.is_path_parseable(path=path):
                             continue
 
                         extracted_path, unzip_file = Helper.unzip(path)
                         parser = ParserFactory.get_parser_for_path(path)
                         mapper = MapperFactory.get_mapper_for_path(path)
-
                         items = parser.parse(path=unzip_file, mapper=mapper)
+
+                        print('Path file {0}, items: {1}'.format(path, len(items)))
                         mapper.insert_items(items)
                         mapper.update_file_parsed_flag(path)
                         Helper.remove_directory(extracted_path)

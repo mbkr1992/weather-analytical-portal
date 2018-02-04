@@ -1,4 +1,4 @@
-from mapper_model.kl_mappers.kl_mapper import KlMapper
+from mapper_model.kl.kl_mapper import KlMapper
 from model.kl import Kl
 from datetime import datetime
 from constants.constants import DATABASE_CONNECTION

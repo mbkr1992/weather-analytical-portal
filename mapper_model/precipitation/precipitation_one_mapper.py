@@ -1,4 +1,4 @@
-from mapper_model.precipitation_mappers.precipitation_mapper import PrecipitationMapper
+from mapper_model.precipitation.precipitation_mapper import PrecipitationMapper
 from model.precipitation import Precipitation
 from datetime import datetime
 from constants.constants import DATABASE_CONNECTION

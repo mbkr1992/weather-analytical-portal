@@ -1,4 +1,4 @@
-from mapper_model.solar_mappers.solar_mapper import SolarMapper
+from mapper_model.solar.solar_mapper import SolarMapper
 from model.solar import Solar
 from datetime import datetime
 

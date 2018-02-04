@@ -48,6 +48,18 @@ class Helper:
         return '/daily/kl/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_more_precip_daily_file(path):
+        return '/daily/more_precip/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_soil_temperature_daily(path):
+        return '/daily/soil_temperature/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_water_equiv_daily(path):
+        return '/daily/water_equiv/' in path and path.endswith('.zip')
+
+    @staticmethod
     def is_path_parseable(path):
         return not (path.endswith('.pdf')
                     or path.endswith('.txt')

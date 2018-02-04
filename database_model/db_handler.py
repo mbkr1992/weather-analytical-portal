@@ -24,43 +24,47 @@ query_insert_files = 'INSERT ' \
                      'INTO file_meta as file (filename, path, modify_date) ' \
                      'VALUES %s ' \
                      'ON CONFLICT (path) DO UPDATE ' \
-                     'SET modify_date=excluded.modify_date, is_downloaded=False ' \
+                     'SET modify_date=excluded.modify_date, is_downloaded=False, is_parsed=False ' \
                      'WHERE file.modify_date < excluded.modify_Date;'
-
-# query_select_files_part_one = 'DECLARE super_cursor BINARY CURSOR FOR ' \
-#                               'SELECT path FROM file_meta WHERE is_downloaded = {0};'.format(False)
-
-# query_select_files_part_two = 'FETCH 1000 FROM super_cursor;'
 #
-query_select_files_simple = 'SELECT path FROM file_meta where is_downloaded=False;'
+query_select_path_of_non_downloaded_files = 'SELECT path FROM file_meta where is_downloaded=False;'
+query_select_path_of_non_parsed_files = "SELECT path FROM file_meta where is_parsed=False and filename LIKE '%.zip' LIMIT 1000"
 
-query_update_files = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
+query_update_file_download_flag = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 
 
 def insert_files(files: [File]):
-    print('Inserting files')
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:
             data = [file.to_tuple() for file in files]
             extras.execute_values(curs, query_insert_files, data, template=None, page_size=100)
 
-def select_files_simple():
+
+def select_non_downloaded_files():
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:
-            curs.execute(query_select_files_simple)
+            curs.execute(query_select_path_of_non_downloaded_files)
             rows = curs.fetchall()
             return [row[0] for row in rows]
 
 
-def update_file(path):
-    # print('Updating files')
+def select_non_parsed_files():
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            curs.execute(query_select_path_of_non_parsed_files)
+            rows = curs.fetchall()
+            return [row[0] for row in rows]
+
+
+def update_file_download_flag(path):
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:
             data = True, path
-            curs.execute(query_update_files, data)
+            curs.execute(query_update_file_download_flag, data)
 
 
 def insert_stations(stations):

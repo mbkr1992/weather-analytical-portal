@@ -1,7 +1,4 @@
 from abc import ABC, abstractmethod
-from download_model.downloader import Downloader
-from parser_model.parser import Parser
-from mapper_model.mapper import Mapper
 
 
 class Operation(ABC):
@@ -13,5 +10,5 @@ class Operation(ABC):
         self.password = 'anonymous'
 
     @abstractmethod
-    def perform_operation(self, downloader: Downloader, parser: Parser, mapper: Mapper):
+    def perform_operation(self, path):
         pass

@@ -1,8 +1,9 @@
 from constants import constants
 from parser_model.file_soil_station_parser import FileSoilStationParser
 from parser_model.simple_parser import SimpleParser
+from parser_model.empty_parser import EmptyParser
 from parser_model.station_parser import StationParser
-
+from common.helper import Helper
 
 class ParserFactory:
     def __init__(self):
@@ -16,4 +17,12 @@ class ParserFactory:
             return StationParser()
         elif identifier == constants.PARSER_SIMPLE:
             return SimpleParser()
-        return None
+        return EmptyParser()
+
+    @staticmethod
+    def get_parser_for_path(path):
+        if Helper.is_solar_daily_file(path) \
+                or Helper.is_precipitation_one_file(path) \
+                or Helper.is_kl_daily_file(path):
+            return SimpleParser()
+        return EmptyParser()

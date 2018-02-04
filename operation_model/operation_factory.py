@@ -1,5 +1,5 @@
+
 from constants import constants
-from operation_model.zip_operation import ZipOperation
 from operation_model.txt_operation import TxtOperation
 
 
@@ -10,6 +10,6 @@ class OperationFactory:
     @staticmethod
     def get_operation(identifier):
         if identifier == constants.OPERATION_ZIP:
-            return ZipOperation()
+            return Helper()
         elif identifier == constants.OPERATION_TEXT:
             return TxtOperation()

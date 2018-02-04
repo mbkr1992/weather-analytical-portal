@@ -1,18 +1,17 @@
-from abc import ABC, abstractmethod
+from mapper_model.mapper import Mapper
+from model.station import Station
 
 
-class Mapper(ABC):
+class EmptyMapper(Mapper):
+
     def __init__(self):
         super().__init__()
 
-    @abstractmethod
     def map(self, item):
-        pass
+        return None
 
-    @abstractmethod
     def insert_items(self, items):
         pass
 
-    @abstractmethod
     def update_file_parsed_flag(self, path):
         pass

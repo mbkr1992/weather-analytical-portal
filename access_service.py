@@ -5,7 +5,7 @@ from download_model.downloader_factory import DownloaderFactory
 from common.ftp_helper import FTPHelper
 from mapper_model.mapper_factory import MapperFactory
 from parser_model.parser_factory import ParserFactory
-from database_model.db_handler import insert_solar_data, select_files, update_file, insert_files, select_files_simple
+from database_model.db_handler import insert_solar_data, select_files, update_file_download_flag, insert_files, select_non_downloaded_files
 from operation_model.operation_factory import OperationFactory
 import asyncio
 # def perform_simple_operation(factory):

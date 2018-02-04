@@ -2,27 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fcfb57f-3740-444c-825f-1e46a7dc9c52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/more_precip/more_precip_daily_mapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/more_precip/more_precip_mapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/soil_temperature/soil_temperature_daily_mapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/soil_temperature/soil_temperature_mapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_daily_mapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_mapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/more_precip.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/soil_temperature.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/water_equiv.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/kl_mappers/kl_daily_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/kl/kl_daily_mapper.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/kl_mappers/kl_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/kl/kl_mapper.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/precipitation_mappers/precipitation_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/precipitation/precipitation_mapper.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/precipitation_mappers/precipitation_one_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/precipitation/precipitation_one_mapper.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/solar_mappers/solar_daily_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/solar/solar_daily_mapper.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/solar_mappers/solar_hourly_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/solar/solar_hourly_mapper.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/mapper_model/solar_mappers/solar_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/solar/solar_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/air_temperature/air_temperature_hourly_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/air_temperature/air_temperature_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/cloudiness/cloudiness_hourly_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/cloudiness/cloudiness_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/wind/wind_hourly_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/wind/wind_mapper.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/air_temperature.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/cloudiness.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/visibility.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/wind.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/helper.py" afterPath="$PROJECT_DIR$/common/helper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database_model/db_handler.py" afterPath="$PROJECT_DIR$/database_model/db_handler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper_model/mapper_factory.py" afterPath="$PROJECT_DIR$/mapper_model/mapper_factory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/operation_model/german_weather_operation.py" afterPath="$PROJECT_DIR$/operation_model/german_weather_operation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper_model/more_precip/more_precip_mapper.py" afterPath="$PROJECT_DIR$/mapper_model/more_precip/more_precip_mapper.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_model/parser_factory.py" afterPath="$PROJECT_DIR$/parser_model/parser_factory.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -36,7 +29,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/portal$sample.coverage" NAME="sample Coverage Results" MODIFIED="1517749198937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/portal$sample.coverage" NAME="sample Coverage Results" MODIFIED="1517755902712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/portal$Initiate.coverage" NAME="sample Coverage Results" MODIFIED="1517496876401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
@@ -51,89 +44,30 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.53505534">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="german_weather_operation.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/operation_model/german_weather_operation.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#47#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="water_equiv_daily_mapper.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_daily_mapper.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="182">
-                  <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#72#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="water_equiv_mapper.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_mapper.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="120">
-                  <caret line="8" column="68" lean-forward="false" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="68" />
-                  <folding>
-                    <element signature="e#0#38#0" expanded="true" />
-                    <marker date="1517748266069" expanded="true" signature="194:466" ph="INSERT INTO data_hub... " />
-                    <marker date="1517748266069" expanded="true" signature="194:618" ph="INSERT INTO data_hub... " />
-                    <marker date="1517748266069" expanded="true" signature="655:708" ph="UPDATE file_... " />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="db_handler.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/database_model/db_handler.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
-                  <caret line="30" column="125" lean-forward="false" selection-start-line="30" selection-start-column="125" selection-end-line="30" selection-end-column="125" />
-                  <folding>
-                    <element signature="e#0#25#0" expanded="true" />
-                    <marker date="1517748498833" expanded="true" signature="252:419" ph="INSERT INTO station... " />
-                    <marker date="1517748498833" expanded="true" signature="447:624" ph="UPDATE stati... " />
-                    <marker date="1517748498833" expanded="true" signature="650:919" ph="INSERT INTO data_hub... " />
-                    <marker date="1517748498833" expanded="true" signature="945:1184" ph="INSERT INTO file_meta... " />
-                    <marker date="1517748498833" expanded="true" signature="945:1271" ph="INSERT INTO file_meta... " />
-                    <marker date="1517748498833" expanded="true" signature="945:1294" ph="INSERT INTO file_meta... " />
-                    <marker date="1517748498833" expanded="true" signature="1344:1396" ph="SELECT path file_meta" />
-                    <marker date="1517748498833" expanded="true" signature="1440:1488" ph="SELECT path file_meta" />
-                    <marker date="1517748498833" expanded="true" signature="1440:1506" ph="SELECT path file_meta" />
-                    <marker date="1517748498833" expanded="true" signature="1440:1514" ph="SELECT path file_meta" />
-                    <marker date="1517748498833" expanded="true" signature="1440:1524" ph="SELECT path file_meta" />
-                    <marker date="1517748498833" expanded="true" signature="1562:1619" ph="UPDATE file_... " />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="water_equiv.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/model/water_equiv.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="330">
-                  <caret line="22" column="27" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="27" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="german_weather_operation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/operation_model/german_weather_operation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="34" column="67" lean-forward="false" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="67" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="visibility.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/model/visibility.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -167,14 +101,18 @@
       <find>POS</find>
       <find>953.77</find>
       <find>zip</find>
+      <find>more_precip</find>
       <find>soil_temperature</find>
+      <find>water_equiv</find>
       <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>self.solar</replace>
       <replace>kl</replace>
-      <replace>soil_temperature</replace>
       <replace>water_equiv</replace>
+      <replace>soil_temperature</replace>
+      <replace>cloudiness</replace>
+      <replace>wind</replace>
       <replace>kl_</replace>
     </replaceStrings>
   </component>
@@ -194,17 +132,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/operation/operation.py" />
-        <option value="$PROJECT_DIR$/download_model/concrete_downloader_factory.py" />
-        <option value="$PROJECT_DIR$/download_model/downloader_factory.py" />
-        <option value="$PROJECT_DIR$/parser_model/concrete_parser_factory.py" />
-        <option value="$PROJECT_DIR$/operation_model/txt_operation.py" />
-        <option value="$PROJECT_DIR$/constants/constants.py" />
-        <option value="$PROJECT_DIR$/operation_model/operation_factory.py" />
-        <option value="$PROJECT_DIR$/access_service.py" />
-        <option value="$PROJECT_DIR$/download_model/ftp_async_file_downloader.py" />
-        <option value="$PROJECT_DIR$/operation_model/operation.py" />
-        <option value="$PROJECT_DIR$/sample_request.py" />
         <option value="$PROJECT_DIR$/sql/important_scripts.sql" />
         <option value="$PROJECT_DIR$/operation_model/zip_operation.py" />
         <option value="$PROJECT_DIR$/parser_model/empty_parser.py" />
@@ -239,12 +166,23 @@
         <option value="$PROJECT_DIR$/mapper_model/soil_temperature/soil_temperature_mapper.py" />
         <option value="$PROJECT_DIR$/model/water_equiv.py" />
         <option value="$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_daily_mapper.py" />
-        <option value="$PROJECT_DIR$/common/helper.py" />
-        <option value="$PROJECT_DIR$/mapper_model/mapper_factory.py" />
-        <option value="$PROJECT_DIR$/parser_model/parser_factory.py" />
         <option value="$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_mapper.py" />
         <option value="$PROJECT_DIR$/database_model/db_handler.py" />
         <option value="$PROJECT_DIR$/operation_model/german_weather_operation.py" />
+        <option value="$PROJECT_DIR$/model/air_temperature.py" />
+        <option value="$PROJECT_DIR$/mapper_model/more_precip/more_precip_mapper.py" />
+        <option value="$PROJECT_DIR$/model/cloudiness.py" />
+        <option value="$PROJECT_DIR$/mapper_model/air_temperature/air_temperature_hourly_mapper.py" />
+        <option value="$PROJECT_DIR$/mapper_model/cloudiness/cloudiness_mapper.py" />
+        <option value="$PROJECT_DIR$/mapper_model/air_temperature/air_temperature_mapper.py" />
+        <option value="$PROJECT_DIR$/mapper_model/cloudiness/cloudiness_hourly_mapper.py" />
+        <option value="$PROJECT_DIR$/model/wind.py" />
+        <option value="$PROJECT_DIR$/mapper_model/wind/wind_mapper.py" />
+        <option value="$PROJECT_DIR$/mapper_model/wind/wind_hourly_mapper.py" />
+        <option value="$PROJECT_DIR$/common/helper.py" />
+        <option value="$PROJECT_DIR$/parser_model/parser_factory.py" />
+        <option value="$PROJECT_DIR$/mapper_model/mapper_factory.py" />
+        <option value="$PROJECT_DIR$/model/visibility.py" />
       </list>
     </option>
   </component>
@@ -309,18 +247,6 @@
               <item name="portal" type="b2602c69:ProjectViewProjectNode" />
               <item name="portal" type="462c0819:PsiDirectoryNode" />
               <item name="mapper_model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="portal" type="b2602c69:ProjectViewProjectNode" />
-              <item name="portal" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper_model" type="462c0819:PsiDirectoryNode" />
-              <item name="soil_temperature" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="portal" type="b2602c69:ProjectViewProjectNode" />
-              <item name="portal" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper_model" type="462c0819:PsiDirectoryNode" />
-              <item name="water_equiv" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="portal" type="b2602c69:ProjectViewProjectNode" />
@@ -525,7 +451,14 @@
       <option name="project" value="LOCAL" />
       <updated>1517602220490</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="-- added a few more mappers">
+      <created>1517750392974</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1517750392974</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -552,7 +485,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30972388" sideWeight="0.495116" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893157" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21733822" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2014652" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -582,7 +515,8 @@
     <MESSAGE value="- Refactored constants&#10;- Refactored operations&#10;- Added compatibility for timestamps" />
     <MESSAGE value="- Parallel downloading" />
     <MESSAGE value="-- Server fetches files and modifies any file necessary&#10;-- then downloads all the updated files again" />
-    <option name="LAST_COMMIT_MESSAGE" value="-- Server fetches files and modifies any file necessary&#10;-- then downloads all the updated files again" />
+    <MESSAGE value="-- added a few more mappers" />
+    <option name="LAST_COMMIT_MESSAGE" value="-- added a few more mappers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -598,90 +532,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/operation_model/txt_operation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/lib/python3.6/site-packages/aioftp/pathio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="348" column="25" lean-forward="false" selection-start-line="348" selection-start-column="20" selection-end-line="348" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/download_model/downloader_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/ftp_helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="46" column="8" lean-forward="true" selection-start-line="46" selection-start-column="8" selection-end-line="48" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/lib/python3.6/asyncio/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/lib/python3.6/asyncio/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-911">
-          <caret line="274" column="0" lean-forward="false" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda/lib/python3.6/asyncio/base_events.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
-          <caret line="431" column="26" lean-forward="false" selection-start-line="431" selection-start-column="8" selection-end-line="431" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/download_model/ftp_file_downloader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/download_model/ftp_async_file_downloader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="62" lean-forward="true" selection-start-line="43" selection-start-column="62" selection-end-line="43" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#26#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/operation_model/operation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="12" lean-forward="true" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/access_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="45" column="47" lean-forward="false" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sql/hourly_solar_description.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -717,22 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="5" column="4" lean-forward="false" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/file.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="57" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="15" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/solar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="76" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -853,16 +687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/kl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="37" column="11" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <marker date="1517705835048" expanded="true" signature="768:1305" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mapper_model/kl/kl_daily_mapper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -883,45 +707,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mapper_model/more_precip/more_precip_daily_mapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="32" lean-forward="false" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper_model/precipitation/precipitation_mapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="23" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517685859485" expanded="true" signature="196:836" ph="INSERT INTO data_hub... " />
-            <marker date="1517685859485" expanded="true" signature="873:926" ph="UPDATE file_... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/more_precip.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="27" lean-forward="false" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper_model/more_precip/more_precip_mapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517711006201" expanded="true" signature="185:550" ph="INSERT INTO data_hub... " />
-            <marker date="1517711006201" expanded="true" signature="586:639" ph="UPDATE file_... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -973,57 +763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="65" column="45" lean-forward="true" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper_model/mapper_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parser_model/parser_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="47" lean-forward="false" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/water_equiv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="27" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_mapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="68" lean-forward="false" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517748266069" expanded="true" signature="194:466" ph="INSERT INTO data_hub... " />
-            <marker date="1517748266069" expanded="true" signature="194:618" ph="INSERT INTO data_hub... " />
-            <marker date="1517748266069" expanded="true" signature="655:708" ph="UPDATE file_... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database_model/db_handler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1046,23 +785,241 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_daily_mapper.py">
+    <entry file="file://$PROJECT_DIR$/model/solar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state relative-caret-position="450">
+          <caret line="30" column="76" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/station.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/precipitation/precipitation_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1517685859485" expanded="true" signature="196:836" ph="INSERT INTO data_hub... " />
+            <marker date="1517685859485" expanded="true" signature="873:926" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/more_precip/more_precip_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="8" column="42" lean-forward="true" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1517750813962" expanded="true" signature="185:550" ph="INSERT INTO data_hub... " />
+            <marker date="1517750813962" expanded="true" signature="586:639" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/file.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="57" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/kl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="37" column="11" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding>
+            <marker date="1517705835048" expanded="true" signature="768:1305" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/air_temperature/air_temperature_hourly_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="18" column="54" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/more_precip/more_precip_daily_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
             <element signature="e#0#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/model/air_temperature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="26" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/air_temperature/air_temperature_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="7" column="27" lean-forward="true" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1517755238142" expanded="true" signature="198:220" ph="INSERT INTO data_hub... " />
+            <marker date="1517755238142" expanded="true" signature="198:457" ph="INSERT INTO data_hub... " />
+            <marker date="1517755238142" expanded="true" signature="198:568" ph="INSERT INTO data_hub... " />
+            <marker date="1517755238142" expanded="true" signature="604:657" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/cloudiness.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/cloudiness/cloudiness_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="37" lean-forward="false" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1517754101359" expanded="true" signature="193:546" ph="INSERT INTO data_hub... " />
+            <marker date="1517754101359" expanded="true" signature="582:635" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/cloudiness/cloudiness_hourly_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/water_equiv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="27" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_daily_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/water_equiv/water_equiv_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="68" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1517748266069" expanded="true" signature="194:466" ph="INSERT INTO data_hub... " />
+            <marker date="1517748266069" expanded="true" signature="194:618" ph="INSERT INTO data_hub... " />
+            <marker date="1517748266069" expanded="true" signature="655:708" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/wind/wind_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="14" column="16" lean-forward="false" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <marker date="1517768356991" expanded="true" signature="187:347" ph="INSERT INTO data_hub... " />
+            <marker date="1517768356991" expanded="true" signature="187:507" ph="INSERT INTO data_hub... " />
+            <marker date="1517768356991" expanded="true" signature="544:597" ph="UPDATE file_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/wind/wind_hourly_mapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="79" lean-forward="false" selection-start-line="17" selection-start-column="79" selection-end-line="17" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser_model/parser_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="32" column="47" lean-forward="false" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="79" column="38" lean-forward="true" selection-start-line="79" selection-start-column="38" selection-end-line="79" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapper_model/mapper_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="17" column="23" lean-forward="true" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/operation_model/german_weather_operation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+        <state relative-caret-position="166">
+          <caret line="34" column="67" lean-forward="false" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="67" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/wind.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="41" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/visibility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -27,7 +27,10 @@ class ParserFactory:
                 or Helper.is_kl_daily_file(path) \
                 or Helper.is_more_precip_daily_file(path) \
                 or Helper.is_soil_temperature_daily(path) \
-                or Helper.is_water_equiv_daily(path):
+                or Helper.is_water_equiv_daily(path)\
+                or Helper.is_air_temperature_hourly(path)\
+                or Helper.is_cloudiness_hourly(path)\
+                or Helper.is_wind_hourly(path):
 
             return SimpleParser()
         return EmptyParser()

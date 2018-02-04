@@ -7,8 +7,9 @@ from mapper_model.more_precip.more_precip_daily_mapper import MorePrecipDailyMap
 from mapper_model.soil_temperature.soil_temperature_daily_mapper import SoilTemperatureDailyMapper
 from mapper_model.kl.kl_daily_mapper import KlDailyMapper
 from mapper_model.water_equiv.water_equiv_daily_mapper import WaterEquivDailyMapper
-
-
+from mapper_model.air_temperature.air_temperature_hourly_mapper import AirTemperatureHourlyMapper
+from mapper_model.cloudiness.cloudiness_hourly_mapper import CloudinessHourlyMapper
+from mapper_model.wind.wind_hourly_mapper import WindHourlyMapper
 class MapperFactory:
     def __init__(self):
         super().__init__()
@@ -33,4 +34,10 @@ class MapperFactory:
             return SoilTemperatureDailyMapper()
         elif Helper.is_water_equiv_daily(path):
             return WaterEquivDailyMapper()
+        elif Helper.is_air_temperature_hourly(path):
+            return AirTemperatureHourlyMapper()
+        elif Helper.is_cloudiness_hourly(path):
+            return CloudinessHourlyMapper()
+        elif Helper.is_wind_hourly(path):
+            return WindHourlyMapper()
         return EmptyMapper()

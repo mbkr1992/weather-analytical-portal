@@ -60,6 +60,30 @@ class Helper:
         return '/daily/water_equiv/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_air_temperature_hourly(path):
+        return '/hourly/air_temperature/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_cloudiness_hourly(path):
+        return '/hourly/cloudiness/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_wind_hourly(path):
+        return '/hourly/wind/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_sun_hourly(path):
+        return '/hourly/sun/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_pressure_hourly(path):
+        return '/hourly/pressure/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_visibility_hourly(path):
+        return '/hourly/visibility/' in path and path.endswith('.zip')
+
+    @staticmethod
     def is_path_parseable(path):
         return not (path.endswith('.pdf')
                     or path.endswith('.txt')

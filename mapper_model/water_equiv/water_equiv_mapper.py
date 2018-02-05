@@ -18,8 +18,6 @@ class WaterEquivMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = None
-        self.select_query = None
 
     def map(self, item={}):
         pass

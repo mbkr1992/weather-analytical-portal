@@ -28,7 +28,7 @@ query_insert_files = 'INSERT ' \
                      'WHERE file.modify_date < excluded.modify_Date;'
 #
 query_select_path_of_non_downloaded_files = 'SELECT path FROM file_meta where is_downloaded=False;'
-query_select_path_of_non_parsed_files = "SELECT path FROM file_meta where is_parsed=False and filename LIKE '%.zip' LIMIT 500"
+query_select_path_of_non_parsed_files = "SELECT path FROM file_meta where is_parsed=False and filename LIKE '%.zip' LIMIT 1000"
 
 query_update_file_download_flag = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 

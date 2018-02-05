@@ -4,7 +4,7 @@ from datetime import datetime
 from constants.constants import DATABASE_CONNECTION
 
 
-class WindHourlyMapper(WindMapper):
+class Wind10MinuteMapper(WindMapper):
 
     def __init__(self):
         super().__init__()
@@ -13,20 +13,20 @@ class WindHourlyMapper(WindMapper):
     def map(self, item={}):
         wind = Wind()
         wind.station_id = item['STATIONS_ID']
-        wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        wind.measurement_category = 'hourly'
+        wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        wind.measurement_category = '10_minute'
 
-        wind.qn_3 = item.get('QN_3', None)
-        if wind.qn_3 == '-999':
-            wind.qn_3 = None
+        wind.qn = item.get('QN', None)
+        if wind.qn == '-999':
+            wind.qn = None
 
-        wind.f = item.get('F', None)
-        if wind.f == '-999':
-            wind.f = None
+        wind.ff_10 = item.get('FF_10', None)
+        if wind.ff_10 == '-999':
+            wind.ff_10 = None
 
-        wind.d = item.get('D', None)
-        if wind.d == '-999':
-            wind.d = None
+        wind.dd_10 = item.get('DD_10', None)
+        if wind.dd_10 == '-999':
+            wind.dd_10 = None
 
         return wind
 

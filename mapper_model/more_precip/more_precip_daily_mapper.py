@@ -9,8 +9,6 @@ class MorePrecipDailyMapper(MorePrecipMapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = None
-        self.select_query = None
 
     def map(self, item={}):
         more_precip = MorePrecip()
@@ -37,7 +35,7 @@ class MorePrecipDailyMapper(MorePrecipMapper):
         return more_precip
 
     def insert_items(self, items):
-        super(MorePrecipDailyMapper, self).insert_items(items)
+        super().insert_items(items)
 
     def update_file_parsed_flag(self, path):
-        super(MorePrecipDailyMapper, self).update_file_parsed_flag(path)
+        super().update_file_parsed_flag(path)

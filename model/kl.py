@@ -27,6 +27,19 @@ class Kl:
         self.tnk = None  # real
         self.tgk = None  # real
 
+        self.mo_n = None
+        self.mo_tt = None
+        self.mo_tx = None
+        self.mo_tn = None
+        self.mo_fk = None
+        self.mx_tx = None
+        self.mx_fx = None
+        self.mx_tn = None
+        self.mo_sd_s = None
+        self.qn_6 = None
+        self.mo_rr = None
+        self.mx_rs = None
+
     def to_tuple(self):
         return (self.station_id,
                 self.measurement_date,
@@ -50,7 +63,20 @@ class Kl:
                 self.upm,
                 self.txk,
                 self.tnk,
-                self.tgk)
+                self.tgk,
+
+                self.mo_n,
+                self.mo_tt,
+                self.mo_tx,
+                self.mo_tn,
+                self.mo_fk,
+                self.mx_tx,
+                self.mx_fx,
+                self.mx_tn,
+                self.mo_sd_s,
+                self.qn_6,
+                self.mo_rr,
+                self.mx_rs)
 
     def __str__(self):
         return '{0}, {1}'.format(self.station_id, self.measurement_date)

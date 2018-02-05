@@ -6,6 +6,7 @@ class Cloudiness:
         self.station_id = None
         self.measurement_date = None
         self.measurement_category = None
+
         self.qn_8 = None      # small int
         self.v_n_i = None  # real
         self.v_n = None  # real
@@ -19,4 +20,4 @@ class Cloudiness:
                 self.v_n)
 
     def __str__(self):
-        return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)
+        return '{0}, {1}'.format(self.station_id, self.measurement_date)

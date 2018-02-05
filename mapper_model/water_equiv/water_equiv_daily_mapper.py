@@ -9,8 +9,6 @@ class WaterEquivDailyMapper(WaterEquivMapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = None
-        self.select_query = None
 
     def map(self, item={}):
         water_equiv = WaterEquiv()
@@ -41,7 +39,7 @@ class WaterEquivDailyMapper(WaterEquivMapper):
         return water_equiv
 
     def insert_items(self, items):
-        super(WaterEquivDailyMapper, self).insert_items(items)
+        super().insert_items(items)
 
     def update_file_parsed_flag(self, path):
-        super(WaterEquivDailyMapper, self).update_file_parsed_flag(path)
+        super().update_file_parsed_flag(path)

@@ -8,7 +8,7 @@ query_insert_precipitation = 'INSERT INTO data_hub (' \
                              'precipitation_qn, precipitation_qn_8, ' \
                              'precipitation_rs_01, precipitation_rs_ind_01, precipitation_rs_ind, ' \
                              'precipitation_rws_dau_10, precipitation_rws_10, precipitation_rws_ind_10, ' \
-                             'precipitation_rth_01, precipitation_rwh_01, precipitation_wrtr) ' \
+                             'precipitation_rth_01, precipitation_rwh_01, precipitation_wrtr, precipitation_r1) ' \
                              'VALUES %s' \
                              'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 

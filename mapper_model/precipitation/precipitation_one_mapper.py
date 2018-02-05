@@ -9,8 +9,6 @@ class PrecipitationOneMapper(PrecipitationMapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = None
-        self.select_query = None
 
     def map(self, item={}):
         precipitation = Precipitation()
@@ -38,7 +36,7 @@ class PrecipitationOneMapper(PrecipitationMapper):
         return precipitation
 
     def insert_items(self, items):
-        super(PrecipitationOneMapper, self).insert_items(items)
+        super().insert_items(items)
 
     def update_file_parsed_flag(self, path):
-        super(PrecipitationOneMapper, self).update_file_parsed_flag(path)
+        super().update_file_parsed_flag(path)

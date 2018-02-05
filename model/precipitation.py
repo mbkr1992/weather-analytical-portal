@@ -23,6 +23,7 @@ class Precipitation:
         self.rth_01 = None  # small int
         self.rwh_01 = None  # real
         self.wrtr = None    # small int
+        self.r1 = None
 
     def to_tuple(self):
         return (self.station_id,
@@ -41,7 +42,8 @@ class Precipitation:
 
                 self.rth_01,
                 self.rwh_01,
-                self.wrtr)
+                self.wrtr,
+                self.r1)
 
     def __str__(self):
         return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)

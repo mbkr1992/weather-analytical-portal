@@ -35,7 +35,7 @@ class SolarDailyMapper(SolarMapper):
         return solar
 
     def insert_items(self, items):
-        super(SolarDailyMapper, self).insert_items(items)
+        super().insert_items(items)
 
     def update_file_parsed_flag(self, path):
-        super(SolarDailyMapper, self).update_file_parsed_flag(path)
+        super().update_file_parsed_flag(path)

@@ -1,10 +1,10 @@
-from mapper_model.wind.wind_mapper import WindMapper
+from mapper_model.visibility.visibility_mapper import VisibilityMapper
 from model.wind import Wind
 from datetime import datetime
 from constants.constants import DATABASE_CONNECTION
 
 
-class WindHourlyMapper(WindMapper):
+class VisibilityHourlyMapper(VisibilityMapper):
 
     def __init__(self):
         super().__init__()
@@ -16,17 +16,17 @@ class WindHourlyMapper(WindMapper):
         wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
         wind.measurement_category = 'hourly'
 
-        wind.qn_3 = item.get('QN_3', None)
-        if wind.qn_3 == '-999':
-            wind.qn_3 = None
+        wind.qn_8 = item.get('QN_8', None)
+        if wind.qn_8 == '-999':
+            wind.qn_8 = None
 
-        wind.f = item.get('F', None)
-        if wind.f == '-999':
-            wind.f = None
+        wind.v_vv_i = item.get('V_VV_I', None)
+        if wind.v_vv_i == '-999':
+            wind.v_vv_i = None
 
-        wind.d = item.get('D', None)
-        if wind.d == '-999':
-            wind.d = None
+        wind.d = item.get('V_VV', None)
+        if wind.v_vv == '-999':
+            wind.v_vv = None
 
         return wind
 

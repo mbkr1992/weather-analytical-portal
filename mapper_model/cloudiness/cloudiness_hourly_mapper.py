@@ -9,8 +9,6 @@ class CloudinessHourlyMapper(CloudinessMapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = None
-        self.select_query = None
 
     def map(self, item={}):
         cloudiness = Cloudiness()
@@ -33,7 +31,7 @@ class CloudinessHourlyMapper(CloudinessMapper):
         return cloudiness
 
     def insert_items(self, items):
-        super(CloudinessHourlyMapper, self).insert_items(items)
+        super().insert_items(items)
 
     def update_file_parsed_flag(self, path):
-        super(CloudinessHourlyMapper, self).update_file_parsed_flag(path)
+        super().update_file_parsed_flag(path)

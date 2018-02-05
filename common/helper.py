@@ -40,12 +40,24 @@ class Helper:
         return '/daily/solar/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_solar_10minute_file(path):
+        return '/10_minute/solar/' in path and path.endswith('.zip')
+
+    @staticmethod
     def is_precipitation_one_file(path):
         return '/1_minute/precipitation/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_precipitation_hourly_file(path):
+        return '/hourly/precipitation/' in path and path.endswith('.zip')
+
+    @staticmethod
     def is_kl_daily_file(path):
         return '/daily/kl/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_kl_10minute_file(path):
+        return '/10_minute/kl/' in path and path.endswith('.zip')
 
     @staticmethod
     def is_more_precip_daily_file(path):
@@ -64,12 +76,20 @@ class Helper:
         return '/hourly/air_temperature/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_air_temperature_10minute(path):
+        return '/10_minute/air_temperature/' in path and path.endswith('.zip')
+
+    @staticmethod
     def is_cloudiness_hourly(path):
         return '/hourly/cloudiness/' in path and path.endswith('.zip')
 
     @staticmethod
     def is_wind_hourly(path):
         return '/hourly/wind/' in path and path.endswith('.zip')
+
+    @staticmethod
+    def is_wind_10minute(path):
+        return '/10_minute/wind/' in path and path.endswith('.zip')
 
     @staticmethod
     def is_sun_hourly(path):

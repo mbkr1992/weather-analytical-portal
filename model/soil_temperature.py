@@ -12,6 +12,7 @@ class SoilTemperature:
         self.v_te010m = None  # real
         self.v_te020m = None  # real
         self.v_te050m = None  # real
+        self.v_te100m = None  # real
 
     def to_tuple(self):
         return (self.station_id,
@@ -22,7 +23,8 @@ class SoilTemperature:
                 self.v_te005m,
                 self.v_te010m,
                 self.v_te020m,
-                self.v_te050m)
+                self.v_te050m,
+                self.v_te100m)
 
     def __str__(self):
         return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)

@@ -25,25 +25,5 @@ class Precipitation:
         self.wrtr = None    # small int
         self.r1 = None
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn,
-                self.qn_8,
-
-                self.rs_01,
-                self.rs_ind_01,
-                self.rs_ind,
-
-                self.rws_dau_10,
-                self.rws_10,
-                self.rws_ind_10,
-
-                self.rth_01,
-                self.rwh_01,
-                self.wrtr,
-                self.r1)
-
     def __str__(self):
         return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)

@@ -2,7 +2,7 @@ from common.helper import Helper
 from mapper_model.empty_mapper import EmptyMapper
 from mapper_model.solar.solar_daily_mapper import SolarDailyMapper
 from mapper_model.solar.solar_hourly_mapper import SolarHourlyMapper
-from mapper_model.precipitation.precipitation_one_mapper import PrecipitationOneMapper
+from mapper_model.precipitation.precipitation_1minute_mapper import Precipitation1MinuteMapper
 from mapper_model.precipitation.precipitation_hourly_mapper import PrecipitationHourlyMapper
 from mapper_model.more_precip.more_precip_daily_mapper import MorePrecipDailyMapper
 from mapper_model.soil_temperature.soil_temperature_daily_mapper import SoilTemperatureDailyMapper
@@ -33,7 +33,7 @@ class MapperFactory:
         elif Helper.is_solar_hourly_file(path):
             return SolarHourlyMapper()
         elif Helper.is_precipitation_one_file(path):
-            return PrecipitationOneMapper()
+            return Precipitation1MinuteMapper()
         elif Helper.is_kl_daily_file(path):
             return KlDailyMapper()
         elif Helper.is_more_precip_daily_file(path):

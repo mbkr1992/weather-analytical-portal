@@ -6,39 +6,42 @@ from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class Precipitation10MinuteMapper(Mapper):
+class Precipitation1MinuteMapper(PrecipitationMapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-
         self.select_query = 'INSERT INTO data_hub (' \
-                                     'station_id, measurement_date, measurement_category, ' \
-                                     'precipitation_qn, ' \
-                                     'precipitation_rws_dau_10, precipitation_rws_10, precipitation_rws_ind_10) ' \
-                                     'VALUES %s' \
-                                     'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+                            'station_id, measurement_date, measurement_category, ' \
+                            'precipitation_qn, precipitation_rs_01,' \
+                            'precipitation_rth_01, precipitation_rwh_01, precipitation_rs_ind_01) ' \
+                            'VALUES %s' \
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
 
     def map(self, item={}):
         precipitation = Precipitation()
         precipitation.station_id = item['STATIONS_ID']
-        precipitation.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        precipitation.measurement_category = '10_minute'
+        precipitation.measurement_date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d%H%M')
+        precipitation.measurement_category = '1_minute'
         precipitation.qn = item.get('QN', None)
 
-        precipitation.rws_dau_10 = item.get('RWS_DAU_10', None)
-        if precipitation.rws_dau_10 == '-999':
-            precipitation.rws_dau_10 = None
+        precipitation.rs_01 = item.get('RS_01', None)
+        if precipitation.rs_01 == '-999':
+            precipitation.rs_01 = None
 
-        precipitation.rws_10 = item.get('RWS_10', None)
-        if precipitation.rws_10 == '-999':
-            precipitation.rws_10 = None
+        precipitation.rth_01 = item.get('RTH_01', None)
+        if precipitation.rth_01 == '-999':
+            precipitation.rth_01 = None
 
-        precipitation.rws_ind_10 = item.get('RWS_IND_10', None)
-        if precipitation.rws_ind_10 == '-999':
-            precipitation.rws_ind_10 = None
+        precipitation.rwh_01 = item.get('RWH_01', None)
+        if precipitation.rwh_01 == '-999':
+            precipitation.rwh_01 = None
+
+        precipitation.rs_ind_01 = item.get('RS_IND_01', None)
+        if precipitation.rs_ind_01 == '-999':
+            precipitation.rs_ind_01 = None
 
         return precipitation
 
@@ -48,9 +51,10 @@ class Precipitation10MinuteMapper(Mapper):
                 item.measurement_date,
                 item.measurement_category,
                 item.qn,
-                item.rws_dau_10,
-                item.rws_10,
-                item.rws_ind_10)
+                item.rs_01,
+                item.rth_01,
+                item.rwh_01,
+                item.rs_ind_01)
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

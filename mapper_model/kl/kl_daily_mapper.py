@@ -1,14 +1,27 @@
-from mapper_model.kl.kl_mapper import KlMapper
+from mapper_model.mapper import Mapper
 from model.kl import Kl
 from datetime import datetime
+from psycopg2 import connect, extras
+from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class KlDailyMapper(KlMapper):
+class KlDailyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
+
+        self.insert_query = 'INSERT INTO data_hub (' \
+                             'station_id, measurement_date, measurement_category, ' \
+                             'kl_qn_3, kl_fx, kl_fm, ' \
+                             'kl_qn_4, kl_rsk, kl_rskf, ' \
+                             'kl_sdk, kl_shk_tag, kl_nm, kl_vpm, kl_pm, ' \
+                             'kl_tmk, kl_upm, kl_txk, kl_tnk, kl_tgk) ' \
+                             'VALUES %s' \
+                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
 
     def map(self, item={}):
         kl = Kl()
@@ -80,8 +93,39 @@ class KlDailyMapper(KlMapper):
 
         return kl
 
+    @staticmethod
+    def to_tuple(item: Kl):
+        return (item.station_id,
+                item.measurement_date,
+                item.measurement_category,
+                item.qn_3,
+                item.fx,
+                item.fm,
+                item.qn_4,
+                item.rsk,
+                item.rskf,
+                item.sdk,
+                item.shk_tag,
+                item.nm,
+                item.vpm,
+                item.pm,
+                item.tmk,
+                item.upm,
+                item.txk,
+                item.tnk,
+                item.tgk)
+
     def insert_items(self, items):
-        super().insert_items(items)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = [self.to_tuple(item) for item in items]
+                extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
-        super().update_file_parsed_flag(path)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = True, path
+                curs.execute(self.update_query, data)
+

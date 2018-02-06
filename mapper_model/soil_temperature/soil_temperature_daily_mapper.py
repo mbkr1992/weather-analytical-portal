@@ -1,6 +1,8 @@
 from mapper_model.soil_temperature.soil_temperature_mapper import SoilTemperatureMapper
 from model.soil_temperature import SoilTemperature
 from datetime import datetime
+from psycopg2 import connect, extras
+from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
@@ -9,6 +11,16 @@ class SoilTemperatureDailyMapper(SoilTemperatureMapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
+
+        self.insert_query = 'INSERT INTO data_hub (' \
+                                        'station_id, measurement_date, measurement_category, ' \
+                                        'soil_temperature_qn_2, soil_temperature_v_te002m, ' \
+                                        'soil_temperature_v_te005m, soil_temperature_v_te010m, soil_temperature_v_te020m, ' \
+                                        'soil_temperature_v_te050m) ' \
+                                        'VALUES %s' \
+                                        'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
 
     def map(self, item={}):
         soil_temperature = SoilTemperature()
@@ -41,8 +53,28 @@ class SoilTemperatureDailyMapper(SoilTemperatureMapper):
             soil_temperature.v_te050m = None
         return soil_temperature
 
+    @staticmethod
+    def to_tuple(item):
+        return (item.station_id,
+                item.measurement_date,
+                item.measurement_category,
+                item.qn_2,
+                item.v_te002m,
+                item.v_te005m,
+                item.v_te010m,
+                item.v_te020m,
+                item.v_te050m)
+
     def insert_items(self, items):
-        super().insert_items(items)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = [self.to_tuple(item) for item in items]
+                extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
-        super().update_file_parsed_flag(path)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = True, path
+                curs.execute(self.update_query, data)

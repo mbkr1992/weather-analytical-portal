@@ -34,15 +34,15 @@ class GermanWeatherOperation(Operation):
                     try:
                         if not Helper.is_path_parseable(path=path):
                             continue
-
+                        print('Path: {0}'.format(path))
                         extracted_path, unzip_file = Helper.unzip(path)
-                        parser = ParserFactory.get_parser_for_path(path)
-                        mapper = MapperFactory.get_mapper_for_path(path)
-                        items = parser.parse(path=unzip_file, mapper=mapper)
-
-                        print('Path file {0}, items: {1}'.format(path, len(items)))
-                        mapper.insert_items(items)
-                        mapper.update_file_parsed_flag(path)
+                        # parser = ParserFactory.get_parser_for_path(path)
+                        # mapper = MapperFactory.get_mapper_for_path(path)
+                        # items = parser.parse(path=unzip_file, mapper=mapper)
+                        #
+                        # print('Path file {0}, items: {1}'.format(path, len(items)))
+                        # mapper.insert_items(items)
+                        # mapper.update_file_parsed_flag(path)
                         Helper.remove_directory(extracted_path)
                     except Exception as e:
                         print('Exception: {0}, {1}'.format(e, path))

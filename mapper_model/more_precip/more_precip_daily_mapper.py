@@ -1,14 +1,24 @@
-from mapper_model.more_precip.more_precip_mapper import MorePrecipMapper
+from mapper_model.mapper import Mapper
 from model.more_precip import MorePrecip
 from datetime import datetime
+from psycopg2 import connect, extras
+from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class MorePrecipDailyMapper(MorePrecipMapper):
+class MorePrecipDailyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
+
+        self.select_query = 'INSERT INTO data_hub (' \
+                          'station_id, measurement_date, measurement_category, ' \
+                          'more_precip_qn_6, more_precip_rs, more_precip_rsf, more_precip_sh_tag) ' \
+                          'VALUES %s' \
+                          'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
+
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
 
     def map(self, item={}):
         more_precip = MorePrecip()
@@ -34,8 +44,26 @@ class MorePrecipDailyMapper(MorePrecipMapper):
 
         return more_precip
 
+    @staticmethod
+    def to_tuple(item):
+        return (item.station_id,
+                item.measurement_date,
+                item.measurement_category,
+                item.qn_6,
+                item.rs,
+                item.rsf,
+                item.sh_tag)
+
     def insert_items(self, items):
-        super().insert_items(items)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = [self.to_tuple(item) for item in items]
+                extras.execute_values(curs, self.select_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
-        super().update_file_parsed_flag(path)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = True, path
+                curs.execute(self.update_query, data)

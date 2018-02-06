@@ -1,14 +1,27 @@
-from mapper_model.kl.kl_mapper import KlMapper
+from mapper_model.mapper import Mapper
 from model.kl import Kl
 from datetime import datetime
+from psycopg2 import connect, extras
+from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class KlMonthlyMapper(KlMapper):
+class KlMonthlyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
+
+        self.insert_query = 'INSERT INTO data_hub (' \
+                            'station_id, measurement_date, measurement_category, ' \
+                            'kl_qn_4, kl_mo_n, kl_mo_tt, ' \
+                            'kl_mo_tx, kl_mo_tn, kl_mo_fk, ' \
+                            'kl_mx_tx, kl_mx_fx, kl_mx_tn, kl_mo_sd_s, qn_6, ' \
+                            'kl_mo_rr, kl_mxrs) ' \
+                            'VALUES %s' \
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
 
     def map(self, item={}):
         kl = Kl()
@@ -70,8 +83,35 @@ class KlMonthlyMapper(KlMapper):
 
         return kl
 
+    @staticmethod
+    def to_tuple(item: Kl):
+        return (item.station_id,
+                item.measurement_date,
+                item.measurement_category,
+                item.qn_4,
+                item.mo_n,
+                item.mo_tt,
+                item.mo_tx,
+                item.mo_tn,
+                item.mo_fk,
+                item.mx_tx,
+                item.mx_fx,
+                item.mx_tn,
+                item.mo_sd_s,
+                item.qn_6,
+                item.mo_rr,
+                item.mx_rs)
+
     def insert_items(self, items):
-        super().insert_items(items)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = [self.to_tuple(item) for item in items]
+                extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
-        super().update_file_parsed_flag(path)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = True, path
+                curs.execute(self.update_file, data)

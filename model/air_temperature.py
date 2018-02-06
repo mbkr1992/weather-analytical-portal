@@ -18,19 +18,5 @@ class AirTemperature:
         self.rf_10 = None
         self.td_10 = None
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn_9,
-                self.tt_tu,
-                self.rf_tu,
-                self.qn,
-                self.pp_10,
-                self.tt_10,
-                self.tm5_10,
-                self.rf_10,
-                self.td_10)
-
     def __str__(self):
         return '{0}, {1}'.format(self.station_id, self.measurement_date)

@@ -28,7 +28,7 @@ query_insert_files = 'INSERT ' \
                      'WHERE file.modify_date < excluded.modify_Date;'
 #
 query_select_path_of_non_downloaded_files = 'SELECT path FROM file_meta where is_downloaded=False;'
-query_select_path_of_non_parsed_files = "SELECT path FROM file_meta where is_parsed=False and filename LIKE '%.zip' LIMIT 1000"
+query_select_path_of_non_parsed_files = "SELECT path FROM file_meta where is_parsed=False and filename LIKE '%.zip' "
 
 query_update_file_download_flag = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 
@@ -97,3 +97,19 @@ def insert_solar_data(items: [Solar]):
                 data = (s.station_id, s.measurement_date, s.qn, s.atmo_radiation, s.fd_radiation, s.fg_radiation,
                         s.sd_radiation, s.zenith, s.measurement_date_local)
                 curs.execute(query_insert_solar, data)
+
+
+def insert_items(query, items):
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            data = [item.to_tuple() for item in items]
+            extras.execute_values(curs, query, data, template=None, page_size=100)
+
+
+def update_file_parsed_flag(query, path):
+    with connect(DBN) as conn:
+        register(connection=conn)
+        with conn.cursor() as curs:
+            data = True, path
+            curs.execute(query, data)

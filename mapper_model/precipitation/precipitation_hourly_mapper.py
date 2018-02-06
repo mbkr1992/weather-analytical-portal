@@ -1,14 +1,25 @@
-from mapper_model.precipitation.precipitation_mapper import PrecipitationMapper
+from mapper_model.mapper import Mapper
 from model.precipitation import Precipitation
 from datetime import datetime
+from psycopg2 import connect, extras
+from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class PrecipitationHourlyMapper(PrecipitationMapper):
+class PrecipitationHourlyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
+        self.select_query = 'INSERT INTO data_hub (' \
+                            'station_id, measurement_date, measurement_category, ' \
+                            'precipitation_qn_8, ' \
+                            'precipitation_rs_ind, ' \
+                            'precipitation_wrtr, precipitation_r1) ' \
+                            'VALUES %s' \
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
 
     def map(self, item={}):
         precipitation = Precipitation()
@@ -31,8 +42,26 @@ class PrecipitationHourlyMapper(PrecipitationMapper):
 
         return precipitation
 
+    @staticmethod
+    def to_tuple(item):
+        return (item.station_id,
+                item.measurement_date,
+                item.measurement_category,
+                item.qn_8,
+                item.r1,
+                item.wrtr,
+                item.rs_ind)
+
     def insert_items(self, items):
-        super().insert_items(items)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = [self.to_tuple(item) for item in items]
+                extras.execute_values(curs, self.select_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
-        super().update_file_parsed_flag(path)
+        with connect(self.dbc) as conn:
+            register(connection=conn)
+            with conn.cursor() as curs:
+                data = True, path
+                curs.execute(self.update_query, data)

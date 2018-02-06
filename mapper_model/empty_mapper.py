@@ -1,5 +1,4 @@
 from mapper_model.mapper import Mapper
-from model.station import Station
 
 
 class EmptyMapper(Mapper):

@@ -17,14 +17,14 @@ class Solar10MinuteMapper(Mapper):
                             'VALUES %s ' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
 
         solar = Solar()
         solar.station_id = item['STATIONS_ID']
         solar.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        solar.measurement_category = '10_minute'
+        solar.measurement_category = '10_minutes'
         solar.qn = item.get('QN', None)
 
         solar.ds = item.get('DS_10', None)

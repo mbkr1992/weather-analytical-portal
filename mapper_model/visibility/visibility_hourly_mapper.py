@@ -1,4 +1,4 @@
-from mapper_model.visibility.visibility_mapper import VisibilityMapper
+from mapper_model.mapper import Mapper
 from model.wind import Wind
 from datetime import datetime
 from psycopg2 import connect, extras
@@ -6,7 +6,7 @@ from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class VisibilityHourlyMapper(VisibilityMapper):
+class VisibilityHourlyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
@@ -17,7 +17,7 @@ class VisibilityHourlyMapper(VisibilityMapper):
                             'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
         wind = Wind()

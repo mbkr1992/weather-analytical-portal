@@ -13,13 +13,12 @@ class PrecipitationHourlyMapper(Mapper):
         self.dbc = DATABASE_CONNECTION
         self.select_query = 'INSERT INTO data_hub (' \
                             'station_id, measurement_date, measurement_category, ' \
-                            'precipitation_qn_8, ' \
-                            'precipitation_rs_ind, ' \
-                            'precipitation_wrtr, precipitation_r1) ' \
+                            'precipitation_qn_8, precipitation_r1, ' \
+                            'precipitation_wrtr, precipitation_rs_ind)' \
                             'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
         precipitation = Precipitation()

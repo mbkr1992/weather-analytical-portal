@@ -12,11 +12,15 @@ class AirTemperature:
         self.rf_tu = None  # real
 
         self.qn = None
-        self.pp_10 = None
-        self.tt_10 = None
-        self.tm5_10 = None
-        self.rf_10 = None
-        self.td_10 = None
+        self.pp = None
+        self.tt = None
+        self.tm5 = None
+        self.rf = None
+        self.td = None
+
+        self.tx = None
+        self.tn = None
+        self.tn5 = None
 
     def __str__(self):
         return '{0}, {1}'.format(self.station_id, self.measurement_date)

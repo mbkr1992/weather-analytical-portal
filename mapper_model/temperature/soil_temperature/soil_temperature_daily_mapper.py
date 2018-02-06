@@ -1,4 +1,4 @@
-from mapper_model.soil_temperature.soil_temperature_mapper import SoilTemperatureMapper
+from mapper_model.mapper import Mapper
 from model.soil_temperature import SoilTemperature
 from datetime import datetime
 from psycopg2 import connect, extras
@@ -6,7 +6,7 @@ from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class SoilTemperatureDailyMapper(SoilTemperatureMapper):
+class SoilTemperatureDailyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
@@ -20,7 +20,7 @@ class SoilTemperatureDailyMapper(SoilTemperatureMapper):
                                         'VALUES %s' \
                                         'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
         soil_temperature = SoilTemperature()

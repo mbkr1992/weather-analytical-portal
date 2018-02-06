@@ -14,3 +14,4 @@ class EmptyMapper(Mapper):
 
     def update_file_parsed_flag(self, path):
         pass
+

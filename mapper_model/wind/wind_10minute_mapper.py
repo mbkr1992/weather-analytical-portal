@@ -13,17 +13,17 @@ class Wind10MinuteMapper(Mapper):
         self.dbc = DATABASE_CONNECTION
         self.insert_query = 'INSERT INTO data_hub (' \
                             'station_id, measurement_date, measurement_category, ' \
-                            'wind_qn, wind_ff_10, wind_dd_10)' \
+                            'wind_qn, wind_ff, wind_dd)' \
                             'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
         wind = Wind()
         wind.station_id = item['STATIONS_ID']
         wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        wind.measurement_category = '10_minute'
+        wind.measurement_category = '10_minutes'
 
         wind.qn = item.get('QN', None)
         if wind.qn == '-999':

@@ -14,10 +14,10 @@ class SolarDailyMapper(Mapper):
         self.insert_query = 'INSERT ' \
                             'INTO data_hub (station_id, measurement_date, measurement_category, solar_qn, solar_atmo, solar_fd, ' \
                             'solar_fg, solar_sd) ' \
-                            'VALUES %S ' \
+                            'VALUES %s ' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
 

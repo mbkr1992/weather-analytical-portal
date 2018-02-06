@@ -8,29 +8,32 @@ class SimpleParser(Parser):
 
     def parse(self, path, mapper):
         with open(path, encoding='ISO-8859-1') as f:
-            list_of_items = []
+            try:
+                list_of_items = []
 
-            # Headings Station_id etc
-            keys = clean_txt(f.readline()).split(';')
+                # Headings Station_id etc
+                keys = clean_txt(f.readline()).split(';')
 
-            # Removing eor column found in  many files
-            last_column = keys[-1]
-            if last_column == 'eor':
-                keys.pop(len(keys) - 1)
+                # Removing eor column found in  many files
+                last_column = keys[-1]
+                if last_column == 'eor':
+                    keys.pop(len(keys) - 1)
 
-            # Actual values 00183 etc
+                # Actual values 00183 etc
 
-            for line in f:
-                values = clean_txt(line).split(';')
-                item = {}
-                for i in range(0, len(keys)):
+                for line in f:
+                    values = clean_txt(line).split(';')
+                    item = {}
+                    for i in range(0, len(keys)):
 
-                    # For cases where data in a row is incomplete
-                    if i < len(values) - 1:
-                        item[keys[i]] = values[i]
-                list_of_items.append(mapper.map(item))
-
-            f.close()
+                        # For cases where data in a row is incomplete
+                        if i < len(values) - 1:
+                            item[keys[i]] = values[i]
+                    list_of_items.append(mapper.map(item))
+            except Exception as e:
+                print('Parsing error {0}'.format(e, path))
+            finally:
+                f.close()
             return list_of_items
 
 

@@ -6,41 +6,45 @@ from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION
 
 
-class MorePrecipDailyMapper(Mapper):
+class MorePrecipMonthlyMapper(Mapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
 
         self.select_query = 'INSERT INTO data_hub (' \
-                          'station_id, measurement_date, measurement_category, ' \
-                          'more_precip_qn_6, more_precip_rs, more_precip_rsf, more_precip_sh_tag) ' \
-                          'VALUES %s' \
-                          'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
+                            'station_id, measurement_date, measurement_category, ' \
+                            'more_precip_qn_6, more_precip_mo_nsh, more_precip_mo_rr, more_precip_mo_sh_s, more_precip_mx_rs) ' \
+                            'VALUES %s' \
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
         more_precip = MorePrecip()
         more_precip.station_id = item['STATIONS_ID']
-        more_precip.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
+        more_precip.measurement_date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d')
         more_precip.measurement_category = 'daily'
 
         more_precip.qn_6 = item.get('QN_6', None)
         if more_precip.qn_6 == '-999':
             more_precip.qn_6 = None
 
-        more_precip.rs = item.get('RS', None)
-        if more_precip.rs == '-999':
-            more_precip.rs = None
+        more_precip.mo_nsh = item.get('MO_NSH', None)
+        if more_precip.mo_nsh == '-999':
+            more_precip.mo_nsh = None
 
-        more_precip.rsf = item.get('RSF', None)
-        if more_precip.rsf == '-999':
-            more_precip.rsf = None
+        more_precip.mo_rr = item.get('MO_RR', None)
+        if more_precip.mo_rr == '-999':
+            more_precip.mo_rr = None
 
-        more_precip.sh_tag = item.get('SH_TAG', None)
-        if more_precip.sh_tag == '-999':
-            more_precip.sh_tag = None
+        more_precip.mo_sh_s = item.get('MO_SH_S', None)
+        if more_precip.mo_sh_s == '-999':
+            more_precip.mo_sh_s = None
+
+        more_precip.max_rs = item.get('MX_RS', None)
+        if more_precip.max_rs == '-999':
+            more_precip.max_rs = None
 
         return more_precip
 
@@ -50,9 +54,10 @@ class MorePrecipDailyMapper(Mapper):
                 item.measurement_date,
                 item.measurement_category,
                 item.qn_6,
-                item.rs,
-                item.rsf,
-                item.sh_tag)
+                item.mo_nsh,
+                item.mo_rr,
+                item.mo_sh_s,
+                item.max_rs)
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

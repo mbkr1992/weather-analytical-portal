@@ -19,13 +19,13 @@ class Precipitation10MinuteMapper(Mapper):
                                      'VALUES %s' \
                                      'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%S) WHERE path =(%S);'
+        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
     def map(self, item={}):
         precipitation = Precipitation()
         precipitation.station_id = item['STATIONS_ID']
-        precipitation.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        precipitation.measurement_category = '10_minute'
+        precipitation.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        precipitation.measurement_category = '10_minutes'
         precipitation.qn = item.get('QN', None)
 
         precipitation.rws_dau_10 = item.get('RWS_DAU_10', None)

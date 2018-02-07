@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4fcfb57f-3740-444c-825f-1e46a7dc9c52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="4fcfb57f-3740-444c-825f-1e46a7dc9c52" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -48,10 +46,10 @@
               <caret line="28" column="1" lean-forward="false" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-                <marker date="1517962843509" expanded="true" signature="407:515" ph="INSERT INTO station... " />
-                <marker date="1517962843509" expanded="true" signature="407:604" ph="INSERT INTO station... " />
-                <marker date="1517962843509" expanded="true" signature="407:618" ph="INSERT INTO station... " />
-                <marker date="1517962843509" expanded="true" signature="651:704" ph="UPDATE file_... " />
+                <marker date="1517963264457" expanded="true" signature="407:515" ph="INSERT INTO station... " />
+                <marker date="1517963264457" expanded="true" signature="407:604" ph="INSERT INTO station... " />
+                <marker date="1517963264457" expanded="true" signature="407:618" ph="INSERT INTO station... " />
+                <marker date="1517963264457" expanded="true" signature="651:704" ph="UPDATE file_... " />
               </folding>
             </state>
           </provider>
@@ -61,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/parser_model/station_parser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="507">
-              <caret line="38" column="20" lean-forward="true" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
+              <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
               <folding>
                 <element signature="e#0#47#0" expanded="true" />
               </folding>
@@ -83,7 +81,6 @@
       <find>rs_ind_01</find>
       <find>helper</find>
       <find>unzip</find>
-      <find>= None</find>
       <find>= None</find>
       <find>precipitation_</find>
       <find>20</find>
@@ -200,7 +197,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="y" value="22" />
     <option name="width" value="1680" />
     <option name="height" value="951" />
@@ -488,7 +485,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="22" width="1680" height="951" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -497,7 +494,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28197065" sideWeight="0.504884" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2274633" sideWeight="0.495116" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26050422" sideWeight="0.495116" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893157" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2008547" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -621,10 +618,10 @@
           <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517941949728" expanded="true" signature="371:898" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949728" expanded="true" signature="371:899" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949728" expanded="true" signature="931:984" ph="UPDATE file_... " />
-            <marker date="1517941949728" expanded="true" signature="983:984" ph="UPDATE file_... " />
+            <marker date="1517963264449" expanded="true" signature="371:898" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264449" expanded="true" signature="371:899" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264449" expanded="true" signature="931:984" ph="UPDATE file_... " />
+            <marker date="1517963264449" expanded="true" signature="983:984" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -635,10 +632,10 @@
           <caret line="23" column="39" lean-forward="true" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517941949714" expanded="true" signature="405:561" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949714" expanded="true" signature="405:586" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949714" expanded="true" signature="405:835" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949714" expanded="true" signature="868:921" ph="UPDATE file_... " />
+            <marker date="1517963264453" expanded="true" signature="405:561" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264453" expanded="true" signature="405:586" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264453" expanded="true" signature="405:835" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264453" expanded="true" signature="868:921" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -649,8 +646,8 @@
           <caret line="20" column="81" lean-forward="false" selection-start-line="20" selection-start-column="81" selection-end-line="20" selection-end-column="81" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517942076290" expanded="true" signature="390:719" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076290" expanded="true" signature="752:805" ph="UPDATE file_... " />
+            <marker date="1517963264455" expanded="true" signature="390:719" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264455" expanded="true" signature="752:805" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -661,8 +658,8 @@
           <caret line="19" column="81" lean-forward="false" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517942076278" expanded="true" signature="374:684" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076278" expanded="true" signature="717:770" ph="UPDATE file_... " />
+            <marker date="1517963264458" expanded="true" signature="374:684" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264458" expanded="true" signature="717:770" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -673,8 +670,8 @@
           <caret line="19" column="81" lean-forward="false" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517942076313" expanded="true" signature="383:725" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076313" expanded="true" signature="758:811" ph="UPDATE file_... " />
+            <marker date="1517963264461" expanded="true" signature="383:725" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264461" expanded="true" signature="758:811" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -684,8 +681,8 @@
         <state relative-caret-position="241">
           <caret line="23" column="34" lean-forward="true" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
           <folding>
-            <marker date="1517941949707" expanded="true" signature="395:814" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949707" expanded="true" signature="847:900" ph="UPDATE file_... " />
+            <marker date="1517963264462" expanded="true" signature="395:814" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264462" expanded="true" signature="847:900" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -703,8 +700,8 @@
         <state relative-caret-position="165">
           <caret line="22" column="81" lean-forward="false" selection-start-line="22" selection-start-column="81" selection-end-line="22" selection-end-column="81" />
           <folding>
-            <marker date="1517942076328" expanded="true" signature="411:997" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076328" expanded="true" signature="1030:1083" ph="UPDATE file_... " />
+            <marker date="1517963264460" expanded="true" signature="411:997" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264460" expanded="true" signature="1030:1083" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -715,8 +712,8 @@
           <caret line="29" column="37" lean-forward="true" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517875589838" expanded="true" signature="408:766" ph="INSERT INTO data_hub... " />
-            <marker date="1517875589838" expanded="true" signature="798:851" ph="UPDATE file_... " />
+            <marker date="1517963264459" expanded="true" signature="408:766" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264459" expanded="true" signature="798:851" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -735,11 +732,11 @@
           <caret line="26" column="59" lean-forward="true" selection-start-line="26" selection-start-column="59" selection-end-line="26" selection-end-column="59" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517944841182" expanded="true" signature="410:516" ph="INSERT INTO data_hub... " />
-            <marker date="1517944841182" expanded="true" signature="410:609" ph="INSERT INTO data_hub... " />
-            <marker date="1517944841182" expanded="true" signature="410:703" ph="INSERT INTO data_hub... " />
-            <marker date="1517944841182" expanded="true" signature="410:854" ph="INSERT INTO data_hub... " />
-            <marker date="1517944841182" expanded="true" signature="886:939" ph="UPDATE file_... " />
+            <marker date="1517963264458" expanded="true" signature="410:516" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264458" expanded="true" signature="410:609" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264458" expanded="true" signature="410:703" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264458" expanded="true" signature="410:854" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264458" expanded="true" signature="886:939" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -750,8 +747,8 @@
           <caret line="15" column="54" lean-forward="false" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="54" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517946143780" expanded="true" signature="379:695" ph="INSERT INTO data_hub... " />
-            <marker date="1517946143780" expanded="true" signature="728:781" ph="UPDATE file_... " />
+            <marker date="1517963264463" expanded="true" signature="379:695" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264463" expanded="true" signature="728:781" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -762,8 +759,8 @@
           <caret line="10" column="8" lean-forward="false" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517945142844" expanded="true" signature="414:818" ph="INSERT INTO data_hub... " />
-            <marker date="1517945142844" expanded="true" signature="850:903" ph="UPDATE file_... " />
+            <marker date="1517963264459" expanded="true" signature="414:818" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264459" expanded="true" signature="850:903" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -774,8 +771,8 @@
           <caret line="15" column="74" lean-forward="false" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="74" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517946087902" expanded="true" signature="386:722" ph="INSERT INTO data_hub... " />
-            <marker date="1517946087902" expanded="true" signature="755:808" ph="UPDATE file_... " />
+            <marker date="1517963264463" expanded="true" signature="386:722" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264463" expanded="true" signature="755:808" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -786,10 +783,10 @@
           <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517948895262" expanded="true" signature="407:582" ph="INSERT INTO data_hub... " />
-            <marker date="1517948895262" expanded="true" signature="407:697" ph="INSERT INTO data_hub... " />
-            <marker date="1517948895262" expanded="true" signature="407:867" ph="INSERT INTO data_hub... " />
-            <marker date="1517948895262" expanded="true" signature="900:953" ph="UPDATE file_... " />
+            <marker date="1517963264452" expanded="true" signature="407:582" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264452" expanded="true" signature="407:697" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264452" expanded="true" signature="407:867" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264452" expanded="true" signature="900:953" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -808,9 +805,9 @@
           <caret line="37" column="38" lean-forward="false" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517942557397" expanded="true" signature="382:507" ph="INSERT INTO data_hub... " />
-            <marker date="1517942557397" expanded="true" signature="382:723" ph="INSERT INTO data_hub... " />
-            <marker date="1517942557397" expanded="true" signature="756:809" ph="UPDATE file_... " />
+            <marker date="1517963264455" expanded="true" signature="382:507" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264455" expanded="true" signature="382:723" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264455" expanded="true" signature="756:809" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -820,9 +817,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding>
-            <marker date="1517950946984" expanded="true" signature="395:760" ph="INSERT INTO data_hub... " />
-            <marker date="1517950946984" expanded="true" signature="792:845" ph="UPDATE file_... " />
-            <marker date="1517950946984" expanded="true" signature="844:845" ph="UPDATE file_... " />
+            <marker date="1517963264448" expanded="true" signature="395:760" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264448" expanded="true" signature="792:845" ph="UPDATE file_... " />
+            <marker date="1517963264448" expanded="true" signature="844:845" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -833,9 +830,9 @@
           <caret line="20" column="67" lean-forward="true" selection-start-line="20" selection-start-column="67" selection-end-line="20" selection-end-column="67" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517951257543" expanded="true" signature="404:655" ph="INSERT INTO data_hub... " />
-            <marker date="1517951257543" expanded="true" signature="404:806" ph="INSERT INTO data_hub... " />
-            <marker date="1517951257543" expanded="true" signature="839:892" ph="UPDATE file_... " />
+            <marker date="1517963264454" expanded="true" signature="404:655" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264454" expanded="true" signature="404:806" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264454" expanded="true" signature="839:892" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -846,8 +843,8 @@
           <caret line="21" column="81" lean-forward="false" selection-start-line="21" selection-start-column="81" selection-end-line="21" selection-end-column="81" />
           <folding>
             <element signature="e#0#87#0" expanded="true" />
-            <marker date="1517942076323" expanded="true" signature="475:1015" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076323" expanded="true" signature="1048:1101" ph="UPDATE file_... " />
+            <marker date="1517963264461" expanded="true" signature="475:1015" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264461" expanded="true" signature="1048:1101" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -858,9 +855,9 @@
           <caret line="23" column="8" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="84" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517941949721" expanded="true" signature="373:887" ph="INSERT INTO data_hub... " />
-            <marker date="1517941949721" expanded="true" signature="920:973" ph="UPDATE file_... " />
-            <marker date="1517941949721" expanded="true" signature="972:973" ph="UPDATE file_... " />
+            <marker date="1517963264449" expanded="true" signature="373:887" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264449" expanded="true" signature="920:973" ph="UPDATE file_... " />
+            <marker date="1517963264449" expanded="true" signature="972:973" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -871,8 +868,8 @@
           <caret line="11" column="26" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517941991455" expanded="true" signature="396:749" ph="INSERT INTO data_hub... " />
-            <marker date="1517941991455" expanded="true" signature="781:834" ph="UPDATE file_... " />
+            <marker date="1517963264451" expanded="true" signature="396:749" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264451" expanded="true" signature="781:834" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -883,8 +880,8 @@
           <caret line="23" column="34" lean-forward="true" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517955289588" expanded="true" signature="398:785" ph="INSERT INTO data_hub... " />
-            <marker date="1517955289588" expanded="true" signature="817:870" ph="UPDATE file_... " />
+            <marker date="1517963264452" expanded="true" signature="398:785" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264452" expanded="true" signature="817:870" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -913,8 +910,8 @@
           <caret line="19" column="8" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="84" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517942076337" expanded="true" signature="377:697" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076337" expanded="true" signature="730:783" ph="UPDATE file_... " />
+            <marker date="1517963264464" expanded="true" signature="377:697" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264464" expanded="true" signature="730:783" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -951,17 +948,17 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="25" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
-            <marker date="1517960310473" expanded="true" signature="252:419" ph="INSERT INTO station... " />
-            <marker date="1517960310473" expanded="true" signature="445:714" ph="INSERT INTO data_hub... " />
-            <marker date="1517960310473" expanded="true" signature="740:979" ph="INSERT INTO file_meta... " />
-            <marker date="1517960310473" expanded="true" signature="740:1066" ph="INSERT INTO file_meta... " />
-            <marker date="1517960310473" expanded="true" signature="740:1089" ph="INSERT INTO file_meta... " />
-            <marker date="1517960310473" expanded="true" signature="1139:1191" ph="SELECT path file_meta" />
-            <marker date="1517960310473" expanded="true" signature="1235:1283" ph="SELECT path file_meta" />
-            <marker date="1517960310473" expanded="true" signature="1235:1301" ph="SELECT path file_meta" />
-            <marker date="1517960310473" expanded="true" signature="1235:1308" ph="SELECT path file_meta" />
-            <marker date="1517960310473" expanded="true" signature="1235:1309" ph="SELECT path file_meta" />
-            <marker date="1517960310473" expanded="true" signature="1348:1405" ph="UPDATE file_... " />
+            <marker date="1517963264444" expanded="true" signature="252:419" ph="INSERT INTO station... " />
+            <marker date="1517963264444" expanded="true" signature="445:714" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264444" expanded="true" signature="740:979" ph="INSERT INTO file_meta... " />
+            <marker date="1517963264444" expanded="true" signature="740:1066" ph="INSERT INTO file_meta... " />
+            <marker date="1517963264444" expanded="true" signature="740:1089" ph="INSERT INTO file_meta... " />
+            <marker date="1517963264444" expanded="true" signature="1139:1191" ph="SELECT path file_meta" />
+            <marker date="1517963264444" expanded="true" signature="1235:1283" ph="SELECT path file_meta" />
+            <marker date="1517963264444" expanded="true" signature="1235:1301" ph="SELECT path file_meta" />
+            <marker date="1517963264444" expanded="true" signature="1235:1308" ph="SELECT path file_meta" />
+            <marker date="1517963264444" expanded="true" signature="1235:1309" ph="SELECT path file_meta" />
+            <marker date="1517963264444" expanded="true" signature="1348:1405" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -995,8 +992,8 @@
         <state relative-caret-position="495">
           <caret line="38" column="37" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="38" selection-end-column="37" />
           <folding>
-            <marker date="1517942076303" expanded="true" signature="380:767" ph="INSERT INTO data_hub... " />
-            <marker date="1517942076303" expanded="true" signature="800:853" ph="UPDATE file_... " />
+            <marker date="1517963264456" expanded="true" signature="380:767" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264456" expanded="true" signature="800:853" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -1014,8 +1011,8 @@
         <state relative-caret-position="30">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="29" />
           <folding>
-            <marker date="1517950074706" expanded="true" signature="379:722" ph="INSERT INTO data_hub... " />
-            <marker date="1517950074706" expanded="true" signature="755:808" ph="UPDATE file_... " />
+            <marker date="1517963264456" expanded="true" signature="379:722" ph="INSERT INTO data_hub... " />
+            <marker date="1517963264456" expanded="true" signature="755:808" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -1052,10 +1049,10 @@
           <caret line="28" column="1" lean-forward="false" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <marker date="1517962843509" expanded="true" signature="407:515" ph="INSERT INTO station... " />
-            <marker date="1517962843509" expanded="true" signature="407:604" ph="INSERT INTO station... " />
-            <marker date="1517962843509" expanded="true" signature="407:618" ph="INSERT INTO station... " />
-            <marker date="1517962843509" expanded="true" signature="651:704" ph="UPDATE file_... " />
+            <marker date="1517963264457" expanded="true" signature="407:515" ph="INSERT INTO station... " />
+            <marker date="1517963264457" expanded="true" signature="407:604" ph="INSERT INTO station... " />
+            <marker date="1517963264457" expanded="true" signature="407:618" ph="INSERT INTO station... " />
+            <marker date="1517963264457" expanded="true" signature="651:704" ph="UPDATE file_... " />
           </folding>
         </state>
       </provider>
@@ -1081,7 +1078,7 @@
     <entry file="file://$PROJECT_DIR$/parser_model/station_parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="507">
-          <caret line="38" column="20" lean-forward="true" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
+          <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
           </folding>

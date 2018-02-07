@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fcfb57f-3740-444c-825f-1e46a7dc9c52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mapper_model/station/station_mapper.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mapper_model/station_mapper.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/helper.py" afterPath="$PROJECT_DIR$/common/helper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database_model/db_handler.py" afterPath="$PROJECT_DIR$/database_model/db_handler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mapper_model/mapper_factory.py" afterPath="$PROJECT_DIR$/mapper_model/mapper_factory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/station.py" afterPath="$PROJECT_DIR$/model/station.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/operation_model/german_weather_operation.py" afterPath="$PROJECT_DIR$/operation_model/german_weather_operation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_model/parser_factory.py" afterPath="$PROJECT_DIR$/parser_model/parser_factory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_model/station_parser.py" afterPath="$PROJECT_DIR$/parser_model/station_parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample_request.py" afterPath="$PROJECT_DIR$/sample_request.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -475,7 +465,14 @@
       <option name="project" value="LOCAL" />
       <updated>1517955964859</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="-- added the station parser">
+      <created>1517963094854</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1517963094855</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -537,7 +534,8 @@
     <MESSAGE value="-- Added several more wrappers, &#10;-- code clean up" />
     <MESSAGE value="-- Normalized hierarchy for mappers" />
     <MESSAGE value="-- refactored all the mappers,&#10;-- all the mappers are working now" />
-    <option name="LAST_COMMIT_MESSAGE" value="-- refactored all the mappers,&#10;-- all the mappers are working now" />
+    <MESSAGE value="-- added the station parser" />
+    <option name="LAST_COMMIT_MESSAGE" value="-- added the station parser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

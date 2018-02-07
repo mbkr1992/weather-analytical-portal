@@ -124,9 +124,16 @@ class Helper:
         return '/hourly/visibility/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_txt_file(path):
+        return path.endswith('.txt')
+
+    @staticmethod
+    def is_station(path):
+        return 'Beschreibung_Stationen' in path and path.endswith('.txt')
+
+    @staticmethod
     def is_path_parseable(path):
         return not (path.endswith('.pdf')
-                    or path.endswith('.txt')
                     or path.endswith('.html')
                     or path.endswith('.gz'))
 

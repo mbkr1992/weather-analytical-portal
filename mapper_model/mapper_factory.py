@@ -22,7 +22,7 @@ from mapper_model.wind.wind_10minute_mapper import Wind10MinuteMapper
 from mapper_model.wind.wind_hourly_mapper import WindHourlyMapper
 from mapper_model.temperature.exteme_temperature.extreme_temperature_10minute_mapper import ExtremeTemperature10MinuteMapper
 from mapper_model.wind.wind_extreme_10minute_mapper import WindExtreme10MinuteMapper
-
+from mapper_model.station.station_mapper import StationMapper
 
 class MapperFactory:
     def __init__(self):
@@ -90,5 +90,8 @@ class MapperFactory:
 
         elif Helper.is_extreme_temperature_10minutes(path):
             return ExtremeTemperature10MinuteMapper()
+
+        elif Helper.is_station(path):
+            return StationMapper()
 
         return EmptyMapper()

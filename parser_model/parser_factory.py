@@ -45,6 +45,7 @@ class ParserFactory:
                 or Helper.is_sun_hourly(path) \
                 or Helper.is_kl_daily_file(path) \
                 or Helper.is_kl_monthly_file(path):
-
             return SimpleParser()
+        elif Helper.is_station(path):
+            return StationParser()
         return EmptyParser()

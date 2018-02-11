@@ -3,7 +3,7 @@ from model.sun import Sun
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class SunHourlyMapper(Mapper):
@@ -11,9 +11,8 @@ class SunHourlyMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO data_hub (' \
-                            'station_id, measurement_date, measurement_category, ' \
-                            'sun_qn_7, sun_sd_so)' \
+
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
                             'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
@@ -25,23 +24,40 @@ class SunHourlyMapper(Mapper):
         sun.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
         sun.measurement_category = 'hourly'
 
-        sun.qn_7 = item.get('QN_7', None)
-        if sun.qn_7 == '-999':
-            sun.qn_7 = None
+        sun.information = list()
+        # qn_7 = item.get('QN_7', None)
+        # if self.is_valid(qn_7):
+        #     sun.information.append(
+        #         dict(
+        #             value=qn_7,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        sun.sd_so = item.get('SD_SO', None)
-        if sun.sd_so == '-999':
-            sun.sd_so = None
+        sd_so = item.get('SD_SO', None)
+        if self.is_valid(sd_so):
+            sun.information.append(
+                dict(
+                    name='SD_SO',
+                    value=sd_so,
+                    unit='min',
+                    description='hourly sunshine duration',
+                )
+            )
 
         return sun
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_7,
-                item.sd_so)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

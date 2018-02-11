@@ -3,7 +3,7 @@ from model.air_temperature import AirTemperature
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class AirTemperature10MinuteMapper(Mapper):
@@ -11,12 +11,9 @@ class AirTemperature10MinuteMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO data_hub (' \
-                            'station_id, measurement_date, measurement_category, ' \
-                            'air_temperature_qn, air_temperature_pp, air_temperature_tt, ' \
-                            'air_temperature_tm5, air_temperature_rf, air_temperature_td) ' \
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
                             'VALUES %s' \
-                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
@@ -26,43 +23,86 @@ class AirTemperature10MinuteMapper(Mapper):
         air_temperature.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
         air_temperature.measurement_category = '10_minutes'
 
-        air_temperature.qn = item.get('QN', None)
-        if air_temperature.qn == '-999':
-            air_temperature.qn = None
+        air_temperature.information = list()
 
-        air_temperature.pp = item.get('PP_10', None)
-        if air_temperature.pp == '-999':
-            air_temperature.pp = None
+        # qn = item.get('QN', None)
+        # if self.is_valid(qn):
+        #     air_temperature.information.append(
+        #         dict(
+        #             name='QN',
+        #             value=qn,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        air_temperature.tt = item.get('TT_10', None)
-        if air_temperature.tt == '-999':
-            air_temperature.tt = None
+        pp = item.get('PP_10', None)
+        if self.is_valid(pp):
+            air_temperature.information.append(
+                dict(
+                    name='PP_10',
+                    value=pp,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
 
-        air_temperature.tm5 = item.get('TM5_10', None)
-        if air_temperature.tm5 == '-999':
-            air_temperature.tm5 = None
+        tt = item.get('TT_10', None)
+        if self.is_valid(tt):
+            air_temperature.information.append(
+                dict(
+                    name='TT_10',
+                    value=tt,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
 
-        air_temperature.rf = item.get('RF_10', None)
-        if air_temperature.rf == '-999':
-            air_temperature.rf = None
+        tm5 = item.get('TM5_10', None)
+        if self.is_valid(tm5):
+            air_temperature.information.append(
+                dict(
+                    name='TM5_10',
+                    value=tm5,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
 
-        air_temperature.td = item.get('TD_10', None)
-        if air_temperature.td == '-999':
-            air_temperature.td = None
+        rf = item.get('RF_10', None)
+        if self.is_valid(rf):
+            air_temperature.information.append(
+                dict(
+                    name='RF_10',
+                    value=rf,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
+
+        td = item.get('TD_10', None)
+        if self.is_valid(td):
+            air_temperature.information.append(
+                dict(
+                    name='TD_10',
+                    value=td,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
 
         return air_temperature
 
     @staticmethod
-    def to_tuple(item: AirTemperature):
+    def is_valid(value):
+        return value and value != '999'
+
+    @staticmethod
+    def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn,
-                item.pp,
-                item.tt,
-                item.tm5,
-                item.rf,
-                item.td)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

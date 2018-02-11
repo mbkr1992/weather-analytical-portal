@@ -3,7 +3,7 @@ from model.solar import Solar
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class Solar10MinuteMapper(Mapper):
@@ -11,10 +11,8 @@ class Solar10MinuteMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT ' \
-                            'INTO data_hub (station_id, measurement_date, measurement_category, solar_qn, solar_ds, ' \
-                            'solar_gs, solar_sd, solar_ls) ' \
-                            'VALUES %s ' \
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
+                            'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
@@ -25,36 +23,75 @@ class Solar10MinuteMapper(Mapper):
         solar.station_id = item['STATIONS_ID']
         solar.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
         solar.measurement_category = '10_minutes'
-        solar.qn = item.get('QN', None)
 
-        solar.ds = item.get('DS_10', None)
-        if solar.ds == '-999':
-            solar.ds = None
+        solar.information = list()
 
-        solar.gs = item.get('GS_10', None)
-        if solar.gs == '-999':
-            solar.gs = None
+        # qn = item.get('QN', None)
+        # if self.is_valid(qn):
+        #     solar.information.append(
+        #         dict(
+        #             value=qn,
+        #             unit=NOT_AVAILABLE,
+        #             description=NOT_AVAILABLE,
+        #         )
+        #     )
 
-        solar.sd = item.get('SD_10', None)
-        if solar.sd == '-999':
-            solar.sd = None
+        ds = item.get('DS_10', None)
+        if self.is_valid(ds):
+            solar.information.append(
+                dict(
+                    name='DS_10',
+                    value=ds,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
 
-        solar.ls = item.get('LS_10', None)
-        if solar.ls == '-999':
-            solar.ls = None
+        gs = item.get('GS_10', None)
+        if self.is_valid(gs):
+            solar.information.append(
+                dict(
+                    name='GS_10',
+                    value=gs,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
+
+        sd = item.get('SD_10', None)
+        if self.is_valid(sd):
+            solar.information.append(
+                dict(
+                    name='SD_10',
+                    value=sd,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
+
+        ls = item.get('LS_10', None)
+        if self.is_valid(ls):
+            solar.information.append(
+                dict(
+                    name='LS_10',
+                    value=ls,
+                    unit=NOT_AVAILABLE,
+                    description=NOT_AVAILABLE,
+                )
+            )
 
         return solar
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn,
-                item.ds,
-                item.gs,
-                item.sd,
-                item.ls)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

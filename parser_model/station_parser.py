@@ -1,7 +1,5 @@
 from constants.constants import DOWNLOAD_FOLDER
-from model.station import Station
 from parser_model.parser import Parser
-import re
 
 
 class StationParser(Parser):

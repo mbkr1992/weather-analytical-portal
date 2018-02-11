@@ -3,7 +3,7 @@ from model.air_temperature import AirTemperature
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class AirTemperatureHourlyMapper(Mapper):
@@ -11,11 +11,9 @@ class AirTemperatureHourlyMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO data_hub (' \
-                            'station_id, measurement_date, measurement_category, ' \
-                            'air_temperature_qn_9, air_temperature_tt_tu, air_temperature_rf_tu) ' \
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
                             'VALUES %s' \
-                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
@@ -25,28 +23,52 @@ class AirTemperatureHourlyMapper(Mapper):
         air_temperature.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
         air_temperature.measurement_category = 'hourly'
 
-        air_temperature.qn_9 = item.get('QN_9', None)
-        if air_temperature.qn_9 == '-999':
-            air_temperature.qn_9 = None
+        air_temperature.information = list()
 
-        air_temperature.tt_tu = item.get('TT_TU', None)
-        if air_temperature.tt_tu == '-999':
-            air_temperature.tt_tu = None
+        # qn_9 = item.get('QN_9', None)
+        # if self.is_valid(qn_9):
+        #     air_temperature.information.append(
+        #         dict(
+        #             value=qn_9,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        air_temperature.rf_tu = item.get('RF_TU', None)
-        if air_temperature.rf_tu == '-999':
-            air_temperature.rf_tu = None
+        tt_tu = item.get('TT_TU', None)
+        if self.is_valid(tt_tu):
+            air_temperature.information.append(
+                dict(
+                    name='TT_TU',
+                    value=tt_tu,
+                    unit='°C',
+                    description='2m air temperature',
+                )
+            )
+
+        rf_tu = item.get('RF_TU', None)
+        if self.is_valid(rf_tu):
+            air_temperature.information.append(
+                dict(
+                    name='RF_TU',
+                    value=rf_tu,
+                    unit='%',
+                    description='2m relative humidity',
+                )
+            )
 
         return air_temperature
 
     @staticmethod
-    def to_tuple(item: AirTemperature):
+    def is_valid(value):
+        return value and value != '999'
+
+    @staticmethod
+    def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_9,
-                item.tt_tu,
-                item.rf_tu)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

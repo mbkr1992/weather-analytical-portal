@@ -3,7 +3,7 @@ from model.water_equiv import WaterEquiv
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class WaterEquivDailyMapper(Mapper):
@@ -11,10 +11,7 @@ class WaterEquivDailyMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO data_hub (' \
-                            'station_id, measurement_date, measurement_category, ' \
-                            'water_equiv_qn_6, water_equiv_ash_6, ' \
-                            'water_equiv_sh_tag, water_equiv_wash_6, water_equiv_waas_6)' \
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
                             'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
@@ -26,38 +23,74 @@ class WaterEquivDailyMapper(Mapper):
         water_equiv.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
         water_equiv.measurement_category = 'daily'
 
-        water_equiv.qn_6 = item.get('QN_6', None)
-        if water_equiv.qn_6 == '-999':
-            water_equiv.qn_6 = None
+        water_equiv.information = list()
 
-        water_equiv.ash_6 = item.get('ASH_6', None)
-        if water_equiv.ash_6 == '-999':
-            water_equiv.ash_6 = None
+        # qn_6 = item.get('QN_6', None)
+        # if self.is_valid(qn_6):
+        #     water_equiv.information.append(
+        #         dict(
+        #             value=qn_6,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        water_equiv.sh_tag = item.get('SH_tag', None)
-        if water_equiv.sh_tag == '-999':
-            water_equiv.sh_tag = None
+        ash_6 = item.get('ASH_6', None)
+        if self.is_valid(ash_6):
+            water_equiv.information.append(
+                dict(
+                    name='ASH_6',
+                    value=ash_6,
+                    unit='cm',
+                    description='height of snow pack sample',
+                )
+            )
 
-        water_equiv.wash_6 = item.get('WASH_6', None)
-        if water_equiv.wash_6 == '-999':
-            water_equiv.wash_6 = None
+        sh_tag = item.get('SH_tag', None)
+        if self.is_valid(sh_tag):
+            water_equiv.information.append(
+                dict(
+                    name='SH_tag',
+                    value=sh_tag,
+                    unit='cm',
+                    description='total snow depth',
+                )
+            )
 
-        water_equiv.waas_6 = item.get('WAAS_6', None)
-        if water_equiv.waas_6 == '-999':
-            water_equiv.waas_6 = None
+        wash_6 = item.get('WASH_6', None)
+        if self.is_valid(wash_6):
+            water_equiv.information.append(
+                dict(
+                    name='WASH_6',
+                    value=wash_6,
+                    unit='nm',
+                    description='total snow water equivalent',
+                )
+            )
+
+        waas_6 = item.get('WAAS_6', None)
+        if self.is_valid(waas_6):
+            water_equiv.information.append(
+                dict(
+                    name='WAAS_6',
+                    value=waas_6,
+                    unit='nm',
+                    description='sampled snow pack water eqivalent',
+                )
+            )
 
         return water_equiv
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_6,
-                item.ash_6,
-                item.sh_tag,
-                item.wash_6,
-                item.waas_6)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

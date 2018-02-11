@@ -3,7 +3,7 @@ from model.kl import Kl
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class KlDailyMapper(Mapper):
@@ -11,15 +11,10 @@ class KlDailyMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-
-        self.insert_query = 'INSERT INTO data_hub (' \
-                             'station_id, measurement_date, measurement_category, ' \
-                             'kl_qn_3, kl_fx, kl_fm, ' \
-                             'kl_qn_4, kl_rsk, kl_rskf, ' \
-                             'kl_sdk, kl_shk_tag, kl_nm, kl_vpm, kl_pm, ' \
-                             'kl_tmk, kl_upm, kl_txk, kl_tnk, kl_tgk) ' \
-                             'VALUES %s' \
-                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+        
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
+                            'VALUES %s' \
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
@@ -29,91 +24,193 @@ class KlDailyMapper(Mapper):
         kl.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
         kl.measurement_category = 'daily'
 
-        kl.qn_3 = item.get('QN_3', None)
+        kl.information = list()
 
-        kl.fx = item.get('FX', None)
-        if kl.fx == '-999':
-            kl.fx = None
+        # qn_3 = item.get('QN_3', None)
+        # if self.is_valid(qn_3):
+        #     kl.information.append(
+        #         dict(
+        #             value=qn_3,
+        #             unit=NOT_AVAILABLE,
+        #         )
+        #     )
+            
+        fx = item.get('FX', None)
+        if self.is_valid(fx):
+            kl.information.append(
+                dict(
+                    name='FX',
+                    value=fx,
+                    unit='m/s',
+                    description='daily maximum of wind gust',
+                )
+            )
 
-        kl.fm = item.get('FM', None)
-        if kl.fm == '-999':
-            kl.fm = None
+        fm = item.get('FM', None)
+        if self.is_valid(fm):
+            kl.information.append(
+                dict(
+                    name='FM',
+                    value=fm,
+                    unit='m/s',
+                    description='daily mean of wind velocity',
+                )
+            )
 
-        kl.qn_4 = item.get('QN_4', None)
-        if kl.qn_4 == '-999':
-            kl.qn_4 = None
+        # qn_4 = item.get('QN_4', None)
+        # if self.is_valid(qn_4):
+        #     kl.information.append(
+        #         dict(
+        #             value=qn_4,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        kl.rsk = item.get('RSK', None)
-        if kl.rsk == '-999':
-            kl.rsk = None
+        rsk = item.get('RSK', None)
+        if self.is_valid(rsk):
+            kl.information.append(
+                dict(
+                    name='RSK',
+                    value=rsk,
+                    unit='mm',
+                    description='daily precipitation height',
+                )
+            )
 
-        kl.rskf = item.get('RSKF', None)
-        if kl.rskf == '-999':
-            kl.rskf = None
+        rskf = item.get('RSKF', None)
+        if self.is_valid(rskf):
+            kl.information.append(
+                dict(
+                    name='RSKF',
+                    value=rskf,
+                    unit=NOT_AVAILABLE,
+                    description='precipitation form',
+                )
+            )
 
-        kl.sdk = item.get('SDK', None)
-        if kl.sdk == '-999':
-            kl.sdk = None
+        sdk = item.get('SDK', None)
+        if self.is_valid(sdk):
+            kl.information.append(
+                dict(
+                    name='SDK',
+                    value=sdk,
+                    unit='h',
+                    description='daily sunshine duration',
+                )
+            )
 
-        kl.shk_tag = item.get('SHK_TAG', None)
-        if kl.shk_tag == '-999':
-            kl.shk_tag = None
+        shk_tag = item.get('SHK_TAG', None)
+        if self.is_valid(shk_tag):
+            kl.information.append(
+                dict(
+                    name='SHK_TAG',
+                    value=shk_tag,
+                    unit='cm',
+                    description='daily snow depth',
+                )
+            )
 
-        kl.nm = item.get('NM', None)
-        if kl.nm == '-999':
-            kl.nm = None
+        nm = item.get('NM', None)
+        if self.is_valid(nm):
+            kl.information.append(
+                dict(
+                    name='NM',
+                    value=nm,
+                    unit='1/8',
+                    description='daily mean of cloud cover',
+                )
+            )
 
-        kl.vpm = item.get('VPM', None)
-        if kl.vpm == '-999':
-            kl.vpm = None
+        vpm = item.get('VPM', None)
+        if self.is_valid(vpm):
+            kl.information.append(
+                dict(
+                    name='VPM',
+                    value=vpm,
+                    unit='hPa',
+                    description='daily mean of vapor pressure',
+                )
+            )
 
-        kl.pm = item.get('PM', None)
-        if kl.pm == '-999':
-            kl.pm = None
+        pm = item.get('PM', None)
+        if self.is_valid(pm):
+            kl.information.append(
+                dict(
+                    name='PM',
+                    value=pm,
+                    unit='hPa',
+                    description='daily mean of pressure',
+                )
+            )
 
-        kl.tmk = item.get('TMK', None)
-        if kl.tmk == '-999':
-            kl.tmk = None
+        tmk = item.get('TMK', None)
+        if self.is_valid(tmk):
+            kl.information.append(
+                dict(
+                    name='TMK',
+                    value=tmk,
+                    unit='°C',
+                    description='daily mean of temperature',
+                )
+            )
 
-        kl.upm = item.get('UPM', None)
-        if kl.upm == '-999':
-            kl.upm = None
+        upm = item.get('UPM', None)
+        if self.is_valid(upm):
+            kl.information.append(
+                dict(
+                    name='UPM',
+                    value=upm,
+                    unit='%',
+                    description='daily mean of relative humidity',
+                )
+            )
 
-        kl.txk = item.get('TXK', None)
-        if kl.txk == '-999':
-            kl.txk = None
+        txk = item.get('TXK', None)
+        if self.is_valid(txk):
+            kl.information.append(
+                dict(
+                    name='TXK',
+                    value=txk,
+                    unit='°C',
+                    description='daily maximum of temperature at °C 2m height',
+                )
+            )
 
-        kl.tnk = item.get('TNK', None)
-        if kl.tnk == '-999':
-            kl.tnk = None
+        tnk = item.get('TNK', None)
+        if self.is_valid(tnk):
+            kl.information.append(
+                dict(
+                    name='TNK',
+                    value=tnk,
+                    unit='°C',
+                    description='daily minimum of temperature at 2m height',
+                )
+            )
 
-        kl.tgk = item.get('TGK', None)
-        if kl.tgk == '-999':
-            kl.tgk = None
+        tgk = item.get('TGK', None)
+        if self.is_valid(tgk):
+            kl.information.append(
+                dict(
+                    name='TGK',
+                    value=tgk,
+                    unit='°C',
+                    description='daily minimum of air temperature at 5cm above ground',
+                )
+            )
 
         return kl
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item: Kl):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_3,
-                item.fx,
-                item.fm,
-                item.qn_4,
-                item.rsk,
-                item.rskf,
-                item.sdk,
-                item.shk_tag,
-                item.nm,
-                item.vpm,
-                item.pm,
-                item.tmk,
-                item.upm,
-                item.txk,
-                item.tnk,
-                item.tgk)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

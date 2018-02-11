@@ -3,7 +3,7 @@ from model.more_precip import MorePrecip
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class MorePrecipMonthlyMapper(Mapper):
@@ -12,11 +12,9 @@ class MorePrecipMonthlyMapper(Mapper):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
 
-        self.select_query = 'INSERT INTO data_hub (' \
-                            'station_id, measurement_date, measurement_category, ' \
-                            'more_precip_qn_6, more_precip_mo_nsh, more_precip_mo_rr, more_precip_mo_sh_s, more_precip_mx_rs) ' \
+        self.select_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
                             'VALUES %s' \
-                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
@@ -26,38 +24,76 @@ class MorePrecipMonthlyMapper(Mapper):
         more_precip.measurement_date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d')
         more_precip.measurement_category = 'daily'
 
-        more_precip.qn_6 = item.get('QN_6', None)
-        if more_precip.qn_6 == '-999':
-            more_precip.qn_6 = None
+        more_precip.information = list()
 
-        more_precip.mo_nsh = item.get('MO_NSH', None)
-        if more_precip.mo_nsh == '-999':
-            more_precip.mo_nsh = None
+        # qn_6 = item.get('QN_6', None)
+        # if self.is_valid(qn_6):
+        #     more_precip.information.append(
+        #         dict(
+        #             name='QN_6',
+        #             value=qn_6,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        more_precip.mo_rr = item.get('MO_RR', None)
-        if more_precip.mo_rr == '-999':
-            more_precip.mo_rr = None
+        mo_nsh = item.get('MO_NSH', None)
+        if self.is_valid(mo_nsh):
+            more_precip.information.append(
+                dict(
+                    name='MO_NSH',
+                    value=mo_nsh,
+                    unit='cm',
+                    description='monthly sum of daily fresh snow',
+                )
+            )
 
-        more_precip.mo_sh_s = item.get('MO_SH_S', None)
-        if more_precip.mo_sh_s == '-999':
-            more_precip.mo_sh_s = None
+        mo_rr = item.get('MO_RR', None)
+        if self.is_valid(mo_rr):
+            more_precip.information.append(
+                dict(
+                    name='MO_RR',
+                    value=mo_rr,
+                    unit='mm',
+                    description='monthly sum of daily precipitation height',
+                )
+            )
 
-        more_precip.max_rs = item.get('MX_RS', None)
-        if more_precip.max_rs == '-999':
-            more_precip.max_rs = None
+        mo_sh_s = item.get('MO_SH_S', None)
+        if self.is_valid(mo_sh_s):
+            more_precip.information.append(
+                dict(
+                    name='MO_SH_S',
+                    value=mo_sh_s,
+                    unit='cm',
+                    description='monthly sum of daily height of snow pack',
+                )
+            )
+
+        max_rs = item.get('MX_RS', None)
+        if self.is_valid(max_rs):
+            more_precip.information.append(
+                dict(
+                    name='MX_RS',
+                    value=max_rs,
+                    unit='mm',
+                    description='monthly max of daily precipitation height',
+                )
+            )
 
         return more_precip
+
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_6,
-                item.mo_nsh,
-                item.mo_rr,
-                item.mo_sh_s,
-                item.max_rs)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

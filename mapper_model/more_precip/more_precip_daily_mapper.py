@@ -3,7 +3,7 @@ from model.more_precip import MorePrecip
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class MorePrecipDailyMapper(Mapper):
@@ -12,11 +12,9 @@ class MorePrecipDailyMapper(Mapper):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
 
-        self.select_query = 'INSERT INTO data_hub (' \
-                          'station_id, measurement_date, measurement_category, ' \
-                          'more_precip_qn_6, more_precip_rs, more_precip_rsf, more_precip_sh_tag) ' \
-                          'VALUES %s' \
-                          'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING'
+        self.select_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
+                            'VALUES %s' \
+                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
         self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
@@ -26,33 +24,63 @@ class MorePrecipDailyMapper(Mapper):
         more_precip.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
         more_precip.measurement_category = 'daily'
 
-        more_precip.qn_6 = item.get('QN_6', None)
-        if more_precip.qn_6 == '-999':
-            more_precip.qn_6 = None
+        more_precip.information = list()
 
-        more_precip.rs = item.get('RS', None)
-        if more_precip.rs == '-999':
-            more_precip.rs = None
+        # qn_6 = item.get('QN_6', None)
+        # if self.is_valid(qn_6):
+        #     more_precip.information.append(
+        #         dict(
+        #             value=qn_6,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        more_precip.rsf = item.get('RSF', None)
-        if more_precip.rsf == '-999':
-            more_precip.rsf = None
+        rs = item.get('RS', None)
+        if self.is_valid(rs):
+            more_precip.information.append(
+                dict(
+                    name='RS',
+                    value=rs,
+                    unit='mm',
+                    description='daily precipitation height',
+                )
+            )
 
-        more_precip.sh_tag = item.get('SH_TAG', None)
-        if more_precip.sh_tag == '-999':
-            more_precip.sh_tag = None
+        rsf = item.get('RSF', None)
+        if self.is_valid(rsf):
+            more_precip.information.append(
+                dict(
+                    name='RSF',
+                    value=rsf,
+                    unit=NOT_AVAILABLE,
+                    description='precipitation form',
+                )
+            )
+
+        sh_tag = item.get('SH_TAG', None)
+        if self.is_valid(sh_tag):
+            more_precip.information.append(
+                dict(
+                    name='SH_TAG',
+                    value=sh_tag,
+                    unit='cm',
+                    description='daily height of snow pack',
+                )
+            )
 
         return more_precip
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_6,
-                item.rs,
-                item.rsf,
-                item.sh_tag)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

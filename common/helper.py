@@ -1,11 +1,11 @@
 import fnmatch
 import os
 import zipfile
-
+import gzip
 from constants.constants import DOWNLOAD_FOLDER
 from itertools import chain
 import shutil
-
+from pathlib import Path
 
 class Helper:
     def __init__(self):
@@ -14,9 +14,13 @@ class Helper:
     @staticmethod
     def unzip(path):
         server_path, separator, filename = path.rpartition('/')
+        extracted_path, file_path = None, None
+        if path.endswith('.zip'):
+            extracted_path = unzip(server_path + separator, filename)
+            file_path = find('produkt_*.txt', extracted_path)
+        elif path.endswith('.gz'):
+            extracted_path, file_path = gunzip(server_path + separator, filename)
 
-        extracted_path = unzip(server_path + separator, filename)
-        file_path = find('produkt_*.txt', extracted_path)
         return extracted_path, file_path
 
     @staticmethod
@@ -76,6 +80,10 @@ class Helper:
         return '/daily/soil_temperature/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_soil_daily(path):
+        return '/daily/soil/' in path and path.endswith('.gz')
+
+    @staticmethod
     def is_soil_temperature_hourly(path):
         return '/hourly/soil_temperature/' in path and path.endswith('.zip')
 
@@ -133,9 +141,28 @@ class Helper:
 
     @staticmethod
     def is_path_parseable(path):
-        return not (path.endswith('.pdf')
-                    or path.endswith('.html')
-                    or path.endswith('.gz'))
+        return (path.endswith('.zip')
+                or path.endswith('.txt')
+                or path.endswith('.txt.gz'))
+
+
+def gunzip(path, filename):
+    path_with_filename = DOWNLOAD_FOLDER + path + filename
+    with gzip.GzipFile(path_with_filename, "r") as input_file_stream:
+        directory, separator, extension = filename.rpartition('.')
+        path_to_extracted_folder = DOWNLOAD_FOLDER + path + directory
+        path_to_extracted_file = path_to_extracted_folder + '/' + directory
+
+        path = Path(path_to_extracted_folder)
+        path.mkdir(parents=True, exist_ok=True)
+
+        out_file_stream = open(path_to_extracted_file, 'wb')
+        out_file_stream.write(input_file_stream.read())
+        out_file_stream.close()
+        input_file_stream.close()
+
+        return path_to_extracted_folder, path_to_extracted_file
+
 
 def unzip(path, filename):
     # taken from https://stackoverflow.com/questions/3451111/unzipping-files-in-python

@@ -3,7 +3,7 @@ from model.pressure import Pressure
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION
+from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 
 
 class PressureHourlyMapper(Mapper):
@@ -12,9 +12,7 @@ class PressureHourlyMapper(Mapper):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
 
-        self.insert_query = 'INSERT INTO data_hub (' \
-                            'station_id, measurement_date, measurement_category, ' \
-                            'pressure_qn_8, pressure_p, pressure_p0)' \
+        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
                             'VALUES %s' \
                             'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
 
@@ -26,28 +24,53 @@ class PressureHourlyMapper(Mapper):
         pressure.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
         pressure.measurement_category = 'hourly'
 
-        pressure.qn_8 = item.get('QN_8', None)
-        if pressure.qn_8 == '-999':
-            pressure.qn_8 = None
+        pressure.information = list()
 
-        pressure.p = item.get('P', None)
-        if pressure.p == '-999':
-            pressure.p = None
+        # qn_8 = item.get('QN_8', None)
+        # if self.is_valid(qn_8):
+        #     pressure.information.append(
+        #         dict(
+        #             name='QN_8',
+        #             value=qn_8,
+        #             unit=NOT_AVAILABLE,
+        #             description='quality level of next columns',
+        #         )
+        #     )
 
-        pressure.p0 = item.get('P0', None)
-        if pressure.p0 == '-999':
-            pressure.p0 = None
+        p = item.get('P', None)
+        if self.is_valid(p):
+            pressure.information.append(
+                dict(
+                    name='P',
+                    value=p,
+                    unit='hPA',
+                    description='mean sea level pressure',
+                )
+            )
+
+        p0 = item.get('P0', None)
+        if self.is_valid(p0):
+            pressure.information.append(
+                dict(
+                    name='P0',
+                    value=p0,
+                    unit='hPA',
+                    description='pressure at station height',
+                )
+            )
 
         return pressure
+
+    @staticmethod
+    def is_valid(value):
+        return value and value != '999'
 
     @staticmethod
     def to_tuple(item):
         return (item.station_id,
                 item.measurement_date,
                 item.measurement_category,
-                item.qn_8,
-                item.p,
-                item.p0)
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:

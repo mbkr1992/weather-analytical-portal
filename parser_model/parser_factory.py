@@ -32,6 +32,7 @@ class ParserFactory:
                 or Helper.is_more_precip_monthly_file(path)\
                 or Helper.is_soil_temperature_daily(path)\
                 or Helper.is_soil_temperature_hourly(path)\
+                or Helper.is_soil_daily(path)\
                 or Helper.is_water_equiv_daily(path)\
                 or Helper.is_air_temperature_hourly(path) \
                 or Helper.is_air_temperature_10minutes(path) \

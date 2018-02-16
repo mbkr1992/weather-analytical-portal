@@ -11,13 +11,5 @@ class Pressure:
         self.p = None  # real
         self.p0 = None
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn_8,
-                self.p,
-                self.p0)
-
     def __str__(self):
         return '{0}, {1}'.format(self.station_id, self.measurement_date)

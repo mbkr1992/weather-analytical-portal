@@ -20,20 +20,5 @@ class Wind:
         self.fmx_10 = None
         self.dx_10 = None
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn_3,
-                self.f,
-                self.d,
-                self.qn,
-                self.ff_10,
-                self.dd_10,
-                self.fx_10,
-                self.fnx_10,
-                self.fmx_10,
-                self.dx_10)
-
     def __str__(self):
-        return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)
+        return '{0}, {1}'.format(self.station_id, self.measurement_date)

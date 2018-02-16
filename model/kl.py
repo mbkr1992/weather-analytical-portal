@@ -40,43 +40,6 @@ class Kl:
         self.mo_rr = None
         self.mx_rs = None
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn_3,
-
-                self.fx,
-                self.fm,
-                self.qn_4,
-
-                self.rsk,
-                self.rskf,
-
-                self.sdk,
-                self.shk_tag,
-
-                self.nm,
-                self.vpm,
-                self.pm,
-                self.tmk,
-                self.upm,
-                self.txk,
-                self.tnk,
-                self.tgk,
-
-                self.mo_n,
-                self.mo_tt,
-                self.mo_tx,
-                self.mo_tn,
-                self.mo_fk,
-                self.mx_tx,
-                self.mx_fx,
-                self.mx_tn,
-                self.mo_sd_s,
-                self.qn_6,
-                self.mo_rr,
-                self.mx_rs)
 
     def __str__(self):
         return '{0}, {1}'.format(self.station_id, self.measurement_date)

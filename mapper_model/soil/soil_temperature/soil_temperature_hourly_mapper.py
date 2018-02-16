@@ -4,6 +4,7 @@ from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from database_model import db_handler
 
 
 class SoilTemperatureHourlyMapper(Mapper):
@@ -11,11 +12,9 @@ class SoilTemperatureHourlyMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO data_hub (station_id, measurement_date, measurement_category, information)' \
-                            'VALUES %s' \
-                            'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+        self.insert_query = db_handler.query_insert_station_data
 
-        self.update_query = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
+        self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
         soil_temperature = SoilTemperature()

@@ -10,12 +10,5 @@ class Sun:
         self.qn_7 = None      # small int
         self.sd_so = None  # real
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn_7,
-                self.sd_so)
-
     def __str__(self):
-        return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)
+        return '{0}, {1}'.format(self.station_id, self.measurement_date)

@@ -12,15 +12,5 @@ class WaterEquiv:
         self.wash_6 = None  # real
         self.waas_6 = None  # real
 
-    def to_tuple(self):
-        return (self.station_id,
-                self.measurement_date,
-                self.measurement_category,
-                self.qn_6,
-                self.ash_6,
-                self.sh_tag,
-                self.wash_6,
-                self.waas_6)
-
     def __str__(self):
-        return '{0}, {1}, {2}'.format(self.station_id, self.measurement_date)
+        return '{0}, {1}'.format(self.station_id, self.measurement_date)

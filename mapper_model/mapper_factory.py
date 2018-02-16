@@ -26,7 +26,7 @@ from mapper_model.water_equiv.water_equiv_daily_mapper import WaterEquivDailyMap
 from mapper_model.wind.wind_10minute_mapper import Wind10MinuteMapper
 from mapper_model.wind.wind_extreme_10minute_mapper import WindExtreme10MinuteMapper
 from mapper_model.wind.wind_hourly_mapper import WindHourlyMapper
-
+from mapper_model.cams.cams_mapper import CamsMapper
 
 class MapperFactory:
     def __init__(self):
@@ -101,5 +101,8 @@ class MapperFactory:
 
         elif Helper.is_station(path):
             return StationMapper()
+
+        elif Helper.is_analysis_cams_nrealtime(path):
+            return CamsMapper()
 
         return EmptyMapper()

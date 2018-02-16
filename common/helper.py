@@ -132,6 +132,14 @@ class Helper:
         return '/hourly/visibility/' in path and path.endswith('.zip')
 
     @staticmethod
+    def is_analysis_cams_nrealtime(path):
+        return path.endswith('.grib')  # 'output.an.[time].grib' in path and path.endswith('.grib')
+
+    @staticmethod
+    def is_forecast_cams_nrealtime(path):
+        return path.endswith('.grib')  # 'output.fc.[time].grib' in path and path.endswith('.grib')
+
+    @staticmethod
     def is_txt_file(path):
         return path.endswith('.txt')
 
@@ -143,7 +151,8 @@ class Helper:
     def is_path_parseable(path):
         return (path.endswith('.zip')
                 or path.endswith('.txt')
-                or path.endswith('.txt.gz'))
+                or path.endswith('.txt.gz')
+                or path.endswith('.grib'))
 
 
 def gunzip(path, filename):

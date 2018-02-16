@@ -1,8 +1,8 @@
 from constants import constants
-from parser_model.file_soil_station_parser import FileSoilStationParser
 from parser_model.simple_parser import SimpleParser
 from parser_model.empty_parser import EmptyParser
 from parser_model.station_parser import StationParser
+from parser_model.grib_parser import GribParser
 from common.helper import Helper
 
 
@@ -12,13 +12,7 @@ class ParserFactory:
 
     @staticmethod
     def get_parser(identifier):
-        if identifier == constants.PARSER_STATION:
-            return FileSoilStationParser()
-        elif identifier == constants.MAPPER_STATION:
-            return StationParser()
-        elif identifier == constants.PARSER_SIMPLE:
-            return SimpleParser()
-        return EmptyParser()
+        pass
 
     @staticmethod
     def get_parser_for_path(path):
@@ -49,4 +43,7 @@ class ParserFactory:
             return SimpleParser()
         elif Helper.is_station(path):
             return StationParser()
+        elif Helper.is_analysis_cams_nrealtime(path)\
+            or Helper.is_forecast_cams_nrealtime(path):
+            return GribParser()
         return EmptyParser()

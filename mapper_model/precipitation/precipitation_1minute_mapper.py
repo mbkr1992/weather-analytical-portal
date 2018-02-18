@@ -3,7 +3,7 @@ from model.precipitation import Precipitation
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from constants.constants import DATABASE_CONNECTION
 from database_model import db_handler
 
 
@@ -16,81 +16,51 @@ class Precipitation1MinuteMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        precipitation = Precipitation()
-        precipitation.station_id = item['STATIONS_ID']
-        precipitation.measurement_date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d%H%M')
-        precipitation.measurement_category = '1_minute'
 
-        precipitation.information = list()
+        list_of_items = []
 
-        # qn = item.get('QN', None)
-        # if self.is_valid(qn):
-        #     precipitation.information.append(
-        #         dict(
-        #             name='QN',
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description=NOT_AVAILABLE,
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d%H%M')
+        interval = '1_minute'
 
-        rs_01 = item.get('RS_01', None)
-        if self.is_valid(rs_01):
-            precipitation.information.append(
-                dict(
-                    name='RS_01',
-                    value=rs_01,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rs_01(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rth_01 = item.get('RTH_01', None)
-        if self.is_valid(rth_01):
-            precipitation.information.append(
-                dict(
-                    name='RTH_01',
-                    value=rth_01,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rth_01(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rwh_01 = item.get('RWH_01', None)
-        if self.is_valid(rwh_01):
-            precipitation.information.append(
-                dict(
-                    name='RWH_01',
-                    value=rwh_01,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rwh_01(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rs_ind_01 = item.get('RS_IND_01', None)
-        if self.is_valid(rs_ind_01):
-            precipitation.information.append(
-                dict(
-                    name='RS_IND_01',
-                    value=rs_ind_01,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rs_ind_01(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return precipitation
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
-                extras.Json(item.information),
-                )
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:
@@ -105,3 +75,73 @@ class Precipitation1MinuteMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_rs_01(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RS_01'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def create_rth_01(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RTH_01'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def create_rwh_01(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RWH_01'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def create_rs_ind_01(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RS_IND_01'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

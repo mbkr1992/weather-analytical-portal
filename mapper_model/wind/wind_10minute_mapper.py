@@ -3,7 +3,7 @@ from model.wind import Wind
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from constants.constants import DATABASE_CONNECTION
 from database_model import db_handler
 
 
@@ -17,57 +17,35 @@ class Wind10MinuteMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        wind = Wind()
-        wind.station_id = item['STATIONS_ID']
-        wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        wind.measurement_category = '10_minutes'
+        list_of_items = []
 
-        wind.information = list()
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        interval = '10_minutes'
 
-        qn = item.get('QN', None)
-        # if self.is_valid(qn):
-        #     wind.information.append(
-        #         dict(
-        #             name='QN',
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_ff_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ff_10 = item.get('FF_10', None)
-        if self.is_valid(ff_10):
-            wind.information.append(
-                dict(
-                    name='FF_10',
-                    value=ff_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_dd_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        dd_10 = item.get('DD_10', None)
-        if self.is_valid(dd_10):
-            wind.information.append(
-                dict(
-                    name='DD_10',
-                    value=dd_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
-
-        return wind
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -83,3 +61,43 @@ class Wind10MinuteMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_ff_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'FF_10'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit=None,
+                value=value,
+                information={
+                    "QN": qn,
+                    "description": None,
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def create_dd_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'DD_10'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit=None,
+                value=value,
+                information={
+                    "QN": qn,
+                    "description": None,
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

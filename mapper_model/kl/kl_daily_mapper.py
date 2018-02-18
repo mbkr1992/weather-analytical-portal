@@ -18,197 +18,119 @@ class KlDailyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        kl = Kl()
-        kl.station_id = item['STATIONS_ID']
-        kl.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
-        kl.measurement_category = 'daily'
+        list_of_items = []
 
-        kl.information = list()
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
+        interval = 'daily'
 
-        # qn_3 = item.get('QN_3', None)
-        # if self.is_valid(qn_3):
-        #     kl.information.append(
-        #         dict(
-        #             value=qn_3,
-        #             unit=NOT_AVAILABLE,
-        #         )
-        #     )
-            
-        fx = item.get('FX', None)
-        if self.is_valid(fx):
-            kl.information.append(
-                dict(
-                    name='FX',
-                    value=fx,
-                    unit='m/s',
-                    description='daily maximum of wind gust',
-                )
-            )
+        list_of_items.append(create_fx(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        fm = item.get('FM', None)
-        if self.is_valid(fm):
-            kl.information.append(
-                dict(
-                    name='FM',
-                    value=fm,
-                    unit='m/s',
-                    description='daily mean of wind velocity',
-                )
-            )
+        list_of_items.append(create_fm(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        # qn_4 = item.get('QN_4', None)
-        # if self.is_valid(qn_4):
-        #     kl.information.append(
-        #         dict(
-        #             value=qn_4,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_rsk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rsk = item.get('RSK', None)
-        if self.is_valid(rsk):
-            kl.information.append(
-                dict(
-                    name='RSK',
-                    value=rsk,
-                    unit='mm',
-                    description='daily precipitation height',
-                )
-            )
+        list_of_items.append(create_rskf(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rskf = item.get('RSKF', None)
-        if self.is_valid(rskf):
-            kl.information.append(
-                dict(
-                    name='RSKF',
-                    value=rskf,
-                    unit=NOT_AVAILABLE,
-                    description='precipitation form',
-                )
-            )
+        list_of_items.append(create_sdk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        sdk = item.get('SDK', None)
-        if self.is_valid(sdk):
-            kl.information.append(
-                dict(
-                    name='SDK',
-                    value=sdk,
-                    unit='h',
-                    description='daily sunshine duration',
-                )
-            )
+        list_of_items.append(create_shk_tag(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        shk_tag = item.get('SHK_TAG', None)
-        if self.is_valid(shk_tag):
-            kl.information.append(
-                dict(
-                    name='SHK_TAG',
-                    value=shk_tag,
-                    unit='cm',
-                    description='daily snow depth',
-                )
-            )
+        list_of_items.append(create_nm(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        nm = item.get('NM', None)
-        if self.is_valid(nm):
-            kl.information.append(
-                dict(
-                    name='NM',
-                    value=nm,
-                    unit='1/8',
-                    description='daily mean of cloud cover',
-                )
-            )
+        list_of_items.append(create_vpm(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        vpm = item.get('VPM', None)
-        if self.is_valid(vpm):
-            kl.information.append(
-                dict(
-                    name='VPM',
-                    value=vpm,
-                    unit='hPa',
-                    description='daily mean of vapor pressure',
-                )
-            )
+        list_of_items.append(create_pm(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        pm = item.get('PM', None)
-        if self.is_valid(pm):
-            kl.information.append(
-                dict(
-                    name='PM',
-                    value=pm,
-                    unit='hPa',
-                    description='daily mean of pressure',
-                )
-            )
+        list_of_items.append(create_tmk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        tmk = item.get('TMK', None)
-        if self.is_valid(tmk):
-            kl.information.append(
-                dict(
-                    name='TMK',
-                    value=tmk,
-                    unit='°C',
-                    description='daily mean of temperature',
-                )
-            )
+        list_of_items.append(create_upm(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        upm = item.get('UPM', None)
-        if self.is_valid(upm):
-            kl.information.append(
-                dict(
-                    name='UPM',
-                    value=upm,
-                    unit='%',
-                    description='daily mean of relative humidity',
-                )
-            )
+        list_of_items.append(create_txk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        txk = item.get('TXK', None)
-        if self.is_valid(txk):
-            kl.information.append(
-                dict(
-                    name='TXK',
-                    value=txk,
-                    unit='°C',
-                    description='daily maximum of temperature at °C 2m height',
-                )
-            )
+        list_of_items.append(create_tnk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        tnk = item.get('TNK', None)
-        if self.is_valid(tnk):
-            kl.information.append(
-                dict(
-                    name='TNK',
-                    value=tnk,
-                    unit='°C',
-                    description='daily minimum of temperature at 2m height',
-                )
-            )
+        list_of_items.append(create_tgk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        tgk = item.get('TGK', None)
-        if self.is_valid(tgk):
-            kl.information.append(
-                dict(
-                    name='TGK',
-                    value=tgk,
-                    unit='°C',
-                    description='daily minimum of air temperature at 5cm above ground',
-                )
-            )
-
-        return kl
+        return list_of_items
 
     @staticmethod
-    def is_valid(value):
-        return value and value != '999'
-
-    @staticmethod
-    def to_tuple(item: Kl):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+    def to_tuple(item):
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -225,3 +147,222 @@ class KlDailyMapper(Mapper):
                 data = True, path
                 curs.execute(self.update_query, data)
 
+
+def create_fx(sid, date, interval, item):
+    qn_3 = item.get('QN_3', None)
+    name = 'FX'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='m/s',
+              value=value,
+              information={
+                  "QN_3": qn_3,
+                  "description": 'daily maximum of wind gust',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_fm(sid, date, interval, item):
+    qn_3 = item.get('QN_3', None)
+    name = 'FM'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='m/s',
+              value=value,
+              information={
+                  "QN_3": qn_3,
+                  "description": 'daily mean of wind velocity',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_rsk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'RSK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='mm',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily precipitation height',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_rskf(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'RSKF'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit=None,
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'precipitation form',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_sdk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'SDK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='h',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily sunshine duration',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_shk_tag(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'SHK_TAG'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='cm',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily snow depth',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_nm(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'NM'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='1/8',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily mean of cloud cover',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_vpm(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'VPM'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='hPa',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily mean of vapor pressure',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_pm(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'PM'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='hPa',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily mean of pressure',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_tmk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'TMK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily mean of temperature',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_upm(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'UPM'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='%',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily mean of relative humidity',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_txk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'TXK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily maximum of temperature at 2m height',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_tnk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'TNK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily minimum of temperature at 2m height',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_tgk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'TGK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'daily minimum of air temperature at 5cm above ground',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

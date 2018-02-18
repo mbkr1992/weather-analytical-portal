@@ -3,7 +3,7 @@ from model.wind import Wind
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from constants.constants import DATABASE_CONNECTION
 from database_model import db_handler
 
 
@@ -17,57 +17,35 @@ class WindHourlyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        wind = Wind()
-        wind.station_id = item['STATIONS_ID']
-        wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        wind.measurement_category = 'hourly'
+        list_of_items = []
 
-        wind.information = list()
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
+        interval = 'hourly'
 
-        # qn_3 = item.get('QN_3', None)
-        # if self.is_valid(qn_3):
-        #     wind.information.append(
-        #         dict(
-        #             name='QN_3',
-        #             value=qn_3,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_f(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        f = item.get('F', None)
-        if self.is_valid(f):
-            wind.information.append(
-                dict(
-                    name='F',
-                    value=f,
-                    unit='m/s',
-                    description='mean wind speed',
-                )
-            )
+        list_of_items.append(create_d(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        d = item.get('D', None)
-        if self.is_valid(d):
-            wind.information.append(
-                dict(
-                    name='D',
-                    value=d,
-                    unit='Grad',
-                    description='mean wind direction',
-                )
-            )
-
-        return wind
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -83,3 +61,43 @@ class WindHourlyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_f(sid, date, interval, item):
+    qn = item.get('QN_3', None)
+    name = 'F'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit='m/s',
+                value=value,
+                information={
+                    "QN_3": qn,
+                    "description": 'mean wind speed',
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def create_d(sid, date, interval, item):
+    qn = item.get('QN_3', None)
+    name = 'D'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit='Grad',
+                value=value,
+                information={
+                    "QN_3": qn,
+                    "description": 'mean wind direction',
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

@@ -8,9 +8,8 @@ class SimpleParser(Parser):
 
     def parse(self, path, mapper):
         with open(path, encoding='ISO-8859-1') as f:
+            list_of_items = []
             try:
-                list_of_items = []
-
                 # Headings Station_id etc
                 keys = clean_txt(f.readline()).split(';')
 
@@ -29,7 +28,7 @@ class SimpleParser(Parser):
                         # For cases where data in a row is incomplete
                         if i < len(values) - 1:
                             item[keys[i]] = values[i]
-                    list_of_items.append(mapper.map(item))
+                    list_of_items.extend(mapper.map(item))
             except Exception as e:
                 print('Parsing error {0}'.format(e, path))
             finally:

@@ -18,67 +18,42 @@ class MorePrecipDailyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        more_precip = MorePrecip()
-        more_precip.station_id = item['STATIONS_ID']
-        more_precip.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
-        more_precip.measurement_category = 'daily'
+        list_of_items = []
 
-        more_precip.information = list()
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
+        interval = 'daily'
 
-        # qn_6 = item.get('QN_6', None)
-        # if self.is_valid(qn_6):
-        #     more_precip.information.append(
-        #         dict(
-        #             value=qn_6,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_rs(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rs = item.get('RS', None)
-        if self.is_valid(rs):
-            more_precip.information.append(
-                dict(
-                    name='RS',
-                    value=rs,
-                    unit='mm',
-                    description='daily precipitation height',
-                )
-            )
+        list_of_items.append(create_rsf(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rsf = item.get('RSF', None)
-        if self.is_valid(rsf):
-            more_precip.information.append(
-                dict(
-                    name='RSF',
-                    value=rsf,
-                    unit=NOT_AVAILABLE,
-                    description='precipitation form',
-                )
-            )
+        list_of_items.append(create_sh_tag(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        sh_tag = item.get('SH_TAG', None)
-        if self.is_valid(sh_tag):
-            more_precip.information.append(
-                dict(
-                    name='SH_TAG',
-                    value=sh_tag,
-                    unit='cm',
-                    description='daily height of snow pack',
-                )
-            )
-
-        return more_precip
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -86,7 +61,7 @@ class MorePrecipDailyMapper(Mapper):
             register(connection=conn)
             with conn.cursor() as curs:
                 data = [self.to_tuple(item) for item in items]
-                extras.execute_values(curs, self.select_query, data, template=None, page_size=100)
+                extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
         with connect(self.dbc) as conn:
@@ -94,3 +69,58 @@ class MorePrecipDailyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_rs(sid, date, interval, item):
+    qn_6 = item.get('QN_6', None)
+    name = 'RS'
+    value = get_value(item, name, None),
+    return MorePrecip(station_id=sid, date=date,
+                      interval=interval, name=name, unit='mm',
+                      value=value,
+                      information={
+                          "QN_6": qn_6,
+                          "description": 'daily precipitation height',
+                          "type": "precipitation",
+                          "source": "DW",
+                      })
+
+
+def create_rsf(sid, date, interval, item):
+    qn_6 = item.get('QN_6', None)
+    name = 'RSF'
+    value = get_value(item, name, None),
+    return MorePrecip(station_id=sid, date=date,
+                      interval=interval, name=name, unit=None,
+                      value=value,
+                      information={
+                          "QN_6": qn_6,
+                          "description": 'precipitation form',
+                          "type": "precipitation",
+                          "source": "DW",
+                      })
+
+
+def create_sh_tag(sid, date, interval, item):
+    qn_6 = item.get('QN_6', None)
+    name = 'SH_TAG'
+    value = get_value(item, name, None),
+    return MorePrecip(station_id=sid, date=date,
+                      interval=interval, name=name, unit='cm',
+                      value=value,
+                      information={
+                          "QN_6": qn_6,
+                          "description": 'daily height of snow pack',
+                          "type": "precipitation",
+                          "source": "DW",
+                      })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

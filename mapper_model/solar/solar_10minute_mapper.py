@@ -18,78 +18,48 @@ class Solar10MinuteMapper(Mapper):
 
     def map(self, item={}):
 
-        solar = Solar()
-        solar.station_id = item['STATIONS_ID']
-        solar.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        solar.measurement_category = '10_minutes'
+        list_of_items = []
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        interval = '10_minutes'
 
-        solar.information = list()
+        list_of_items.append(create_ds_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        # qn = item.get('QN', None)
-        # if self.is_valid(qn):
-        #     solar.information.append(
-        #         dict(
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description=NOT_AVAILABLE,
-        #         )
-        #     )
+        list_of_items.append(create_gs_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ds = item.get('DS_10', None)
-        if self.is_valid(ds):
-            solar.information.append(
-                dict(
-                    name='DS_10',
-                    value=ds,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_sd_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        gs = item.get('GS_10', None)
-        if self.is_valid(gs):
-            solar.information.append(
-                dict(
-                    name='GS_10',
-                    value=gs,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_ls_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        sd = item.get('SD_10', None)
-        if self.is_valid(sd):
-            solar.information.append(
-                dict(
-                    name='SD_10',
-                    value=sd,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
-
-        ls = item.get('LS_10', None)
-        if self.is_valid(ls):
-            solar.information.append(
-                dict(
-                    name='LS_10',
-                    value=ls,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
-
-        return solar
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -105,3 +75,73 @@ class Solar10MinuteMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_ds_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'DS_10'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit=None,
+                 value=value,
+                 information={
+                     "QN_8": qn,
+                     "description": None,
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_gs_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'GS_10'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit=None,
+                 value=value,
+                 information={
+                     "QN_8": qn,
+                     "description": None,
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_sd_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'SD_10'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit=None,
+                 value=value,
+                 information={
+                     "QN_8": qn,
+                     "description": None,
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_ls_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'LS_10'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit=None,
+                 value=value,
+                 information={
+                     "QN_8": qn,
+                     "description": None,
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

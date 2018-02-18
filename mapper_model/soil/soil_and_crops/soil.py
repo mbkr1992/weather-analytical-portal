@@ -18,231 +18,139 @@ class SoilDailyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        soil_temperature = SoilTemperature()
-        soil_temperature.station_id = item['Stationsindex']
-        soil_temperature.measurement_date = datetime.strptime(item['Datum'], '%Y%m%d')
-        soil_temperature.measurement_category = 'daily'
+        list_of_items = []
 
-        soil_temperature.information = list()
+        station_id = item['Stationsindex']
+        date = datetime.strptime(item['Datum'], '%Y%m%d')
+        interval = 'daily'
 
-        # qn_2 = item.get('QN_2', None)
-        # if self.is_valid(qn_2):
-        #     soil_temperature.information.append(
-        #         dict(
-        #             name='QN_2',
-        #             value=qn_2,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_vgsl(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        vgsl = item.get('VGSL', None)
-        if self.is_valid(vgsl):
-            soil_temperature.information.append(
-                dict(
-                    name='VGSL',
-                    value=vgsl,
-                    unit='mm',
-                    description='real evapotranspiration over grass and sandy loam (AMBAV)',
-                )
-            )
+        list_of_items.append(create_vpgb(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        vpgb = item.get('VPGB', None)
-        if self.is_valid(vpgb):
-            soil_temperature.information.append(
-                dict(
-                    name='VPGB',
-                    value=vpgb,
-                    unit='mm',
-                    description='potential evapotranspiration over grass (AMBAV)',
-                )
-            )
+        list_of_items.append(create_vpgh(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        vpgh = item.get('VPGH', None)
-        if self.is_valid(vpgh):
-            soil_temperature.information.append(
-                dict(
-                    name='VPGH',
-                    value=vpgh,
-                    unit='mm',
-                    description='potential evaporation over grass (Haude)',
-                )
-            )
+        list_of_items.append(create_ts05(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ts05 = item.get('TS05', None)
-        if self.is_valid(ts05):
-            soil_temperature.information.append(
-                dict(
-                    name='TS05',
-                    value=ts05,
-                    unit='°C',
-                    description='mean daily soil temperature in 5 cm depth for uncovered typical soil in 5 cm depth '
-                                'mean daily soil',
-                )
-            )
+        list_of_items.append(create_ts10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ts10 = item.get('TS10', None)
-        if self.is_valid(ts10):
-            soil_temperature.information.append(
-                dict(
-                    name='TS10',
-                    value=ts10,
-                    unit='°C',
-                    description='mean daily soil temperature in 5 cm depth for uncovered typical soil in 10 cm depth '
-                                'mean daily soil',
-                )
-            )
+        list_of_items.append(create_ts20(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ts20 = item.get('TS20', None)
-        if self.is_valid(ts20):
-            soil_temperature.information.append(
-                dict(
-                    name='TS20',
-                    value=ts20,
-                    unit='°C',
-                    description='mean daily soil temperature in 5 cm depth for uncovered typical soil in 20 cm depth '
-                                'mean daily soil',
-                )
-            )
+        list_of_items.append(create_ts50(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ts50 = item.get('TS50', None)
-        if self.is_valid(ts50):
-            soil_temperature.information.append(
-                dict(
-                    name='TS50',
-                    value=ts50,
-                    unit='°C',
-                    description='mean daily soil temperature in 5 cm depth for uncovered typical soil in 50 cm depth '
-                                'mean daily soil',
-                )
-            )
+        list_of_items.append(create_ts100(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        ts100 = item.get('TS100', None)
-        if self.is_valid(ts100):
-            soil_temperature.information.append(
-                dict(
-                    name='TS100',
-                    value=ts100,
-                    unit='°C',
-                    description='mean daily soil temperature in 5 cm depth for uncovered typical soil in 1 m depth '
-                                'mean daily soil',
-                )
-            )
-        zfumi = item.get('ZFUMI', None)
-        if self.is_valid(zfumi):
-            soil_temperature.information.append(
-                dict(
-                    name='ZFUMI',
-                    value=zfumi,
-                    unit='cm',
-                    description='frost depth at midday for uncovered soil',
-                )
-            )
-        bf10 = item.get('BF10', None)
-        if self.is_valid(bf10):
-            soil_temperature.information.append(
-                dict(
-                    name='BF10',
-                    value=bf10,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam between 0 and 10 cm depth in % plant '
-                                'usable water',
-                )
-            )
+        list_of_items.append(create_zfumi(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bf20 = item.get('BF20', None)
-        if self.is_valid(bf20):
-            soil_temperature.information.append(
-                dict(
-                    name='BF20',
-                    value=bf20,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam between 10 and 20 cm depth in % plant '
-                                'usable water',
-                )
-            )
+        list_of_items.append(create_bf10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bf30 = item.get('BF30', None)
-        if self.is_valid(bf30):
-            soil_temperature.information.append(
-                dict(
-                    name='BF30',
-                    value=bf30,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam between 20 and 30 cm depth in % plant '
-                                'usable water',
-                )
-            )
+        list_of_items.append(create_bf20(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bf40 = item.get('BF40', None)
-        if self.is_valid(bf40):
-            soil_temperature.information.append(
-                dict(
-                    name='BF40',
-                    value=bf40,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam between 30 and 40 cm depth in % plant '
-                                'usable water',
-                )
-            )
+        list_of_items.append(create_bf30(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bf50 = item.get('BF50', None)
-        if self.is_valid(bf50):
-            soil_temperature.information.append(
-                dict(
-                    name='BF50',
-                    value=bf50,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam between 40 and 50 cm depth in % plant '
-                                'usable water',
-                )
-            )
+        list_of_items.append(create_bf40(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bf60 = item.get('BF60', None)
-        if self.is_valid(bf60):
-            soil_temperature.information.append(
-                dict(
-                    name='BF60',
-                    value=bf60,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam between 50 and 60 cm depth in % plant '
-                                'usable water',
-                )
-            )
+        list_of_items.append(create_bf50(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bfgsl = item.get('BFGSL', None)
-        if self.is_valid(bfgsl):
-            soil_temperature.information.append(
-                dict(
-                    name='BFGSL',
-                    value=bfgsl,
-                    unit='%nFK',
-                    description='soil moisture under grass and sandy loam up to 60 cm depth',
-                )
-            )
+        list_of_items.append(create_bf60(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        bfgls = item.get('BFGLS', None)
-        if self.is_valid(bfgls):
-            soil_temperature.information.append(
-                dict(
-                    name='BFGLS',
-                    value=bfgls,
-                    unit='%nFK',
-                    description='soil moisture under grass and loamy sand up to 60 cm depth',
-                )
-            )
+        list_of_items.append(create_bfgsl(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return soil_temperature
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        list_of_items.append(create_bfgls(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -258,3 +166,280 @@ class SoilDailyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_vgsl(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'VGSL'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='mm',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'real evapotranspiration over grass and sandy loam (AMBAV)',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_vpgb(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'VPGB'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='mm',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'potential evapotranspiration over grass (AMBAV)',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_vpgh(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'VPGH'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='mm',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'potential evaporation over grass (Haude)',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_ts05(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'TS05'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'mean daily soil temperature in 5 cm depth for uncovered typical soil in 5 cm depth '
+                                              'mean daily soil',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_ts10(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'TS10'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'mean daily soil temperature in 5 cm depth for uncovered typical soil in 10 cm depth '
+                                              'mean daily soil',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_ts20(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'TS20'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'mean daily soil temperature in 5 cm depth for uncovered typical soil in 20 cm depth '
+                                              'mean daily soil',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_ts50(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'TS50'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'mean daily soil temperature in 5 cm depth for uncovered typical soil in 50 cm depth '
+                                              'mean daily soil',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_ts100(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'TS100'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'mean daily soil temperature in 5 cm depth for uncovered typical soil in 1 m depth '
+                                              'mean daily soil',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_zfumi(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'ZFUMI'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='cm',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'frost depth at midday for uncovered soil',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bf10(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BF10'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam between 0 and 10 cm depth in % plant '
+                                              'usable water',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bf20(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BF20'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam between 10 and 20 cm depth in % plant '
+                                              'usable water',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bf30(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BF30'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam between 20 and 30 cm depth in % plant '
+                                              'usable water',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bf40(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BF40'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam between 30 and 40 cm depth in % plant '
+                                              'usable water',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bf50(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BF50'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam between 40 and 50 cm depth in % plant '
+                                              'usable water',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bf60(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BF60'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam between 50 and 60 cm depth in % plant '
+                                              'usable water',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bfgsl(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BFGSL'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and sandy loam up to 60 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_bfgls(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'BFGLS'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='%nFK',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'soil moisture under grass and loamy sand up to 60 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]
+

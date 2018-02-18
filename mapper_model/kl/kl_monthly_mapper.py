@@ -6,6 +6,7 @@ from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
 from database_model import db_handler
 
+
 class KlMonthlyMapper(Mapper):
 
     def __init__(self):
@@ -17,167 +18,99 @@ class KlMonthlyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        kl = Kl()
-        kl.station_id = item['STATIONS_ID']
-        kl.measurement_date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d')
-        kl.measurement_category = 'monthly'
 
-        kl.information = list()
+        list_of_items = []
 
-        # qn_4 = item.get('QN_4', None)
-        # if self.is_valid(qn_4):
-        #     kl.information.append(
-        #         dict(
-        #             value=qn_4,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM_BEGINN'], '%Y%m%d')
+        interval = 'monthly'
 
-        mo_n = item.get('MO_N', None)
-        if self.is_valid(mo_n):
-            kl.information.append(
-                dict(
-                    name='MO_N',
-                    value=mo_n,
-                    unit='1/8',
-                    description='monthly mean of cloud cover',
-                )
-            )
+        list_of_items.append(create_mo_n(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mo_tt = item.get('MO_TT', None)
-        if self.is_valid(mo_tt):
-            kl.information.append(
-                dict(
-                    name='MO_TT',
-                    value=mo_tt,
-                    unit='°C',
-                    description='monthly mean of daily temperature means in 2m',
-                )
-            )
+        list_of_items.append(create_mo_tt(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mo_tx = item.get('MO_TX', None)
-        if self.is_valid(mo_tx):
-            kl.information.append(
-                dict(
-                    name='MO_TX',
-                    value=mo_tx,
-                    unit='°C',
-                    description='monthly mean of daily temperature maxima in 2m height',
-                )
-            )
+        list_of_items.append(create_mo_tx(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mo_tn = item.get('MO_TN', None)
-        if self.is_valid(mo_tn):
-            kl.information.append(
-                dict(
-                    name='MO_TN',
-                    value=mo_tn,
-                    unit=NOT_AVAILABLE,
-                    description='monthly mean of daily temperature minima in 2m height',
-                )
-            )
+        list_of_items.append(create_mo_tn(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mo_sd_s = item.get('MO_SD_S', None)
-        if self.is_valid(mo_sd_s):
-            kl.information.append(
-                dict(
-                    name='MO_SD_S',
-                    value=mo_sd_s,
-                    unit='h',
-                    description='monthly sum of sunshine duration',
-                )
-            )
+        list_of_items.append(create_mo_sd_s(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mo_fk = item.get('MO_FK', None)
-        if self.is_valid(mo_fk):
-            kl.information.append(
-                dict(
-                    name='MO_FK',
-                    value=mo_fk,
-                    unit='Bft',
-                    description='monthly mean of daily wind speed',
-                )
-            )
+        list_of_items.append(create_mo_fk(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mx_tx = item.get('MX_TX', None)
-        if self.is_valid(mx_tx):
-            kl.information.append(
-                dict(
-                    name='MX_TX',
-                    value=mx_tx,
-                    unit='°C',
-                    description='monthly maximum of daily temperature maxima in 2m height',
-                )
-            )
+        list_of_items.append(create_mx_tx(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mx_fx = item.get('MX_FX', None)
-        if self.is_valid(mx_fx):
-            kl.information.append(
-                dict(
-                    name='MX_FX',
-                    value=mx_fx,
-                    unit='m/sec',
-                    description='monthly maximum of daily wind speed',
-                )
-            )
+        list_of_items.append(create_mx_fx(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mx_tn = item.get('MX_TN', None)
-        if self.is_valid(mx_tn):
-            kl.information.append(
-                dict(
-                    name='MX_TN',
-                    value=mx_tn,
-                    unit='°C',
-                    description='monthly minimum of daily temperature minima in 2m height',
-                )
-            )
+        list_of_items.append(create_mx_tn(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        # qn_6 = item.get('QN_6', None)
-        # if self.is_valid(qn_6):
-        #     kl.information.append(
-        #         dict(
-        #             name='QN_6',
-        #             value=qn_6,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_mo_rr(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mo_rr = item.get('MO_RR', None)
-        if self.is_valid(mo_rr):
-            kl.information.append(
-                dict(
-                    name='MO_RR',
-                    value='monthly sum of precipitation height',
-                    unit='mm',
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_mx_rs(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        mx_rs = item.get('MX_RS', None)
-        if self.is_valid(mx_rs):
-            kl.information.append(
-                dict(
-                    name='MX_RS',
-                    value=mx_rs,
-                    unit='mm',
-                    description='monthly maximum of daily',
-                )
-            )
-
-        return kl
-
+        return list_of_items
 
     @staticmethod
-    def is_valid(value):
-        return value and value != '999'
-
-    @staticmethod
-    def to_tuple(item: Kl):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+    def to_tuple(item):
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -193,3 +126,178 @@ class KlMonthlyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_mo_n(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MO_N'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='1/8',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly mean of cloud cover',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mo_tt(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MO_TT'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly mean of daily temperature means in 2m',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mo_tx(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MO_TX'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly mean of daily temperature maxima in 2m',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mo_tn(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MO_TN'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit=None,
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly mean of daily temperature minima in 2m',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mo_sd_s(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MO_SD_S'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='h',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly sum of sunshine duration',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mo_fk(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MO_FK'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='Bft',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly mean of daily wind speed',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mx_tx(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MX_TX'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly maximum of daily temperature maxima in 2m height',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mx_fx(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MX_FX'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='m/s',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly maximum of daily wind speed',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mx_tn(sid, date, interval, item):
+    qn_4 = item.get('QN_4', None)
+    name = 'MX_TN'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='°C',
+              value=value,
+              information={
+                  "QN_4": qn_4,
+                  "description": 'monthly minimum of daily temperature minima in 2m height',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mo_rr(sid, date, interval, item):
+    qn_6 = item.get('QN_6', None)
+    name = 'MO_RR'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='mm',
+              value=value,
+              information={
+                  "QN_4": qn_6,
+                  "description": 'monthly sum of precipitation height',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def create_mx_rs(sid, date, interval, item):
+    qn_6 = item.get('QN_6', None)
+    name = 'MX_RS'
+    value = get_value(item, name, None),
+    return Kl(station_id=sid, date=date,
+              interval=interval, name=name, unit='mm',
+              value=value,
+              information={
+                  "QN_4": qn_6,
+                  "description": 'monthly maximum of daily',
+                  "type": "kl",
+                  "source": "DW",
+              })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

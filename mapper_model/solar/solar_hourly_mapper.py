@@ -3,7 +3,7 @@ from model.solar import Solar
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from constants.constants import DATABASE_CONNECTION
 from database_model import db_handler
 
 
@@ -17,90 +17,56 @@ class SolarHourlyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        solar = Solar()
-        solar.station_id = item['STATIONS_ID']
-        solar.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H:%M')
-        solar.measurement_category = 'daily'
+        list_of_items = []
 
-        solar.information = list()
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H:%M')
+        interval = 'daily'
 
-        # qn = item.get('QN_592', None)
-        # if self.is_valid(qn):
-        #     solar.information.append(
-        #         dict(
-        #             name='QN_592',
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items.append(create_atmo(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        atmo_radiation = item.get('ATMO_LBERG', None)
-        if self.is_valid(atmo_radiation):
-            solar.information.append(
-                dict(
-                    name='ATMO_LBERG',
-                    value=atmo_radiation,
-                    unit='J/cm^2',
-                    description='longwave downward radiation',
-                )
-            )
+        list_of_items.append(create_fd(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        fd_radiation = item.get('FD_LBERG', None)
-        if self.is_valid(fd_radiation):
-            solar.information.append(
-                dict(
-                    name='FD_LBERG',
-                    value=fd_radiation,
-                    unit='J/cm^2',
-                    description='daily sum of diffuse solar radiation',
-                )
-            )
+        list_of_items.append(create_fg(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        fg_radiation = item.get('FG_LBERG', None)
-        if self.is_valid(fg_radiation):
-            solar.information.append(
-                dict(
-                    name='FG_LBERG',
-                    value=fg_radiation,
-                    unit='J/cm^2',
-                    description='daily sum of solar incoming radiation',
-                )
-            )
+        list_of_items.append(create_sd(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        sd_radiation = item.get('SD_LBERG', None)
-        if self.is_valid(sd_radiation):
-            solar.information.append(
-                dict(
-                    name='SD_LBERG',
-                    value=sd_radiation,
-                    unit='min',
-                    description='daily sum of sunshine duration',
-                )
-            )
+        list_of_items.append(create_zenit(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        zenith = item.get('ZENIT', None)
-        if self.is_valid(zenith):
-            solar.information.append(
-                dict(
-                    name='ZENIT',
-                    value=zenith,
-                    unit='degree',
-                    description='solar zenith angle at mid of interval',
-                )
-            )
-
-        return solar
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -116,3 +82,88 @@ class SolarHourlyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_atmo(sid, date, interval, item):
+    qn = item.get('QN_592', None)
+    name = 'ATMO_LBERG'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit='J/cm^2',
+                 value=value,
+                 information={
+                     "QN_592": qn,
+                     "description": 'longwave downward radiation',
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_fd(sid, date, interval, item):
+    qn = item.get('QN_592', None)
+    name = 'FD_LBERG'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit='J/cm^2',
+                 value=value,
+                 information={
+                     "QN_592": qn,
+                     "description": 'hourly sum of diffuse solar radiation',
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_fg(sid, date, interval, item):
+    qn = item.get('QN_592', None)
+    name = 'FG_LBERG'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit='J/cm^2',
+                 value=value,
+                 information={
+                     "QN_592": qn,
+                     "description": 'hourly sum of solar incoming radiation',
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_sd(sid, date, interval, item):
+    qn = item.get('QN_592', None)
+    name = 'SD_LBERG'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit='min',
+                 value=value,
+                 information={
+                     "QN_592": qn,
+                     "description": 'hourly sum of sunshine duration',
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def create_zenit(sid, date, interval, item):
+    qn = item.get('QN_592', None)
+    name = 'ZENIT'
+    value = get_value(item, name, None),
+    return Solar(station_id=sid, date=date,
+                 interval=interval, name=name, unit='degree',
+                 value=value,
+                 information={
+                     "QN_592": qn,
+                     "description": 'solar zenith angle at mid of interval',
+                     "type": "solar",
+                     "source": "DW",
+                 })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

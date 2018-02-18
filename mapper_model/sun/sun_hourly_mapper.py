@@ -3,7 +3,7 @@ from model.sun import Sun
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from constants.constants import DATABASE_CONNECTION
 from database_model import db_handler
 
 
@@ -18,44 +18,28 @@ class SunHourlyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        sun = Sun()
-        sun.station_id = item['STATIONS_ID']
-        sun.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        sun.measurement_category = 'hourly'
 
-        sun.information = list()
-        # qn_7 = item.get('QN_7', None)
-        # if self.is_valid(qn_7):
-        #     sun.information.append(
-        #         dict(
-        #             value=qn_7,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items = []
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
+        interval = 'hourly'
 
-        sd_so = item.get('SD_SO', None)
-        if self.is_valid(sd_so):
-            sun.information.append(
-                dict(
-                    name='SD_SO',
-                    value=sd_so,
-                    unit='min',
-                    description='hourly sunshine duration',
-                )
-            )
+        list_of_items.append(create_sd_so(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return sun
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -72,3 +56,27 @@ class SunHourlyMapper(Mapper):
                 data = True, path
                 curs.execute(self.update_query, data)
 
+
+def create_sd_so(sid, date, interval, item):
+    qn = item.get('QN_7', None)
+    name = 'SD_SO'
+    value = get_value(item, name, None),
+    return Sun(station_id=sid, date=date,
+               interval=interval, name=name, unit='min',
+               value=value,
+               information={
+                   "QN_7": qn,
+                   "description": 'hourly sunshine duration',
+                   "type": "sun",
+                   "source": "DW",
+               })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

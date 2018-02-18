@@ -3,7 +3,7 @@ from model.wind import Wind
 from datetime import datetime
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
+from constants.constants import DATABASE_CONNECTION
 from database_model import db_handler
 
 
@@ -17,77 +17,50 @@ class WindExtreme10MinuteMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        wind = Wind()
-        wind.station_id = item['STATIONS_ID']
-        wind.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        wind.measurement_category = '10_minutes'
 
-        # qn = item.get('QN', None)
-        # if self.is_valid(qn):
-        #     wind.information.append(
-        #         dict(
-        #             name='QN',
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        list_of_items = []
 
-        fx_10 = item.get('FX_10', None)
-        if self.is_valid(fx_10):
-            wind.information.append(
-                dict(
-                    name='FX_10',
-                    value=fx_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        interval = '10_minutes'
 
-        fnx_10 = item.get('FNX_10', None)
-        if self.is_valid(fnx_10):
-            wind.information.append(
-                dict(
-                    name='FNX_10',
-                    value=fnx_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_fx_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        fmx_10 = item.get('FMX_10', None)
-        if self.is_valid(fmx_10):
-            wind.information.append(
-                dict(
-                    name='FMX_10',
-                    value=fmx_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_fnx_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        dx_10 = item.get('DX_10', None)
-        if self.is_valid(dx_10):
-            wind.information.append(
-                dict(
-                    name='DX_10',
-                    value=dx_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_fmx_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return wind
+        list_of_items.append(create_dx_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -103,3 +76,73 @@ class WindExtreme10MinuteMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_fx_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'FX_10'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit=None,
+                value=value,
+                information={
+                    "QN": qn,
+                    "description": None,
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def create_fnx_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'FNX_10'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit=None,
+                value=value,
+                information={
+                    "QN": qn,
+                    "description": None,
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def create_fmx_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'FMX_10'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit=None,
+                value=value,
+                information={
+                    "QN": qn,
+                    "description": None,
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def create_dx_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'DX_10'
+    value = get_value(item, name, None),
+    return Wind(station_id=sid, date=date,
+                interval=interval, name=name, unit=None,
+                value=value,
+                information={
+                    "QN": qn,
+                    "description": None,
+                    "type": "sun",
+                    "source": "DW",
+                })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

@@ -17,56 +17,36 @@ class VisibilityHourlyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        visibility = Visibility()
-        visibility.station_id = item['STATIONS_ID']
-        visibility.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        visibility.measurement_category = 'hourly'
-        visibility.information = list()
-        # qn_8 = item.get('QN_8', None)
-        # if self.is_valid(qn_8):
-        #     wind.information.append(
-        #         dict(
-        #             value=qn_8,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
 
-        v_vv_i = item.get('V_VV_I', None)
-        if self.is_valid(v_vv_i):
-            visibility.information.append(
-                dict(
-                    name='V_VV_I',
-                    value=v_vv_i,
-                    unit=NOT_AVAILABLE,
-                    description='index how measurement is taken '
-                                'P=human'
-                                'I=instrument',
-                )
-            )
+        list_of_items = []
 
-        v_vv = item.get('V_VV', None)
-        if self.is_valid(v_vv):
-            visibility.information.append(
-                dict(
-                    name='V_VV',
-                    value=v_vv,
-                    unit='m',
-                    description='visibility',
-                )
-            )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
+        interval = 'hourly'
 
-        return visibility
+        list_of_items.append(create_v_vv_i(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        list_of_items.append(create_v_vv(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
+
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -83,3 +63,43 @@ class VisibilityHourlyMapper(Mapper):
                 data = True, path
                 curs.execute(self.update_query, data)
 
+
+def create_v_vv_i(sid, date, interval, item):
+    qn = item.get('QN_8', None)
+    name = 'V_VV_I'
+    value = get_value(item, name, None),
+    return Visibility(station_id=sid, date=date,
+                      interval=interval, name=name, unit=None,
+                      value=value,
+                      information={
+                          "QN_8": qn,
+                          "description": 'P=human'
+                                         'I=instrument',
+                          "type": "visibility",
+                          "source": "DW",
+                      })
+
+
+def create_v_vv(sid, date, interval, item):
+    qn = item.get('QN_8', None)
+    name = 'V_VV'
+    value = get_value(item, name, None),
+    return Visibility(station_id=sid, date=date,
+                      interval=interval, name=name, unit='m',
+                      value=value,
+                      information={
+                          "QN_8": qn,
+                          "description": 'visibility',
+                          "type": "visibility",
+                          "source": "DW",
+                      })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

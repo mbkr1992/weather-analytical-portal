@@ -28,6 +28,12 @@ query_select_path_of_non_parsed_files = "SELECT path FROM file_meta where is_par
 
 query_update_file_download_flag = 'UPDATE file_meta SET is_downloaded =(%s) WHERE path =(%s);'
 
+query_insert_station_data = 'INSERT INTO station_data (name, value, date, station_id, interval, information)' \
+                            'VALUES %s' \
+                            'ON CONFLICT (date, name, station_id, interval) DO NOTHING '
+
+query_update_file_is_parsed_flag = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
+
 
 def insert_files(files: [File]):
     with connect(DBN) as conn:

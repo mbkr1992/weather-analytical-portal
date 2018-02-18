@@ -71,12 +71,13 @@ class GermanWeatherOperation(Operation):
 
                         parser = ParserFactory.get_parser_for_path(path)
                         mapper = MapperFactory.get_mapper_for_path(path)
+                        # print('4. Parser {0}, Mapper: {1}'.format(parser, mapper))
+
                         items = parser.parse(path=file_path, mapper=mapper)
 
-                        print('4. Parser {0}, Mapper: {1}'.format(parser, mapper))
-                        print('Path file {0}, items: {1}'.format(path, len(items)))
+                        print('5. Path file {0}, items: {1}'.format(path, len(items)))
 
-                        # mapper.insert_items(items)
+                        mapper.insert_items(items)
                         # mapper.update_file_parsed_flag(path)
                     except Exception as e:
                         print('Exception: {0}, {1}'.format(e, path))

@@ -17,56 +17,36 @@ class AirTemperatureHourlyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        air_temperature = AirTemperature()
-        air_temperature.station_id = item['STATIONS_ID']
-        air_temperature.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
-        air_temperature.measurement_category = 'hourly'
 
-        air_temperature.information = list()
+        list_of_items = []
 
-        # qn_9 = item.get('QN_9', None)
-        # if self.is_valid(qn_9):
-        #     air_temperature.information.append(
-        #         dict(
-        #             value=qn_9,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
+        interval = 'hourly'
 
-        tt_tu = item.get('TT_TU', None)
-        if self.is_valid(tt_tu):
-            air_temperature.information.append(
-                dict(
-                    name='TT_TU',
-                    value=tt_tu,
-                    unit='°C',
-                    description='2m air temperature',
-                )
-            )
+        list_of_items.append(create_tt_tu(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rf_tu = item.get('RF_TU', None)
-        if self.is_valid(rf_tu):
-            air_temperature.information.append(
-                dict(
-                    name='RF_TU',
-                    value=rf_tu,
-                    unit='%',
-                    description='2m relative humidity',
-                )
-            )
+        list_of_items.append(create_rf_tu(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return air_temperature
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -82,3 +62,43 @@ class AirTemperatureHourlyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_tt_tu(sid, date, interval, item):
+    qn = item.get('QN_9', None)
+    name = 'TT_TU'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit='°C',
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": '2m air temperature',
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def create_rf_tu(sid, date, interval, item):
+    qn = item.get('QN_9', None)
+    name = 'RF_TU'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit='%',
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": '2m relative humidity',
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

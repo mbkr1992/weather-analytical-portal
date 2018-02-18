@@ -18,69 +18,44 @@ class Precipitation10MinuteMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        precipitation = Precipitation()
-        precipitation.station_id = item['STATIONS_ID']
-        precipitation.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        precipitation.measurement_category = '10_minutes'
 
-        precipitation.information = list()
+        list_of_items = []
 
-        # qn = item.get('QN', None)
-        # if self.is_valid(qn):
-        #     precipitation.information.append(
-        #         dict(
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description=NOT_AVAILABLE,
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        interval = '10_minutes'
 
-        rws_dau_10 = item.get('RWS_DAU_10', None)
-        if self.is_valid(rws_dau_10):
-            precipitation.information.append(
-                dict(
-                    name='RWS_DAU_10',
-                    value=rws_dau_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rws_dau_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rws_10 = item.get('RWS_10', None)
-        if self.is_valid(rws_10):
-            precipitation.information.append(
-                dict(
-                    name='RWS_10',
-                    value=rws_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rws_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rws_ind_10 = item.get('RWS_IND_10', None)
-        if self.is_valid(rws_ind_10):
-            precipitation.information.append(
-                dict(
-                    name='RWS_IND_10',
-                    value=rws_ind_10,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rws_ind_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return precipitation
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
-                extras.Json(item.information),
-                )
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
+                extras.Json(item.information))
 
     def insert_items(self, items):
         with connect(self.dbc) as conn:
@@ -95,3 +70,58 @@ class Precipitation10MinuteMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_rws_dau_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RWS_DAU_10'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def create_rws_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RWS_10'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def create_rws_ind_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RWS_IND_10'
+    value = get_value(item, name, None),
+    return Precipitation(station_id=sid, date=date,
+                         interval=interval, name=name, unit=None,
+                         value=value,
+                         information={
+                             "QN": qn,
+                             "description": None,
+                             "type": "precipitation",
+                             "source": "DW",
+                         })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

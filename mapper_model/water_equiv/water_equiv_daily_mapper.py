@@ -17,68 +17,41 @@ class WaterEquivDailyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        water_equiv = WaterEquiv()
-        water_equiv.station_id = item['STATIONS_ID']
-        water_equiv.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
-        water_equiv.measurement_category = 'daily'
 
-        water_equiv.information = list()
+        list_of_items = []
 
-        # qn_6 = item.get('QN_6', None)
-        # if self.is_valid(qn_6):
-        #     water_equiv.information.append(
-        #         dict(
-        #             value=qn_6,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
+        interval = 'daily'
 
-        ash_6 = item.get('ASH_6', None)
-        if self.is_valid(ash_6):
-            water_equiv.information.append(
-                dict(
-                    name='ASH_6',
-                    value=ash_6,
-                    unit='cm',
-                    description='height of snow pack sample',
-                )
-            )
+        list_of_items.append(create_ash_6(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        sh_tag = item.get('SH_tag', None)
-        if self.is_valid(sh_tag):
-            water_equiv.information.append(
-                dict(
-                    name='SH_tag',
-                    value=sh_tag,
-                    unit='cm',
-                    description='total snow depth',
-                )
-            )
+        list_of_items.append(create_sh_tag(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        wash_6 = item.get('WASH_6', None)
-        if self.is_valid(wash_6):
-            water_equiv.information.append(
-                dict(
-                    name='WASH_6',
-                    value=wash_6,
-                    unit='nm',
-                    description='total snow water equivalent',
-                )
-            )
+        list_of_items.append(create_wash_6(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        waas_6 = item.get('WAAS_6', None)
-        if self.is_valid(waas_6):
-            water_equiv.information.append(
-                dict(
-                    name='WAAS_6',
-                    value=waas_6,
-                    unit='nm',
-                    description='sampled snow pack water eqivalent',
-                )
-            )
-
-        return water_equiv
+        list_of_items.append(create_waas_6(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
+        return list_of_items
 
     @staticmethod
     def is_valid(value):
@@ -86,9 +59,11 @@ class WaterEquivDailyMapper(Mapper):
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -104,3 +79,72 @@ class WaterEquivDailyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_ash_6(sid, date, interval, item):
+    qn = item.get('QN_6', None)
+    name = 'ASH_6'
+    value = get_value(item, name, None),
+    return WaterEquiv(station_id=sid, date=date,
+                      interval=interval, name=name, unit='cm',
+                      value=value,
+                      information={
+                          "QN_8": qn,
+                          "description": 'height of snow pack sample',
+                          "type": "water_equiv",
+                          "source": "DW",
+                      })
+
+
+def create_sh_tag(sid, date, interval, item):
+    qn = item.get('QN_6', None)
+    name = 'SH_TAG'
+    value = get_value(item, name, None),
+    return WaterEquiv(station_id=sid, date=date,
+                      interval=interval, name=name, unit='cm',
+                      value=value,
+                      information={
+                          "QN_8": qn,
+                          "description": 'total snow depth',
+                          "type": "water_equiv",
+                          "source": "DW",
+                      })
+
+
+def create_wash_6(sid, date, interval, item):
+    qn = item.get('QN_6', None)
+    name = 'WASH_6'
+    value = get_value(item, name, None),
+    return WaterEquiv(station_id=sid, date=date,
+                      interval=interval, name=name, unit='nm',
+                      value=value,
+                      information={
+                          "QN_8": qn,
+                          "description": 'total snow water equivalent',
+                          "type": "water_equiv",
+                          "source": "DW",
+                      })
+
+
+def create_waas_6(sid, date, interval, item):
+    qn = item.get('QN_6', None)
+    name = 'WAAS_6'
+    value = get_value(item, name, None),
+    return WaterEquiv(station_id=sid, date=date,
+                      interval=interval, name=name, unit='nm',
+                      value=value,
+                      information={
+                          "QN_8": qn,
+                          "description": 'sampled snow pack water eqivalent',
+                          "type": "water_equiv",
+                          "source": "DW",
+                      })
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

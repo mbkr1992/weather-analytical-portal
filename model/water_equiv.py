@@ -1,16 +1,23 @@
 class WaterEquiv:
 
-    def __init__(self):
+    def __init__(self,
+                 station_id=None,
+                 date=None,
+                 interval=None,
+                 name=None,
+                 value=None,
+                 unit=None,
+                 information=None):
+
         super().__init__()
 
-        self.station_id = None
-        self.measurement_date = None
-
-        self.qn_6 = None      # small int
-        self.ash_6 = None  # real
-        self.sh_tag = None  # real
-        self.wash_6 = None  # real
-        self.waas_6 = None  # real
+        self.station_id = station_id
+        self.date = date
+        self.interval = interval
+        self.name = name
+        self.value = value
+        self.unit = unit
+        self.information = information
 
     def __str__(self):
         return '{0}, {1}'.format(self.station_id, self.measurement_date)

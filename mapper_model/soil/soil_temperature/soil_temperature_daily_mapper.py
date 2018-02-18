@@ -18,101 +18,57 @@ class SoilTemperatureDailyMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        soil_temperature = SoilTemperature()
-        soil_temperature.station_id = item['STATIONS_ID']
-        soil_temperature.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
-        soil_temperature.measurement_category = 'daily'
 
-        soil_temperature.information = list()
+        list_of_items = []
 
-        # qn_2 = item.get('QN_2', None)
-        # if self.is_valid(qn_2):
-        #     soil_temperature.information.append(
-        #         dict(
-        #             name='QN_2',
-        #             value=qn_2,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d')
+        interval = 'daily'
 
-        v_te002m = item.get('V_TE002M', None)
-        if self.is_valid(v_te002m):
-            soil_temperature.information.append(
-                dict(
-                    name='V_TE002M',
-                    value=v_te002m,
-                    unit='°C',
-                    description='daily soil temperature in 2 cm depth',
-                )
-            )
+        list_of_items.append(create_v_te002m(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        v_te005m = item.get('V_TE005M', None)
-        if self.is_valid(v_te005m):
-            soil_temperature.information.append(
-                dict(
-                    name='V_TE005M',
-                    value=v_te005m,
-                    unit='°C',
-                    description='daily soil temperature in 5 cm depth',
-                )
-            )
+        list_of_items.append(create_v_te005m(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        v_te010m = item.get('V_TE010M', None)
-        if self.is_valid(v_te010m):
-            soil_temperature.information.append(
-                dict(
-                    name='V_TE010M',
-                    value=v_te010m,
-                    unit='°C',
-                    description='daily soil temperature in 10 cm depth',
-                )
-            )
+        list_of_items.append(create_v_te010m(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        v_te020m = item.get('V_TE020M', None)
-        if self.is_valid(v_te020m):
-            soil_temperature.information.append(
-                dict(
-                    name='V_TE020M',
-                    value=v_te020m,
-                    unit='°C',
-                    description='daily soil temperature in 20 cm depth',
-                )
-            )
+        list_of_items.append(create_v_te020m(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        v_te050m = item.get('V_TE050M', None)
-        if self.is_valid(v_te050m):
-            soil_temperature.information.append(
-                dict(
-                    name='V_TE050M',
-                    value=v_te050m,
-                    unit='°C',
-                    description='daily soil temperature in 50 cm depth',
-                )
-            )
+        list_of_items.append(create_v_te050m(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        v_te100 = item.get('V_TE100M', None)
-        if self.is_valid(v_te100):
-            soil_temperature.information.append(
-                dict(
-                    name='V_TE100M',
-                    value=v_te100,
-                    unit='°C',
-                    description='daily soil temperature in 100 cm depth',
-                )
-            )
-
-        return soil_temperature
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -128,3 +84,88 @@ class SoilTemperatureDailyMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_v_te002m(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'V_TE002M'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'daily soil temperature in 2 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_v_te005m(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'V_TE005M'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'daily soil temperature in 5 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_v_te010m(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'V_TE010M'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'daily soil temperature in 10 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_v_te020m(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'V_TE020M'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'daily soil temperature in 20 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def create_v_te050m(sid, date, interval, item):
+    qn_2 = item.get('QN_2', None)
+    name = 'V_TE050M'
+    value = get_value(item, name, None),
+    return SoilTemperature(station_id=sid, date=date,
+                           interval=interval, name=name, unit='°C',
+                           value=value,
+                           information={
+                               "QN": qn_2,
+                               "description": 'daily soil temperature in 50 cm depth',
+                               "type": "pressure",
+                               "source": "DW",
+                           })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

@@ -17,90 +17,57 @@ class AirTemperature10MinuteMapper(Mapper):
         self.update_query = db_handler.query_update_file_is_parsed_flag
 
     def map(self, item={}):
-        air_temperature = AirTemperature()
-        air_temperature.station_id = item['STATIONS_ID']
-        air_temperature.measurement_date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
-        air_temperature.measurement_category = '10_minutes'
 
-        air_temperature.information = list()
+        list_of_items = []
 
-        # qn = item.get('QN', None)
-        # if self.is_valid(qn):
-        #     air_temperature.information.append(
-        #         dict(
-        #             name='QN',
-        #             value=qn,
-        #             unit=NOT_AVAILABLE,
-        #             description='quality level of next columns',
-        #         )
-        #     )
+        station_id = item['STATIONS_ID']
+        date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H%M')
+        interval = '10_minutes'
 
-        pp = item.get('PP_10', None)
-        if self.is_valid(pp):
-            air_temperature.information.append(
-                dict(
-                    name='PP_10',
-                    value=pp,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_pp(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        tt = item.get('TT_10', None)
-        if self.is_valid(tt):
-            air_temperature.information.append(
-                dict(
-                    name='TT_10',
-                    value=tt,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_tt(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        tm5 = item.get('TM5_10', None)
-        if self.is_valid(tm5):
-            air_temperature.information.append(
-                dict(
-                    name='TM5_10',
-                    value=tm5,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_tm5_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        rf = item.get('RF_10', None)
-        if self.is_valid(rf):
-            air_temperature.information.append(
-                dict(
-                    name='RF_10',
-                    value=rf,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_rf_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        td = item.get('TD_10', None)
-        if self.is_valid(td):
-            air_temperature.information.append(
-                dict(
-                    name='TD_10',
-                    value=td,
-                    unit=NOT_AVAILABLE,
-                    description=NOT_AVAILABLE,
-                )
-            )
+        list_of_items.append(create_td_10(
+            item=item,
+            sid=station_id,
+            date=date,
+            interval=interval,
+        ))
 
-        return air_temperature
-
-    @staticmethod
-    def is_valid(value):
-        return value and value != '999'
+        return list_of_items
 
     @staticmethod
     def to_tuple(item):
-        return (item.station_id,
-                item.measurement_date,
-                item.measurement_category,
+        return (item.name,
+                extras.Json(item.value),
+                item.date,
+                item.station_id,
+                item.interval,
                 extras.Json(item.information))
 
     def insert_items(self, items):
@@ -116,3 +83,88 @@ class AirTemperature10MinuteMapper(Mapper):
             with conn.cursor() as curs:
                 data = True, path
                 curs.execute(self.update_query, data)
+
+
+def create_pp(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'PP_10'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit=None,
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": None,
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def create_tt(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'TT_10'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit=None,
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": None,
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def create_tm5_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'TM5_10'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit=None,
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": None,
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def create_rf_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'RF_10'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit=None,
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": None,
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def create_td_10(sid, date, interval, item):
+    qn = item.get('QN', None)
+    name = 'TD_10'
+    value = get_value(item, name, None),
+    return AirTemperature(station_id=sid, date=date,
+                          interval=interval, name=name, unit=None,
+                          value=value,
+                          information={
+                              "QN": qn,
+                              "description": None,
+                              "type": "Air",
+                              "source": "DW",
+                          })
+
+
+def get_value(item, key, default):
+    if key not in item:
+        return default
+
+    if item[key] == '-999':
+        return default
+
+    return item[key]

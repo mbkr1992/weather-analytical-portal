@@ -5,6 +5,7 @@ from parser_model.parser_factory import ParserFactory
 from mapper_model.mapper_factory import MapperFactory
 from common.helper import Helper
 import asyncio
+import time
 
 
 class CopernicusOperation(Operation):
@@ -29,7 +30,7 @@ class CopernicusOperation(Operation):
                     try:
                         if not Helper.is_path_parseable(path=path):
                             continue
-
+                        start_time = time.time()
                         parser = ParserFactory.get_parser_for_path(path)
                         mapper = MapperFactory.get_mapper_for_path(path)
                         items = parser.parse(path=path, mapper=mapper)
@@ -38,6 +39,7 @@ class CopernicusOperation(Operation):
                         # print('Path file {0}, items: {1}'.format(path, len(items)))
 
                         mapper.insert_items(items)
+                        print("--- %s seconds ---" % (time.time() - start_time))
                         # mapper.update_file_parsed_flag(path)
                     except Exception as e:
                         print('Exception: {0}, {1}'.format(e, path))

@@ -13,11 +13,10 @@ class GribParser(Parser):
         list_of_items = []
 
         try:
-            grbs.seek(0)
-
-            for grb in grbs:
-                # grb = grbs.read(1)[0]
-                list_of_items.extend(mapper.map(grb))
+            list_of_items = mapper.map(grbs)
+            # for grb in grbs:
+            #     # grb = grbs.read(1)[0]
+            #     list_of_items.extend(mapper.map(grb))
         except Exception as e:
             print('Parsing error {0}'.format(e, path))
         finally:

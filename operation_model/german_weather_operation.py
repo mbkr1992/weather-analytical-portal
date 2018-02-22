@@ -30,7 +30,7 @@ class GermanWeatherOperation(Operation):
             # paths_to_parse = select_non_parsed_files()
 
             paths_to_parse = [
-                # '/pub/CDC/observations_germany/climate/1_minute/precipitation/historical/1993/1minutenwerte_nieder_00003_19930701_19930731_hist.zip',
+                '/pub/CDC/observations_germany/climate/1_minute/precipitation/historical/1993/1minutenwerte_nieder_00003_19930701_19930731_hist.zip',
                 # '/pub/CDC/observations_germany/climate/10_minutes/air_temperature/historical/10minutenwerte_tu_00003_19930428_19991231_hist.zip',
                 # '/pub/CDC/observations_germany/climate/10_minutes/extreme_temperature/historical/10minutenwerte_tx_00003_19930428_19991231_hist.zip',
                 # '/pub/CDC/observations_germany/climate/10_minutes/extreme_wind/historical/10minutenwerte_fx_00003_19930428_19991231_hist.zip',
@@ -53,7 +53,7 @@ class GermanWeatherOperation(Operation):
                 # '/pub/CDC/observations_germany/climate/hourly/wind/historical/stundenwerte_FF_00003_19370101_20110331_hist.zip',
                 # '/pub/CDC/observations_germany/climate/monthly/kl/historical/monatswerte_KL_00001_19310101_19860630_hist.zip',
                 # '/pub/CDC/observations_germany/climate/monthly/more_precip/historical/monatswerte_RR_00001_18910101_19860630_hist.zip',
-                '/pub/CDC/observations_germany/climate/subdaily/standard_format/kl_10XXX_bis_1999.txt.gz'
+                # '/pub/CDC/observations_germany/climate/subdaily/standard_format/kl_10XXX_bis_1999.txt.gz'
             ];
 
             if paths_to_parse:

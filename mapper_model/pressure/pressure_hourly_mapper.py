@@ -66,31 +66,29 @@ class PressureHourlyMapper(Mapper):
 
 def create_p(sid, date, interval, item):
     qn_8 = item.get('QN_8', None)
-    name = 'P'
-    value = get_value(item, name, None),
+    code = 'P'
+    name = 'Mean sea level pressure'
+    value = get_value(item, code, None),
     return Pressure(station_id=sid, date=date,
                     interval=interval, name=name, unit='hPA',
                     value=value,
                     information={
                         "QN": qn_8,
-                        "description": 'mean sea level pressure',
-                        "type": "pressure",
-                        "source": "DW",
+                        "code": code,
                     })
 
 
 def create_p0(sid, date, interval, item):
     qn_8 = item.get('QN_8', None)
-    name = 'P0'
-    value = get_value(item, name, None),
+    code = 'P0'
+    name = 'Pressure at station height'
+    value = get_value(item, code, None),
     return Pressure(station_id=sid, date=date,
                     interval=interval, name=name, unit='hPA',
                     value=value,
                     information={
                         "QN": qn_8,
-                        "description": 'pressure at station height',
-                        "type": "pressure",
-                        "source": "DW",
+                        "code": code,
                     })
 
 

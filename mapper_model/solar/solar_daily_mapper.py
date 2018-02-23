@@ -78,61 +78,57 @@ class SolarDailyMapper(Mapper):
 
 def create_atmo(sid, date, interval, item):
     qn = item.get('QN_592', None)
-    name = 'ATMO_STRAHL'
-    value = get_value(item, name, None),
+    code = 'ATMO_STRAHL'
+    name = 'Longwave downward radiation'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='J/cm^2',
                  value=value,
                  information={
                      "QN_592": qn,
-                     "description": 'longwave downward radiation',
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 
 def create_fd(sid, date, interval, item):
     qn = item.get('QN_592', None)
-    name = 'FD_STRAHL'
-    value = get_value(item, name, None),
+    code = 'FD_STRAHL'
+    name = 'Daily sum of diffuse solar radiation'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='J/cm^2',
                  value=value,
                  information={
                      "QN_592": qn,
-                     "description": 'daily sum of diffuse solar radiation',
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 
 def create_fg(sid, date, interval, item):
     qn = item.get('QN_592', None)
-    name = 'FG_STRAHL'
-    value = get_value(item, name, None),
+    code = 'FG_STRAHL'
+    name = 'Daily sum of solar incoming radiation'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='J/cm^2',
                  value=value,
                  information={
                      "QN_592": qn,
-                     "description": 'daily sum of solar incoming radiation',
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 
 def create_sd(sid, date, interval, item):
     qn = item.get('QN_592', None)
-    name = 'SD_STRAHL'
-    value = get_value(item, name, None),
+    code = 'SD_STRAHL'
+    name = 'Daily sum of sunshine duration'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='min',
                  value=value,
                  information={
                      "QN_592": qn,
-                     "description": 'daily sum of sunshine duration',
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 

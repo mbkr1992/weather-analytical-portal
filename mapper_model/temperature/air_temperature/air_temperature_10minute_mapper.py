@@ -87,76 +87,71 @@ class AirTemperature10MinuteMapper(Mapper):
 
 def create_pp(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'PP_10'
-    value = get_value(item, name, None),
+    code = 'PP_10'
+    name = 'Air pressure at station altitude'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='hpa',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_tt(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'TT_10'
-    value = get_value(item, name, None),
+    code = 'TT_10'
+    name = 'Air temperature in 2m height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_tm5_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'TM5_10'
-    value = get_value(item, name, None),
+    code = 'TM5_10'
+    name = 'Air temperature in 5cm height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_rf_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RF_10'
-    value = get_value(item, name, None),
+    code = 'RF_10'
+    name = 'Relative humidity at 2m height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='%',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_td_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'TD_10'
-    value = get_value(item, name, None),
+    code = 'TD_10'
+    name = 'Dew point temperature in 2m height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 

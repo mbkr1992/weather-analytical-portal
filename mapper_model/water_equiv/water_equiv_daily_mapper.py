@@ -83,62 +83,59 @@ class WaterEquivDailyMapper(Mapper):
 
 def create_ash_6(sid, date, interval, item):
     qn = item.get('QN_6', None)
-    name = 'ASH_6'
-    value = get_value(item, name, None),
+    code = 'ASH_6'
+    name = 'Height of snow pack sample'
+    value = get_value(item, code, None),
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
                       information={
                           "QN_8": qn,
-                          "description": 'height of snow pack sample',
-                          "type": "water_equiv",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_sh_tag(sid, date, interval, item):
     qn = item.get('QN_6', None)
-    name = 'SH_TAG'
-    value = get_value(item, name, None),
+    code = 'SH_TAG'
+    name = 'Total snow depth'
+    value = get_value(item, code, None),
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
                       information={
                           "QN_8": qn,
-                          "description": 'total snow depth',
-                          "type": "water_equiv",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_wash_6(sid, date, interval, item):
     qn = item.get('QN_6', None)
-    name = 'WASH_6'
-    value = get_value(item, name, None),
+    code = 'WASH_6'
+    name = 'Total snow water equivalent'
+    value = get_value(item, code, None),
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='nm',
                       value=value,
                       information={
                           "QN_8": qn,
-                          "description": 'total snow water equivalent',
-                          "type": "water_equiv",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_waas_6(sid, date, interval, item):
     qn = item.get('QN_6', None)
-    name = 'WAAS_6'
-    value = get_value(item, name, None),
+    code = 'WAAS_6'
+    name = 'Total snow pack water equivalent'
+    value = get_value(item, code, None),
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='nm',
                       value=value,
                       information={
                           "QN_8": qn,
-                          "description": 'sampled snow pack water eqivalent',
-                          "type": "water_equiv",
-                          "source": "DW",
+                          "code": code,
                       })
+
 
 def get_value(item, key, default):
     if key not in item:

@@ -24,13 +24,6 @@ class VisibilityHourlyMapper(Mapper):
         date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
         interval = 'hourly'
 
-        list_of_items.append(create_v_vv_i(
-            item=item,
-            sid=station_id,
-            date=date,
-            interval=interval,
-        ))
-
         list_of_items.append(create_v_vv(
             item=item,
             sid=station_id,
@@ -64,34 +57,19 @@ class VisibilityHourlyMapper(Mapper):
                 curs.execute(self.update_query, data)
 
 
-def create_v_vv_i(sid, date, interval, item):
-    qn = item.get('QN_8', None)
-    name = 'V_VV_I'
-    value = get_value(item, name, None),
-    return Visibility(station_id=sid, date=date,
-                      interval=interval, name=name, unit=None,
-                      value=value,
-                      information={
-                          "QN_8": qn,
-                          "description": 'P=human'
-                                         'I=instrument',
-                          "type": "visibility",
-                          "source": "DW",
-                      })
-
-
 def create_v_vv(sid, date, interval, item):
     qn = item.get('QN_8', None)
-    name = 'V_VV'
-    value = get_value(item, name, None),
+    code = 'V_VV'
+    name = 'Visibility'
+    value = get_value(item, code, None),
     return Visibility(station_id=sid, date=date,
                       interval=interval, name=name, unit='m',
                       value=value,
                       information={
                           "QN_8": qn,
-                          "description": 'visibility',
-                          "type": "visibility",
-                          "source": "DW",
+                          "Measured": item.get('V_VV_I', None),
+                          "description": 'P=human '
+                                         'I=instrument ',
                       })
 
 

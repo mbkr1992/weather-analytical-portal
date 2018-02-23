@@ -88,76 +88,71 @@ class SoilTemperatureDailyMapper(Mapper):
 
 def create_v_te002m(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
-    name = 'V_TE002M'
-    value = get_value(item, name, None),
+    code = 'V_TE002M'
+    name = 'Daily soil temperature in 2 cm depth'
+    value = get_value(item, code, None),
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
                            information={
                                "QN": qn_2,
-                               "description": 'daily soil temperature in 2 cm depth',
-                               "type": "pressure",
-                               "source": "DW",
+                               "code": code,
                            })
 
 
 def create_v_te005m(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
-    name = 'V_TE005M'
-    value = get_value(item, name, None),
+    code = 'V_TE005M'
+    name = 'Daily soil temperature in 5 cm depth'
+    value = get_value(item, code, None),
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
                            information={
                                "QN": qn_2,
-                               "description": 'daily soil temperature in 5 cm depth',
-                               "type": "pressure",
-                               "source": "DW",
+                               "code": code,
                            })
 
 
 def create_v_te010m(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
-    name = 'V_TE010M'
-    value = get_value(item, name, None),
+    code = 'V_TE010M'
+    name = 'Daily soil temperature in 10 cm depth'
+    value = get_value(item, code, None),
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
                            information={
                                "QN": qn_2,
-                               "description": 'daily soil temperature in 10 cm depth',
-                               "type": "pressure",
-                               "source": "DW",
+                               "code": code,
                            })
 
 
 def create_v_te020m(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
-    name = 'V_TE020M'
-    value = get_value(item, name, None),
+    code = 'V_TE020M'
+    name = 'Daily soil temperature in 20 cm depth'
+    value = get_value(item, code, None),
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
                            information={
                                "QN": qn_2,
-                               "description": 'daily soil temperature in 20 cm depth',
-                               "type": "pressure",
-                               "source": "DW",
+                               "code": code,
                            })
 
 
 def create_v_te050m(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
-    name = 'V_TE050M'
-    value = get_value(item, name, None),
+    code = 'V_TE050M'
+    name = 'Daily soil temperature in 50 cm depth'
+    value = get_value(item, code, None),
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
                            information={
                                "QN": qn_2,
-                               "description": 'daily soil temperature in 50 cm depth',
-                               "type": "pressure",
-                               "source": "DW",
+                               "code": code,
                            })
 
 

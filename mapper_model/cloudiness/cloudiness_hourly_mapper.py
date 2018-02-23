@@ -24,13 +24,6 @@ class CloudinessHourlyMapper(Mapper):
         date = datetime.strptime(item['MESS_DATUM'], '%Y%m%d%H')
         interval = 'hourly'
 
-        list_of_items.append(create_vni(
-            item=item,
-            sid=station_id,
-            date=date,
-            interval=interval,
-        ))
-
         list_of_items.append(create_vn(
             item=item,
             sid=station_id,
@@ -64,35 +57,20 @@ class CloudinessHourlyMapper(Mapper):
                 curs.execute(self.update_query, data)
 
 
-def create_vni(sid, date, interval, item):
-    qn_8 = item.get('QN_8', None)
-    name = 'V_N_I'
-    value = get_value(item, name, None),
-    return Cloudiness(station_id=sid, date=date,
-                      interval=interval, name=name, unit=None,
-                      value=value,
-                      information={
-                          "QN_8": qn_8,
-                          "description": 'P=human '
-                                         'I=instrument ',
-                          "type": "cloudiness",
-                          "source": "DW",
-                      })
-
-
 def create_vn(sid, date, interval, item):
     qn_8 = item.get('QN_8', None)
-    name = 'V_N'
-    value = get_value(item, name, None),
+    code = 'V_N'
+    name = 'Total cloud cover'
+    value = get_value(item, code, None),
     return Cloudiness(station_id=sid, date=date,
                       interval=interval, name=name, unit=None,
                       value=value,
                       information={
                           "QN_8": qn_8,
-                          "description": '1/8 = total cloud cover '
-                                         '-1 = not determined ',
-                          "type": "cloudiness",
-                          "source": "DW",
+                          "code": code,
+                          "Measured": item.get('V_N_I', None),
+                          "description": 'P=human '
+                                         'I=instrument ',
                       })
 
 

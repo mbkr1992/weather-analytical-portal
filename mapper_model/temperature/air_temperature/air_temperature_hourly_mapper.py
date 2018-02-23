@@ -66,31 +66,29 @@ class AirTemperatureHourlyMapper(Mapper):
 
 def create_tt_tu(sid, date, interval, item):
     qn = item.get('QN_9', None)
-    name = 'TT_TU'
-    value = get_value(item, name, None),
+    code = 'TT_TU'
+    name = 'Air temperature in 2m height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
                           interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": '2m air temperature',
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_rf_tu(sid, date, interval, item):
     qn = item.get('QN_9', None)
-    name = 'RF_TU'
-    value = get_value(item, name, None),
+    code = 'RF_TU'
+    name = 'Relative humidity at 2m height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
                           interval=interval, name=name, unit='%',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": '2m relative humidity',
-                              "type": "Air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 

@@ -130,166 +130,155 @@ class KlMonthlyMapper(Mapper):
 
 def create_mo_n(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MO_N'
-    value = get_value(item, name, None),
+    code = 'MO_N'
+    name = 'Monthly mean of cloud cover'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='1/8',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly mean of cloud cover',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mo_tt(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MO_TT'
-    value = get_value(item, name, None),
+    code = 'MO_TT'
+    name = 'Monthly mean of daily temperature means in 2m'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly mean of daily temperature means in 2m',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mo_tx(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MO_TX'
-    value = get_value(item, name, None),
+    code = 'MO_TX'
+    name = 'mMnthly mean of daily temperature maxima in 2m'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly mean of daily temperature maxima in 2m',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mo_tn(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MO_TN'
-    value = get_value(item, name, None),
+    code = 'MO_TN'
+    name = 'Monthly mean of daily temperature minima in 2m'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
-              interval=interval, name=name, unit=None,
+              interval=interval, name=name, unit='°C',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly mean of daily temperature minima in 2m',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mo_sd_s(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MO_SD_S'
-    value = get_value(item, name, None),
+    code = 'MO_SD_S'
+    name = 'Monthly sum of sunshine duration'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='h',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly sum of sunshine duration',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mo_fk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MO_FK'
-    value = get_value(item, name, None),
+    code = 'MO_FK'
+    name = 'Monthly mean of daily wind speed'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='Bft',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly mean of daily wind speed',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mx_tx(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MX_TX'
-    value = get_value(item, name, None),
+    code = 'MX_TX'
+    name = 'Monthly maximum of daily temperature maxima in 2m height'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly maximum of daily temperature maxima in 2m height',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mx_fx(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MX_FX'
-    value = get_value(item, name, None),
+    code = 'MX_FX'
+    name = 'Monthly maximum of daily wind speed'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='m/s',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly maximum of daily wind speed',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mx_tn(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
-    name = 'MX_TN'
-    value = get_value(item, name, None),
+    code = 'MX_TN'
+    name = 'Monthly minimum of daily temperature minima in 2m height'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
               information={
                   "QN_4": qn_4,
-                  "description": 'monthly minimum of daily temperature minima in 2m height',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mo_rr(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'MO_RR'
-    value = get_value(item, name, None),
+    code = 'MO_RR'
+    name = 'Monthly sum of precipitation height'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='mm',
               value=value,
               information={
                   "QN_4": qn_6,
-                  "description": 'monthly sum of precipitation height',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": code,
               })
 
 
 def create_mx_rs(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'MX_RS'
-    value = get_value(item, name, None),
+    code = 'MX_RS'
+    name = 'Monthly maximum of daily precipitation height'
+    value = get_value(item, code, None),
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='mm',
               value=value,
               information={
                   "QN_4": qn_6,
-                  "description": 'monthly maximum of daily',
-                  "type": "kl",
-                  "source": "DW",
+                  "code": 'code',
               })
 
 

@@ -79,60 +79,60 @@ class Precipitation1MinuteMapper(Mapper):
 
 def create_rs_01(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RS_01'
-    value = get_value(item, name, None),
+    code = 'RS_01'
+    name = 'Rainfall'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='mm',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
+                             "code": code,
                              "source": "DW",
                          })
 
 
 def create_rth_01(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RTH_01'
-    value = get_value(item, name, None),
+    code = 'RTH_01'
+    name = 'Rainfall drops'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='mm',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
+                             "code": code,
                              "source": "DW",
                          })
 
 
 def create_rwh_01(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RWH_01'
-    value = get_value(item, name, None),
+    code = 'RWH_01'
+    name = 'Precipitation height'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='mm',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
+                             "code": code,
                              "source": "DW",
                          })
 
 
 def create_rs_ind_01(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RS_IND_01'
-    value = get_value(item, name, None),
+    code = 'RS_IND_01'
+    name = 'Precipitation indicator'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='numeric code',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
+                             "code": code,
                              "source": "DW",
                          })
 

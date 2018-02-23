@@ -73,47 +73,43 @@ class PrecipitationHourlyMapper(Mapper):
 
 def create_r1(sid, date, interval, item):
     qn_8 = item.get('QN_8', None)
-    name = 'R1'
-    value = get_value(item, name, None),
+    code = 'R1'
+    name = 'Hourly precipitation height'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
                          interval=interval, name=name, unit='mm',
                          value=value,
                          information={
                              "QN": qn_8,
-                             "description": 'hourly precipitation height',
-                             "type": "precipitation",
-                             "source": "DW",
+                             "code": code,
                          })
 
 
 def create_wrtr(sid, date, interval, item):
     qn_8 = item.get('QN_8', None)
-    name = 'wrtr'
-    value = get_value(item, name, None),
+    code = 'wrtr'
+    name = 'Form of precipitation'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
                          interval=interval, name=name, unit='WR-code',
                          value=value,
                          information={
                              "QN": qn_8,
-                             "description": 'form of precipitation',
-                             "type": "precipitation",
-                             "source": "DW",
+                             "code": code,
                          })
 
 
 def create_rs_ind(sid, date, interval, item):
     qn_8 = item.get('QN_8', None)
-    name = 'RS_IND'
-    value = get_value(item, name, None),
+    code = 'RS_IND'
+    name = 'Precipitation fallen'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='~',
                          value=value,
                          information={
                              "QN": qn_8,
-                             "description": '0 = no precipitation '
-                                            '1 = precipitation has fallen ',
-                             "type": "precipitation",
-                             "source": "DW",
+                             "code": code,
                          })
 
 

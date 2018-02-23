@@ -73,46 +73,43 @@ class MorePrecipDailyMapper(Mapper):
 
 def create_rs(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'RS'
-    value = get_value(item, name, None),
+    code = 'RS'
+    name = 'Daily precipitation height'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
                       interval=interval, name=name, unit='mm',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'daily precipitation height',
-                          "type": "precipitation",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_rsf(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'RSF'
-    value = get_value(item, name, None),
+    code = 'RSF'
+    name = 'Precipitation form'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
-                      interval=interval, name=name, unit=None,
+                      interval=interval, name=name, unit='~',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'precipitation form',
-                          "type": "precipitation",
-                          "source": "DW",
+                          "code": 'code',
                       })
 
 
 def create_sh_tag(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'SH_TAG'
-    value = get_value(item, name, None),
+    code = 'SH_TAG'
+    name = 'Daily height of snow pack'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'daily height of snow pack',
-                          "type": "precipitation",
-                          "source": "DW",
+                          "code": code,
                       })
 
 

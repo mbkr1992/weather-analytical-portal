@@ -80,61 +80,57 @@ class WindExtreme10MinuteMapper(Mapper):
 
 def create_fx_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'FX_10'
-    value = get_value(item, name, None),
+    code = 'FX_10'
+    name = 'Maximum wind speed'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
-                interval=interval, name=name, unit=None,
+                interval=interval, name=name, unit='m/s',
                 value=value,
                 information={
                     "QN": qn,
-                    "description": None,
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 
 def create_fnx_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'FNX_10'
-    value = get_value(item, name, None),
+    code = 'FNX_10'
+    name = 'Minimum wind speed'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
-                interval=interval, name=name, unit=None,
+                interval=interval, name=name, unit='m/s',
                 value=value,
                 information={
                     "QN": qn,
-                    "description": None,
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 
 def create_fmx_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'FMX_10'
-    value = get_value(item, name, None),
+    code = 'FMX_10'
+    name = 'Maximum mean wind speed '
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
-                interval=interval, name=name, unit=None,
+                interval=interval, name=name, unit='~',
                 value=value,
                 information={
                     "QN": qn,
-                    "description": None,
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 
 def create_dx_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'DX_10'
-    value = get_value(item, name, None),
+    code = 'DX_10'
+    name = 'Maximum Wind direction'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
-                interval=interval, name=name, unit=None,
+                interval=interval, name=name, unit='~',
                 value=value,
                 information={
                     "QN": qn,
-                    "description": None,
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 

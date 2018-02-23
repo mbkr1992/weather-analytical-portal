@@ -79,46 +79,43 @@ class ExtremeTemperature10MinuteMapper(Mapper):
 
 def create_tx_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'TX_10'
-    value = get_value(item, name, None),
+    code = 'TX_10'
+    name = 'Maximum temperature'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_tn_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'TN_10'
-    value = get_value(item, name, None),
+    code = 'TN_10'
+    name = 'Lowest temperature'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 
 def create_tn5_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'TN5_10'
-    value = get_value(item, name, None),
+    code = 'TN5_10'
+    name = 'Low temperature in 5 cm height'
+    value = get_value(item, code, None),
     return AirTemperature(station_id=sid, date=date,
-                          interval=interval, name=name, unit=None,
+                          interval=interval, name=name, unit='°C',
                           value=value,
                           information={
                               "QN": qn,
-                              "description": None,
-                              "type": "air",
-                              "source": "DW",
+                              "code": code,
                           })
 
 

@@ -74,46 +74,43 @@ class Precipitation10MinuteMapper(Mapper):
 
 def create_rws_dau_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RWS_DAU_10'
-    value = get_value(item, name, None),
+    code = 'RWS_DAU_10'
+    name = 'Precipitation time'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='minute',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
-                             "source": "DW",
+                             "code": code,
                          })
 
 
 def create_rws_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RWS_10'
-    value = get_value(item, name, None),
+    code = 'RWS_10'
+    name = 'Sum of precipitation'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='mm',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
-                             "source": "DW",
+                             "code": code,
                          })
 
 
 def create_rws_ind_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'RWS_IND_10'
-    value = get_value(item, name, None),
+    code = 'RWS_IND_10'
+    name = 'Precipitation indicator'
+    value = get_value(item, code, None),
     return Precipitation(station_id=sid, date=date,
-                         interval=interval, name=name, unit=None,
+                         interval=interval, name=name, unit='~',
                          value=value,
                          information={
                              "QN": qn,
-                             "description": None,
-                             "type": "precipitation",
-                             "source": "DW",
+                             "code": code,
                          })
 
 

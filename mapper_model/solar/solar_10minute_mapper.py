@@ -79,61 +79,57 @@ class Solar10MinuteMapper(Mapper):
 
 def create_ds_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'DS_10'
-    value = get_value(item, name, None),
+    code = 'DS_10'
+    name = 'Diffuse sky radiation'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
-                 interval=interval, name=name, unit=None,
+                 interval=interval, name=name, unit='J/cm',
                  value=value,
                  information={
                      "QN_8": qn,
-                     "description": None,
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 
 def create_gs_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'GS_10'
-    value = get_value(item, name, None),
+    code = 'GS_10'
+    name = 'Global radiation'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
-                 interval=interval, name=name, unit=None,
+                 interval=interval, name=name, unit='J/cm',
                  value=value,
                  information={
                      "QN_8": qn,
-                     "description": None,
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 
 def create_sd_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'SD_10'
-    value = get_value(item, name, None),
+    code = 'SD_10'
+    name = 'Sunshine duration'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
-                 interval=interval, name=name, unit=None,
+                 interval=interval, name=name, unit='hour',
                  value=value,
                  information={
                      "QN_8": qn,
-                     "description": None,
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 
 def create_ls_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'LS_10'
-    value = get_value(item, name, None),
+    code = 'LS_10'
+    name = 'Long-wave radiation'
+    value = get_value(item, code, None),
     return Solar(station_id=sid, date=date,
-                 interval=interval, name=name, unit=None,
+                 interval=interval, name=name, unit='J/cm',
                  value=value,
                  information={
                      "QN_8": qn,
-                     "description": None,
-                     "type": "solar",
-                     "source": "DW",
+                     "code": code,
                  })
 
 

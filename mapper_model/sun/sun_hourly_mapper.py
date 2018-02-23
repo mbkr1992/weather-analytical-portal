@@ -59,16 +59,15 @@ class SunHourlyMapper(Mapper):
 
 def create_sd_so(sid, date, interval, item):
     qn = item.get('QN_7', None)
-    name = 'SD_SO'
-    value = get_value(item, name, None),
+    code = 'SD_SO'
+    name = 'Hourly sunshine duration'
+    value = get_value(item, code, None),
     return Sun(station_id=sid, date=date,
                interval=interval, name=name, unit='min',
                value=value,
                information={
                    "QN_7": qn,
-                   "description": 'hourly sunshine duration',
-                   "type": "sun",
-                   "source": "DW",
+                   "code": code,
                })
 
 

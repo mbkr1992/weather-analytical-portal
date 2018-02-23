@@ -65,31 +65,29 @@ class WindHourlyMapper(Mapper):
 
 def create_f(sid, date, interval, item):
     qn = item.get('QN_3', None)
-    name = 'F'
-    value = get_value(item, name, None),
+    code = 'F'
+    name = 'Mean wind speed'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
                 interval=interval, name=name, unit='m/s',
                 value=value,
                 information={
                     "QN_3": qn,
-                    "description": 'mean wind speed',
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 
 def create_d(sid, date, interval, item):
     qn = item.get('QN_3', None)
-    name = 'D'
-    value = get_value(item, name, None),
+    code = 'D'
+    name = 'Mean wind direction'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
                 interval=interval, name=name, unit='Grad',
                 value=value,
                 information={
                     "QN_3": qn,
-                    "description": 'mean wind direction',
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 

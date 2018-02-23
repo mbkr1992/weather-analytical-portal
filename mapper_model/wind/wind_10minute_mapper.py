@@ -65,31 +65,29 @@ class Wind10MinuteMapper(Mapper):
 
 def create_ff_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'FF_10'
-    value = get_value(item, name, None),
+    code = 'FF_10'
+    name = 'Mean wind speed'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
-                interval=interval, name=name, unit=None,
+                interval=interval, name=name, unit='m/s',
                 value=value,
                 information={
                     "QN": qn,
-                    "description": None,
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 
 def create_dd_10(sid, date, interval, item):
     qn = item.get('QN', None)
-    name = 'DD_10'
-    value = get_value(item, name, None),
+    code = 'DD_10'
+    name = 'Mean wind direction'
+    value = get_value(item, code, None),
     return Wind(station_id=sid, date=date,
-                interval=interval, name=name, unit=None,
+                interval=interval, name=name, unit='Degree',
                 value=value,
                 information={
                     "QN": qn,
-                    "description": None,
-                    "type": "sun",
-                    "source": "DW",
+                    "code": code,
                 })
 
 

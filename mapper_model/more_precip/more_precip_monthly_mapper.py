@@ -80,61 +80,57 @@ class MorePrecipMonthlyMapper(Mapper):
 
 def create_mo_nsh(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'MO_NSH'
-    value = get_value(item, name, None),
+    code = 'MO_NSH'
+    name = 'Monthly sum of daily fresh snow'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'monthly sum of daily fresh snow',
-                          "type": "kl",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_mo_rr(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'MO_RR'
-    value = get_value(item, name, None),
+    code = 'MO_RR'
+    name = 'Monthly sum of daily precipitation height'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
                       interval=interval, name=name, unit='mm',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'monthly sum of daily precipitation height',
-                          "type": "kl",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_mo_sh_s(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'MO_SH_S'
-    value = get_value(item, name, None),
+    code = 'MO_SH_S'
+    name = 'Monthly sum of daily height of snow pack'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'monthly sum of daily height of snow pack',
-                          "type": "kl",
-                          "source": "DW",
+                          "code": code,
                       })
 
 
 def create_mx_rs(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
-    name = 'MX_RS'
-    value = get_value(item, name, None),
+    code = 'MX_RS'
+    name = 'Monthly max of daily precipitation height'
+    value = get_value(item, code, None),
     return MorePrecip(station_id=sid, date=date,
                       interval=interval, name=name, unit='mm',
                       value=value,
                       information={
                           "QN_6": qn_6,
-                          "description": 'monthly max of daily precipitation height',
-                          "type": "kl",
-                          "source": "DW",
+                          "code": code,
                       })
 
 

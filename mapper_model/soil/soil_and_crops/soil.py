@@ -145,19 +145,21 @@ class SoilDailyMapper(Mapper):
         return list_of_items
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -172,7 +174,7 @@ def create_vgsl(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
     code = 'VGSL'
     name = 'Real evapotranspiration over grass and sandy loam (AMBAV)'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='mm',
                            value=value,
@@ -186,7 +188,7 @@ def create_vpgb(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
     code = 'VPGB'
     name = 'Potential evapotranspiration over grass (AMBAV)'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='mm',
                            value=value,
@@ -200,7 +202,7 @@ def create_vpgh(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
     code = 'VPGH'
     name = 'Potential evaporation over grass (Haude)'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='mm',
                            value=value,
@@ -215,7 +217,7 @@ def create_ts05(sid, date, interval, item):
     code = 'TS05'
     name = 'Mean daily soil temperature in 5 cm depth for uncovered typical soil in 5 cm depth '\
            'mean daily soil',
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
@@ -230,7 +232,7 @@ def create_ts10(sid, date, interval, item):
     code = 'TS10'
     name = 'Mean daily soil temperature in 5 cm depth for uncovered typical soil in 10 cm depth '\
            'mean daily soil',
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
@@ -245,7 +247,7 @@ def create_ts20(sid, date, interval, item):
     code = 'TS20'
     name = 'Mean daily soil temperature in 5 cm depth for uncovered typical soil in 20 cm depth '\
            'mean daily soil'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
@@ -260,7 +262,7 @@ def create_ts50(sid, date, interval, item):
     code = 'TS50'
     name = 'Mean daily soil temperature in 5 cm depth for uncovered typical soil in 50 cm depth '\
            'mean daily soil'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
@@ -275,7 +277,7 @@ def create_ts100(sid, date, interval, item):
     code = 'TS100'
     name = 'Mean daily soil temperature in 5 cm depth for uncovered typical soil in 1 m depth '\
            'mean daily soil'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='°C',
                            value=value,
@@ -289,7 +291,7 @@ def create_zfumi(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
     code = 'ZFUMI'
     name = 'Frost depth at midday for uncovered soil'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='cm',
                            value=value,
@@ -304,7 +306,7 @@ def create_bf10(sid, date, interval, item):
     code = 'BF10'
     name = 'Soil moisture under grass and sandy loam between 0 and 10 cm depth in % plant '\
            'usable water'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -319,7 +321,7 @@ def create_bf20(sid, date, interval, item):
     code = 'BF20'
     name = 'Soil moisture under grass and sandy loam between 10 and 20 cm depth in % plant '\
            'usable water'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -334,7 +336,7 @@ def create_bf30(sid, date, interval, item):
     code = 'BF30'
     name = 'Soil moisture under grass and sandy loam between 20 and 30 cm depth in % plant '\
            'usable water'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -349,7 +351,7 @@ def create_bf40(sid, date, interval, item):
     code = 'BF40'
     name = 'Soil moisture under grass and sandy loam between 30 and 40 cm depth in % plant '\
            'usable water'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -364,7 +366,7 @@ def create_bf50(sid, date, interval, item):
     code = 'BF50'
     name = 'Soil moisture under grass and sandy loam between 40 and 50 cm depth in % plant '\
            'usable water'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -379,7 +381,7 @@ def create_bf60(sid, date, interval, item):
     code = 'BF60'
     name = 'Soil moisture under grass and sandy loam between 50 and 60 cm depth in % plant '\
            'usable water'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -393,7 +395,7 @@ def create_bfgsl(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
     code = 'BFGSL'
     name = 'Soil moisture under grass and sandy loam up to 60 cm depth'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,
@@ -407,7 +409,7 @@ def create_bfgls(sid, date, interval, item):
     qn_2 = item.get('QN_2', None)
     code = 'BFGLS'
     name = 'Soil moisture under grass and loamy sand up to 60 cm depth'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return SoilTemperature(station_id=sid, date=date,
                            interval=interval, name=name, unit='%nFK',
                            value=value,

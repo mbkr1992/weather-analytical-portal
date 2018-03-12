@@ -42,13 +42,13 @@ class StationMapper(Mapper):
     def to_tuple(item):
         return (item.id,
                 item.name,
-                Point(x=item.latitude, y=item.longitude, srid=4326),
+                Point(y=item.longitude, x=item.latitude, srid=4326),
                 item.state,
                 item.from_date,
                 item.to_date,
                 item.height)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:

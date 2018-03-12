@@ -14,11 +14,12 @@ class CamsMapper(Mapper):
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO satellite_data (name, value, date, position, information)' \
+        self.insert_query = 'INSERT INTO data ' \
+                            '(date, position, name, value, unit, mars_type, mars_class, param_id, position_str)' \
                             'VALUES %s' \
-                            # 'ON CONFLICT (measurement_date, measurement_category, station_id) DO NOTHING '
+                            'ON CONFLICT (date, param_id, mars_type, mars_class) DO NOTHING '
 
-    def map(self, grb={}):
+    def map(self, grb=None):
 
         list_of_grib_objects = []
 
@@ -42,31 +43,36 @@ class CamsMapper(Mapper):
         average = get_value(grb, 'average', None)
 
         for (x, y), value in np.ndenumerate(values):
-            information = dict(_type=mars_type, _class=mars_class, param_id=param_id, max=maximum, min=minimum,
-                               avg=average)
             latitude = round(lats[x, y], 10)
             longitude = round(lons[x, y], 10)
             grb_obj = Grib(name=name, value=round(value, 10), timestamp=timestamp, latitude=latitude, longitude=longitude,
-                           unit=unit, information=information)
+                           unit=unit, mars_type=mars_type, mars_class=mars_class, param_id=param_id, information={
+                    "max": maximum,
+                    "min": minimum,
+                })
             list_of_grib_objects.append(grb_obj)
 
         return list_of_grib_objects
 
     @staticmethod
     def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.timestamp,
-                Point(x=item.latitude, y=item.longitude, srid=4326),
-                extras.Json(item.information),
-                )
+        return (
+            item.timestamp,
+            Point(x=item.longitude, y=item.latitude, srid=4326),
+            item.name,
+            extras.Json(item.value),
+            item.unit,
+            item.mars_type,
+            item.mars_class,
+            item.param_id,
+            '({}, {})'.format(item.latitude, item.longitude),
+        )
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
                 data = [self.to_tuple(item) for item in items]
-                print('Data', data)
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):

@@ -39,9 +39,11 @@ class FTPAsyncFileDownloader(Downloader):
             await client.change_directory(prefix_path)
             list = await client.list(recursive=True)
 
-            def to_file(file_tuple):
-                path, meta_information = file_tuple
-                full_path = '{0}{1}'.format(prefix_path, path)
-                return File(filename=path.name, path=full_path, meta_information=meta_information)
+            return [to_file(item, prefix_path) for item in list if item[1]['type'] == 'file']
 
-            return [to_file(item) for item in list if item[1]['type'] == 'file']
+
+def to_file(file_tuple, prefix_path):
+    path, meta_information = file_tuple
+    full_path = '{0}{1}'.format(prefix_path, path)
+    priority = 1 if path.endswith('Beschreibung_Stationen.txt') else 0
+    return File(filename=path.name, path=full_path, meta_information=meta_information, priority=priority)

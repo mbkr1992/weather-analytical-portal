@@ -1,9 +1,11 @@
 from operation_model.operation import Operation
-from database_model.db_handler import update_file_download_flag, insert_files, select_non_downloaded_files, select_non_parsed_files
+from database_model.db_handler import update_file_download_flag, \
+    insert_files, select_non_downloaded_files, select_non_parsed_files, get_station
 from constants import constants
 from download_model.downloader_factory import DownloaderFactory
 from parser_model.parser_factory import ParserFactory
 from mapper_model.mapper_factory import MapperFactory
+from mapper_model.station.station_mapper import StationMapper
 from common.helper import Helper
 import asyncio
 
@@ -16,8 +18,9 @@ class GermanWeatherOperation(Operation):
         try:
             print('GermanWeatherOperation in-progress');
             # # Fetch all the paths from the duetsche service
-            # loop = asyncio.get_event_loop()
-            # loop.run_until_complete(fetch_path_operation(prefix_path))
+            loop = asyncio.get_event_loop()
+            # loop.run_until_complete(fetch_path_operation('/pub/CDC/observations_germany/climate/'))
+            # loop.run_until_complete(fetch_path_operation('/pub/CDC/help/'))
 
             # # Fetch all the non-downloaded file paths from database
             # paths_to_download = select_non_downloaded_files()
@@ -27,10 +30,10 @@ class GermanWeatherOperation(Operation):
             #                            paths_to_download]
             #     loop.run_until_complete(asyncio.wait(download_operations))
 
-            # paths_to_parse = select_non_parsed_files()
+            paths_to_parse = select_non_parsed_files()
 
-            paths_to_parse = [
-                '/pub/CDC/observations_germany/climate/1_minute/precipitation/historical/1993/1minutenwerte_nieder_00003_19930701_19930731_hist.zip',
+            # paths_to_parse = [
+                # '/pub/CDC/observations_germany/climate/1_minute/precipitation/historical/1993/1minutenwerte_nieder_00003_19930701_19930731_hist.zip',
                 # '/pub/CDC/observations_germany/climate/10_minutes/air_temperature/historical/10minutenwerte_tu_00003_19930428_19991231_hist.zip',
                 # '/pub/CDC/observations_germany/climate/10_minutes/extreme_temperature/historical/10minutenwerte_tx_00003_19930428_19991231_hist.zip',
                 # '/pub/CDC/observations_germany/climate/10_minutes/extreme_wind/historical/10minutenwerte_fx_00003_19930428_19991231_hist.zip',
@@ -54,7 +57,7 @@ class GermanWeatherOperation(Operation):
                 # '/pub/CDC/observations_germany/climate/monthly/kl/historical/monatswerte_KL_00001_19310101_19860630_hist.zip',
                 # '/pub/CDC/observations_germany/climate/monthly/more_precip/historical/monatswerte_RR_00001_18910101_19860630_hist.zip',
                 # '/pub/CDC/observations_germany/climate/subdaily/standard_format/kl_10XXX_bis_1999.txt.gz'
-            ];
+            # ];
 
             if paths_to_parse:
                 for path in paths_to_parse:
@@ -71,14 +74,19 @@ class GermanWeatherOperation(Operation):
 
                         parser = ParserFactory.get_parser_for_path(path)
                         mapper = MapperFactory.get_mapper_for_path(path)
-                        # print('4. Parser {0}, Mapper: {1}'.format(parser, mapper))
 
                         items = parser.parse(path=file_path, mapper=mapper)
 
                         print('5. Path file {0}, items: {1}'.format(path, len(items)))
 
-                        mapper.insert_items(items)
-                        # mapper.update_file_parsed_flag(path)
+                        if items:
+                            if not isinstance(mapper, StationMapper):
+                                station_id = items[0].station_id
+                                position, = get_station(station_id)
+                                mapper.insert_items(items, position)
+                            else:
+                                mapper.insert_items(items)
+                        mapper.update_file_parsed_flag(path)
                     except Exception as e:
                         print('Exception: {0}, {1}'.format(e, path))
                     finally:

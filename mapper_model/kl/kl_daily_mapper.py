@@ -125,19 +125,21 @@ class KlDailyMapper(Mapper):
         return list_of_items
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -152,7 +154,7 @@ def create_fx(sid, date, interval, item):
     qn_3 = item.get('QN_3', None)
     code = 'FX'
     name = 'Daily maximum of wind gust'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='m/s',
               value=value,
@@ -166,7 +168,7 @@ def create_fm(sid, date, interval, item):
     qn_3 = item.get('QN_3', None)
     code = 'FM'
     name = 'Daily mean of wind velocity'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='m/s',
               value=value,
@@ -180,7 +182,7 @@ def create_rsk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'RSK'
     name = 'Daily precipitation height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='mm',
               value=value,
@@ -194,7 +196,7 @@ def create_rskf(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'RSKF'
     name = 'Precipitation form'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='~',
               value=value,
@@ -208,7 +210,7 @@ def create_sdk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'SDK'
     name = 'Daily sunshine duration'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='h',
               value=value,
@@ -222,7 +224,7 @@ def create_shk_tag(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'SHK_TAG'
     name = 'Daily snow depth'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='cm',
               value=value,
@@ -236,7 +238,7 @@ def create_nm(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'NM'
     name = 'Daily mean of cloud cover'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='1/8',
               value=value,
@@ -250,7 +252,7 @@ def create_vpm(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'VPM'
     name = 'Daily mean of vapor pressure'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='hPa',
               value=value,
@@ -264,7 +266,7 @@ def create_pm(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'PM'
     name = 'Daily mean of pressure'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='hPa',
               value=value,
@@ -278,7 +280,7 @@ def create_tmk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'TMK'
     name = 'Daily mean of temperature'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -292,7 +294,7 @@ def create_upm(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'UPM'
     name = 'Daily mean of relative humidity'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='%',
               value=value,
@@ -306,7 +308,7 @@ def create_txk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'TXK'
     name = 'Daily maximum of temperature at 2m height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -320,7 +322,7 @@ def create_tnk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'TNK'
     name = 'Daily minimum of temperature at 2m height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -334,7 +336,7 @@ def create_tgk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'TGK'
     name = 'Daily minimum of air temperature at 5cm above ground'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,

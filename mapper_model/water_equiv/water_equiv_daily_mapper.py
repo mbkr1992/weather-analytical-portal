@@ -58,19 +58,21 @@ class WaterEquivDailyMapper(Mapper):
         return value and value != '999'
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -85,7 +87,7 @@ def create_ash_6(sid, date, interval, item):
     qn = item.get('QN_6', None)
     code = 'ASH_6'
     name = 'Height of snow pack sample'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
@@ -99,7 +101,7 @@ def create_sh_tag(sid, date, interval, item):
     qn = item.get('QN_6', None)
     code = 'SH_TAG'
     name = 'Total snow depth'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='cm',
                       value=value,
@@ -113,7 +115,7 @@ def create_wash_6(sid, date, interval, item):
     qn = item.get('QN_6', None)
     code = 'WASH_6'
     name = 'Total snow water equivalent'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='nm',
                       value=value,
@@ -127,7 +129,7 @@ def create_waas_6(sid, date, interval, item):
     qn = item.get('QN_6', None)
     code = 'WAAS_6'
     name = 'Total snow pack water equivalent'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return WaterEquiv(station_id=sid, date=date,
                       interval=interval, name=name, unit='nm',
                       value=value,

@@ -10,7 +10,7 @@ class Mapper(ABC):
         pass
 
     @abstractmethod
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         pass
 
     @abstractmethod

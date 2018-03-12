@@ -105,19 +105,21 @@ class KlMonthlyMapper(Mapper):
         return list_of_items
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -132,7 +134,7 @@ def create_mo_n(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MO_N'
     name = 'Monthly mean of cloud cover'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='1/8',
               value=value,
@@ -146,7 +148,7 @@ def create_mo_tt(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MO_TT'
     name = 'Monthly mean of daily temperature means in 2m'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -160,7 +162,7 @@ def create_mo_tx(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MO_TX'
     name = 'mMnthly mean of daily temperature maxima in 2m'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -174,7 +176,7 @@ def create_mo_tn(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MO_TN'
     name = 'Monthly mean of daily temperature minima in 2m'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -188,7 +190,7 @@ def create_mo_sd_s(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MO_SD_S'
     name = 'Monthly sum of sunshine duration'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='h',
               value=value,
@@ -202,7 +204,7 @@ def create_mo_fk(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MO_FK'
     name = 'Monthly mean of daily wind speed'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='Bft',
               value=value,
@@ -216,7 +218,7 @@ def create_mx_tx(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MX_TX'
     name = 'Monthly maximum of daily temperature maxima in 2m height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -230,7 +232,7 @@ def create_mx_fx(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MX_FX'
     name = 'Monthly maximum of daily wind speed'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='m/s',
               value=value,
@@ -244,7 +246,7 @@ def create_mx_tn(sid, date, interval, item):
     qn_4 = item.get('QN_4', None)
     code = 'MX_TN'
     name = 'Monthly minimum of daily temperature minima in 2m height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='°C',
               value=value,
@@ -258,7 +260,7 @@ def create_mo_rr(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
     code = 'MO_RR'
     name = 'Monthly sum of precipitation height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='mm',
               value=value,
@@ -272,7 +274,7 @@ def create_mx_rs(sid, date, interval, item):
     qn_6 = item.get('QN_6', None)
     code = 'MX_RS'
     name = 'Monthly maximum of daily precipitation height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Kl(station_id=sid, date=date,
               interval=interval, name=name, unit='mm',
               value=value,

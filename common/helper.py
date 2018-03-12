@@ -6,6 +6,8 @@ from constants.constants import DOWNLOAD_FOLDER
 from itertools import chain
 import shutil
 from pathlib import Path
+import re
+
 
 class Helper:
     def __init__(self):
@@ -150,7 +152,7 @@ class Helper:
     @staticmethod
     def is_path_parseable(path):
         return (path.endswith('.zip')
-                or path.endswith('.txt')
+                or (path.endswith('Beschreibung_Stationen.txt'))
                 or path.endswith('.txt.gz')
                 or path.endswith('.grib'))
 
@@ -195,3 +197,6 @@ def find(pattern, path):
 
     # return the first result
     return result.pop(0)
+
+
+

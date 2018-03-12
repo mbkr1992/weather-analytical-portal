@@ -54,19 +54,21 @@ class Precipitation1MinuteMapper(Mapper):
         return list_of_items
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -81,7 +83,7 @@ def create_rs_01(sid, date, interval, item):
     qn = item.get('QN', None)
     code = 'RS_01'
     name = 'Rainfall'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Precipitation(station_id=sid, date=date,
                          interval=interval, name=name, unit='mm',
                          value=value,
@@ -96,7 +98,7 @@ def create_rth_01(sid, date, interval, item):
     qn = item.get('QN', None)
     code = 'RTH_01'
     name = 'Rainfall drops'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Precipitation(station_id=sid, date=date,
                          interval=interval, name=name, unit='mm',
                          value=value,
@@ -111,7 +113,7 @@ def create_rwh_01(sid, date, interval, item):
     qn = item.get('QN', None)
     code = 'RWH_01'
     name = 'Precipitation height'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Precipitation(station_id=sid, date=date,
                          interval=interval, name=name, unit='mm',
                          value=value,
@@ -126,7 +128,7 @@ def create_rs_ind_01(sid, date, interval, item):
     qn = item.get('QN', None)
     code = 'RS_IND_01'
     name = 'Precipitation indicator'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Precipitation(station_id=sid, date=date,
                          interval=interval, name=name, unit='numeric code',
                          value=value,

@@ -61,19 +61,21 @@ class SolarHourlyMapper(Mapper):
         return list_of_items
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -88,7 +90,7 @@ def create_atmo(sid, date, interval, item):
     qn = item.get('QN_592', None)
     code = 'ATMO_LBERG'
     name = 'Longwave downward radiation'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='J/cm^2',
                  value=value,
@@ -102,7 +104,7 @@ def create_fd(sid, date, interval, item):
     qn = item.get('QN_592', None)
     code = 'FD_LBERG'
     name = 'Hourly sum of diffuse solar radiation'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='J/cm^2',
                  value=value,
@@ -116,7 +118,7 @@ def create_fg(sid, date, interval, item):
     qn = item.get('QN_592', None)
     code = 'FG_LBERG'
     name = 'Hourly sum of solar incoming radiation'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='J/cm^2',
                  value=value,
@@ -130,7 +132,7 @@ def create_sd(sid, date, interval, item):
     qn = item.get('QN_592', None)
     code = 'SD_LBERG'
     name = 'Hourly sum of sunshine duration'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='min',
                  value=value,
@@ -144,7 +146,7 @@ def create_zenit(sid, date, interval, item):
     qn = item.get('QN_592', None)
     code = 'ZENIT'
     name = 'Solar zenith angle at mid of interval',
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Solar(station_id=sid, date=date,
                  interval=interval, name=name, unit='degree',
                  value=value,

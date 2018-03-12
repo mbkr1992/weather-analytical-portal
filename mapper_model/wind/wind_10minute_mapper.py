@@ -40,19 +40,21 @@ class Wind10MinuteMapper(Mapper):
         return list_of_items
 
     @staticmethod
-    def to_tuple(item):
-        return (item.name,
-                extras.Json(item.value),
-                item.date,
+    def to_tuple(item, position):
+        return (item.date,
                 item.station_id,
+                item.name,
+                extras.Json(item.value),
+                item.unit,
                 item.interval,
-                extras.Json(item.information))
+                extras.Json(item.information),
+                position)
 
-    def insert_items(self, items):
+    def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
             register(connection=conn)
             with conn.cursor() as curs:
-                data = [self.to_tuple(item) for item in items]
+                data = [self.to_tuple(item, position) for item in items]
                 extras.execute_values(curs, self.insert_query, data, template=None, page_size=100)
 
     def update_file_parsed_flag(self, path):
@@ -67,7 +69,7 @@ def create_ff_10(sid, date, interval, item):
     qn = item.get('QN', None)
     code = 'FF_10'
     name = 'Mean wind speed'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Wind(station_id=sid, date=date,
                 interval=interval, name=name, unit='m/s',
                 value=value,
@@ -81,7 +83,7 @@ def create_dd_10(sid, date, interval, item):
     qn = item.get('QN', None)
     code = 'DD_10'
     name = 'Mean wind direction'
-    value = get_value(item, code, None),
+    value = get_value(item, code, None)
     return Wind(station_id=sid, date=date,
                 interval=interval, name=name, unit='Degree',
                 value=value,

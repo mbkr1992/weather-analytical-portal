@@ -15,7 +15,7 @@ class CamsMapper(Mapper):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
         self.insert_query = 'INSERT INTO data ' \
-                            '(date, position, name, value, unit, mars_type, mars_class, param_id, position_str)' \
+                            '(date, position, name, value, unit, mars_type, mars_class, param_id, source, position_str)' \
                             'VALUES %s' \
                             'ON CONFLICT (date, param_id, mars_type, mars_class) DO NOTHING '
 
@@ -65,6 +65,7 @@ class CamsMapper(Mapper):
             item.mars_type,
             item.mars_class,
             item.param_id,
+            item.source,
             '({}, {})'.format(item.latitude, item.longitude),
         )
 

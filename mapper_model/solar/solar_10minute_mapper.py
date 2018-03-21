@@ -62,7 +62,8 @@ class Solar10MinuteMapper(Mapper):
                 item.unit,
                 item.interval,
                 extras.Json(item.information),
-                position)
+                position,
+                item.source)
 
     def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:

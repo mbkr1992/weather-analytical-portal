@@ -1,6 +1,6 @@
 from operation_model.operation import Operation
 from database_model.db_handler import update_file_download_flag, \
-    insert_files, select_non_downloaded_files, select_non_parsed_files, get_station
+    insert_files, select_non_downloaded_files_station, select_non_parsed_files_station, get_station
 from constants import constants
 from download_model.downloader_factory import DownloaderFactory
 from parser_model.parser_factory import ParserFactory
@@ -30,7 +30,7 @@ class GermanWeatherOperation(Operation):
             #                            paths_to_download]
             #     loop.run_until_complete(asyncio.wait(download_operations))
 
-            paths_to_parse = select_non_parsed_files()
+            paths_to_parse = select_non_parsed_files_station()
 
             # paths_to_parse = [
                 # '/pub/CDC/observations_germany/climate/1_minute/precipitation/historical/1993/1minutenwerte_nieder_00003_19930701_19930731_hist.zip',

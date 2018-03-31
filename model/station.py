@@ -12,7 +12,7 @@ class Station:
         self.latitude = latitude
         self.longitude = longitude
         if self.latitude and self.longitude:
-            self.position = Point(x=longitude, y=latitude, srid=4326)
+            self.position = Point(x=latitude, y=longitude, srid=4326)
         self.from_date = None
         self.to_date = None
         self.state = None

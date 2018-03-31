@@ -18,6 +18,7 @@ class Wind:
         self.value = value
         self.unit = unit
         self.information = information
+        self.source = 'DWD'
 
     def __str__(self):
-        return '{0}, {1}'.format(self.station_id, self.measurement_date)
+        return '{0}, {1}'.format(self.station_id, self.name)

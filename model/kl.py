@@ -18,6 +18,7 @@ class Kl:
         self.value = value
         self.unit = unit
         self.information = information
+        self.source = 'DWD'
 
 
     def __str__(self):

@@ -14,6 +14,7 @@ class Grib:
         self.mars_class = mars_class
         self.param_id = param_id
         self.information = information  # json
+        self.source = 'Copernicus'
 
     def __str__(self):
         return '{0}, {1}, {2}'.format(self.name, self.value, self.timestamp)

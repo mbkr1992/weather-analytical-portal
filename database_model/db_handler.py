@@ -1,8 +1,7 @@
-from postgis import Point
 from postgis.psycopg import register
 from psycopg2 import connect, extras
 from constants import constants
-from model.solar import Solar
+from model.station import Station
 from model.file import File
 
 DBN = constants.DATABASE_CONNECTION
@@ -12,7 +11,7 @@ query_insert_station = 'INSERT ' \
                        'VALUES (%s, %s, %s, %s, %s, %s, %s);'
 
 query_insert_station_data = 'INSERT INTO data ' \
-                            '(date, station_id, name, value, unit, time_category, information, position, source)' \
+                            '(date, station_id, name, value, unit, time_category, information, position, source, position_str)' \
                             'VALUES %s' \
                             'ON CONFLICT (date, name, station_id, time_category) DO NOTHING '
 
@@ -87,11 +86,17 @@ def update_file_download_flag(path):
             curs.execute(query_update_file_download_flag, data)
 
 
-query_select_station_with_id = "SELECT position FROM station where id = (%s)"
+query_select_station_with_id = "SELECT id, position FROM station where id = (%s)"
 def get_station(id):
     with connect(DBN) as conn:
         register(connection=conn)
         with conn.cursor() as curs:
             data = id,
             curs.execute(query_select_station_with_id, data)
-            return curs.fetchone()
+
+            def to_station(row):
+                _, point = row
+                latitude, longitude = point
+                return Station(latitude=latitude, longitude=longitude)
+
+            return to_station(curs.fetchone())

@@ -3,8 +3,8 @@ from operation_model.copernicus_operation import CopernicusOperation
 
 
 def perform_async_operation():
-    # GermanWeatherOperation().perform_operation()
-    CopernicusOperation().perform_operation()
+    GermanWeatherOperation().perform_operation()
+    # CopernicusOperation().perform_operation()
     pass
 
 

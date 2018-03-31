@@ -3,7 +3,7 @@ from postgis import Point
 
 class Station:
 
-    def __init__(self, longitude, latitude):
+    def __init__(self, longitude=None, latitude=None):
         super().__init__()
 
         self.id = id
@@ -11,7 +11,8 @@ class Station:
         self.height = None
         self.latitude = latitude
         self.longitude = longitude
-        self.position = Point(x=longitude, y=latitude, srid=4326)
+        if self.latitude and self.longitude:
+            self.position = Point(x=longitude, y=latitude, srid=4326)
         self.from_date = None
         self.to_date = None
         self.state = None

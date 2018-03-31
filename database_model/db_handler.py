@@ -10,13 +10,6 @@ query_insert_station = 'INSERT ' \
                        'INTO station (id, name, position, state, from_date, to_date, height) ' \
                        'VALUES (%s, %s, %s, %s, %s, %s, %s);'
 
-query_insert_station_data = 'INSERT INTO data ' \
-                            '(date, station_id, name, value, unit, time_category, information, position, source, position_str)' \
-                            'VALUES %s' \
-                            'ON CONFLICT (date, name, station_id, time_category) DO NOTHING '
-
-query_update_file_is_parsed_flag = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
-
 
 query_insert_files = 'INSERT ' \
                      'INTO file_meta as file (filename, path, modify_date, priority) ' \
@@ -57,7 +50,7 @@ def select_non_downloaded_files_satellite():
             return [to_file(row) for row in rows]
 
 
-query_select_path_of_non_parsed_files_station = "SELECT path FROM file_meta where is_parsed=False AND path NOT LIKE {} ORDER BY priority DESC".format("'%.grib'")
+query_select_path_of_non_parsed_files_station = "SELECT path FROM file_meta where is_parsed=False AND path LIKE {} ORDER BY priority DESC".format("'/pub/%'")
 def select_non_parsed_files_station():
     with connect(DBN) as conn:
         register(connection=conn)
@@ -67,7 +60,7 @@ def select_non_parsed_files_station():
             return [row[0] for row in rows]
 
 
-query_select_path_of_non_parsed_files_satellite = "SELECT path FROM file_meta where is_parsed=False AND path LIKE {} ORDER BY priority DESC".format("'%.grib'")
+query_select_path_of_non_parsed_files_satellite = "SELECT path FROM file_meta where is_parsed=False AND path NOT LIKE {} ORDER BY priority DESC".format("'/pub/%'")
 def select_non_parsed_files_satellite():
     with connect(DBN) as conn:
         register(connection=conn)

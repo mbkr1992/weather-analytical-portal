@@ -1,16 +1,21 @@
 from abc import ABC, abstractmethod
 from psycopg2 import connect, extras
 from postgis.psycopg import register
-from database_model import db_handler
 from constants import constants
 
+query_insert_station_data = 'INSERT INTO data ' \
+                            '(date, station_id, name, value, unit, time_category, information, source, position, latitude, longitude)' \
+                            'VALUES %s' \
+                            'ON CONFLICT (date, name, station_id, time_category) DO NOTHING '
+
+query_update_file_is_parsed_flag = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
 class Mapper(ABC):
     def __init__(self):
         super().__init__()
         self.dbc = constants.DATABASE_CONNECTION
-        self.insert_query = db_handler.query_insert_station_data
-        self.update_query = db_handler.query_update_file_is_parsed_flag
+        self.insert_query = query_insert_station_data
+        self.update_query = query_update_file_is_parsed_flag
 
     @abstractmethod
     def map(self, item):
@@ -25,9 +30,10 @@ class Mapper(ABC):
                 item.unit,
                 item.interval,
                 extras.Json(item.information),
-                station.position,
                 item.source,
-                '({}, {})'.format(station.latitude, station.longitude))
+                station.position,
+                station.latitude,
+                station.longitude)
 
     def insert_items(self, items, station=None):
         with connect(self.dbc) as conn:

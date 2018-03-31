@@ -14,7 +14,7 @@ class StationMapper(Mapper):
         self.dbc = DATABASE_CONNECTION
 
         self.insert_query = 'INSERT ' \
-                            'INTO station (id, name, position, state, from_date, to_date, height) ' \
+                            'INTO station (id, name, state, from_date, to_date, height, position, latitude, longitude) ' \
                             'VALUES %s' \
                             'ON CONFLICT (id) DO NOTHING '
 
@@ -28,6 +28,8 @@ class StationMapper(Mapper):
 
         station.latitude = item.get('geoBreite', None) or item.get('geo_Breite', None)
         station.longitude = item.get('geoLaenge', None) or item.get('geo_Laenge', None)
+        station.position = Point(x=station.latitude, y=station.longitude, srid=4326)
+
         station.state = item.get('Bundesland', None) or item.get('Bundeslandname', None)
 
         from_date = item.get('von_datum', None) or item.get('von', None)
@@ -42,11 +44,13 @@ class StationMapper(Mapper):
     def to_tuple(item):
         return (item.id,
                 item.name,
-                Point(y=item.longitude, x=item.latitude, srid=4326),
                 item.state,
                 item.from_date,
                 item.to_date,
-                item.height)
+                item.height,
+                item.position,
+                item.latitude,
+                item.longitude)
 
     def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:

@@ -4,20 +4,22 @@ from datetime import datetime, timedelta
 from psycopg2 import connect, extras
 from postgis.psycopg import register
 from constants.constants import DATABASE_CONNECTION, NOT_AVAILABLE
-from database_model import db_handler
 import numpy as np
 from postgis import Point
 
+query_insert_station_data = 'INSERT INTO data ' \
+                            '(date, name, value, unit, mars_type, mars_class, param_id, source, position, latitude, longitude)' \
+                            'VALUES %s' \
+                            'ON CONFLICT (date, param_id, mars_type, mars_class) DO NOTHING '
+query_update_file_is_parsed_flag = 'UPDATE file_meta SET is_parsed =(%s) WHERE path =(%s);'
 
 class CamsMapper(Mapper):
 
     def __init__(self):
         super().__init__()
         self.dbc = DATABASE_CONNECTION
-        self.insert_query = 'INSERT INTO data ' \
-                            '(date, position, name, value, unit, mars_type, mars_class, param_id, source, position_str)' \
-                            'VALUES %s' \
-                            'ON CONFLICT (date, param_id, mars_type, mars_class) DO NOTHING '
+        self.insert_query = query_insert_station_data
+        self.update_query = query_update_file_is_parsed_flag
 
     def map(self, grb=None):
 
@@ -46,10 +48,11 @@ class CamsMapper(Mapper):
             latitude = round(lats[x, y], 10)
             longitude = round(lons[x, y], 10)
             grb_obj = Grib(name=name, value=round(value, 10), timestamp=timestamp, latitude=latitude, longitude=longitude,
-                           unit=unit, mars_type=mars_type, mars_class=mars_class, param_id=param_id, information={
-                    "max": maximum,
-                    "min": minimum,
-                })
+                           unit=unit, mars_type=mars_type, mars_class=mars_class, param_id=param_id, source='Copernicus',
+                           information={
+                               "max": maximum,
+                               "min": minimum,
+                           })
             list_of_grib_objects.append(grb_obj)
 
         return list_of_grib_objects
@@ -58,7 +61,6 @@ class CamsMapper(Mapper):
     def to_tuple(item):
         return (
             item.timestamp,
-            Point(x=item.longitude, y=item.latitude, srid=4326),
             item.name,
             extras.Json(item.value),
             item.unit,
@@ -66,8 +68,9 @@ class CamsMapper(Mapper):
             item.mars_class,
             item.param_id,
             item.source,
-            '({}, {})'.format(item.latitude, item.longitude),
-        )
+            item.position,
+            item.latitude,
+            item.longitude)
 
     def insert_items(self, items, position=None):
         with connect(self.dbc) as conn:
